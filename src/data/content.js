@@ -10,9 +10,9 @@ export const content = {
     about: {
       title: "About Me",
       intro: [
-        "안녕하세요! 저는 DevOps Engineer이자 Cloud Infra Architect인 고동현입니다.",
-        "컴퓨터 공학에 대한 깊이 있는 이해를 바탕으로, 클라우드 인프라 설계와 자동화된 배포 파이프라인 구축에 집중하고 있습니다. Cloud Club, Amazon Cloud Club 등 클라우드 커뮤니티 활동과 보안 연구를 병행하며 폭넓은 경험을 쌓아왔습니다.",
-        "현재는 AWS, GCP 등 클라우드 환경에서 안정적이고 확장 가능한 시스템을 설계하고 운영하는 데 집중하고 있습니다."
+        "안녕하세요! 저는 **DevOps Engineer**이자 **Cloud Infra Architect**인 **고동현**입니다.",
+        "컴퓨터 공학에 대한 깊이 있는 이해를 바탕으로, **클라우드 인프라 설계**와 **자동화된 배포 파이프라인** 구축에 집중하고 있습니다. Cloud Club, Amazon Cloud Club 등 클라우드 커뮤니티 활동과 보안 연구를 병행하며 폭넓은 경험을 쌓아왔습니다.",
+        "현재는 **AWS**, **GCP** 등 클라우드 환경에서 안정적이고 확장 가능한 시스템을 설계하고 운영하는 데 집중하고 있습니다."
       ],
       tabs: {
         experience: "Experience",
@@ -454,9 +454,9 @@ export const content = {
     about: {
       title: "About Me",
       intro: [
-        "Hello! I'm Ko Donghyeon, a passionate DevOps Engineer and Cloud Infra Architect. I specialize in building scalable infrastructure and automated deployment pipelines.",
-        "With a strong foundation in Computer Science, I've been actively involved in cloud communities like Cloud Club and Amazon Cloud Club, while conducting security research at Dongguk University's Computer Security & Distributed Computing Lab.",
-        "I am currently focused on designing and operating reliable, scalable systems in AWS and GCP cloud environments."
+        "Hello! I'm **Ko Donghyeon**, a passionate **DevOps Engineer** and **Cloud Infra Architect**. I specialize in building scalable infrastructure and automated deployment pipelines.",
+        "With a strong foundation in Computer Science, I've been actively involved in cloud communities like **Cloud Club** and **Amazon Cloud Club**, while conducting security research at Dongguk University's Computer Security & Distributed Computing Lab.",
+        "I am currently focused on designing and operating reliable, scalable systems in **AWS** and **GCP** cloud environments."
       ],
       tabs: {
         experience: "Experience",
@@ -878,9 +878,9 @@ export const content = {
     about: {
       title: "About Me",
       intro: [
-        "こんにちは！DevOps EngineerかつCloud Architectの高東賢（コ・ドンヒョン）です。",
-        "コンピュータ工学の深い理解をもとに、クラウドインフラ設計と自動化デプロイパイプラインの構築に注力しています。Cloud Club、Amazon Cloud Clubなどのクラウドコミュニティ活動とセキュリティ研究を並行し、幅広い経験を積んできました。",
-        "現在はAWS、GCPなどのクラウド環境で、安定的かつスケーラブルなシステムの設計・運用に集中しています。"
+        "こんにちは！**DevOps Engineer**かつ**Cloud Architect**の**高東見**（コ・ドンヒョン）です。",
+        "コンピュータ工学の深い理解をもとに、**クラウドインフラ設計**と**自動化デプロイパイプライン**の構築に注力しています。Cloud Club、Amazon Cloud Clubなどのクラウドコミュニティ活動とセキュリティ研究を並行し、幅広い経験を積んできました。",
+        "現在は**AWS**、**GCP**などのクラウド環境で、安定的かつスケーラブルなシステムの設計・運用に集中しています。"
       ],
       tabs: {
         experience: "経歴",
