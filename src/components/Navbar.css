@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    padding: 20px 0;
+    padding: 10px 0;
     z-index: 1000;
     transition: var(--transition);
     background-color: rgba(224, 225, 221, 0.95);
@@ -14,7 +14,7 @@
     background-color: rgba(224, 225, 221, 0.95);
     backdrop-filter: blur(10px);
     box-shadow: var(--shadow-sm);
-    padding: 15px 0;
+    padding: 8px 0;
 }
 
 .navbar-container {
