@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コ・ドンヒョン - 履歴書</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: #1B263B;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 40px 50px;
+  }
+
+  a { color: #415A77; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .header { text-align: center; margin-bottom: 8px; }
+  .header h1 { font-size: 22pt; font-weight: 700; margin-bottom: 4px; }
+  .header .contact { font-size: 10pt; color: #415A77; }
+  .header .contact a { margin: 0 4px; }
+
+  .section { margin-bottom: 12px; }
+  .section-title {
+    font-size: 11pt;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-bottom: 1.5px solid #1B263B;
+    padding-bottom: 3px;
+    margin-bottom: 8px;
+  }
+
+  .entry { margin-bottom: 10px; }
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1px;
+  }
+  .entry-title { font-weight: 700; font-size: 10.5pt; }
+  .entry-date { font-size: 9.5pt; color: #415A77; white-space: nowrap; }
+  .entry-sub {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5pt;
+    color: #415A77;
+    font-style: italic;
+    margin-bottom: 3px;
+  }
+
+  ul { padding-left: 18px; margin-top: 2px; }
+  ul li { margin-bottom: 2px; font-size: 10pt; }
+
+  .skills-grid { font-size: 10pt; }
+  .skills-grid .row { margin-bottom: 3px; }
+  .skills-grid .label { font-weight: 600; }
+
+  .achievement { margin-bottom: 6px; }
+  .achievement .entry-header { margin-bottom: 0; }
+  .achievement ul { margin-top: 1px; }
+  .achievement li { font-size: 9.5pt; }
+
+  @media print {
+    body { padding: 20px 30px; }
+    a { color: #1B263B; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>コ・ドンヒョン (Ko Donghyeon)</h1>
+  <div class="contact">
+    (+82) 10-3590-5395 |
+    <a href="mailto:kodh0204@gmail.com">kodh0204@gmail.com</a> |
+    <a href="https://github.com/Gosorasora">Github</a> |
+    <a href="https://www.linkedin.com/in/kosora">LinkedIn</a>
+  </div>
+</div>
+
+<!-- 職務経歴 -->
+<div class="section">
+  <div class="section-title">職務経歴</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">BUZZ &amp; BEYOND (vling)</span>
+      <span class="entry-date">2026.01 - 在職中</span>
+    </div>
+    <div class="entry-sub">
+      <span>DevOps Engineer インターン / Infra · Platform · AX</span>
+      <span>ソウル, 韓国</span>
+    </div>
+    <ul>
+      <li>Helm Chart で Atlantis を Kubernetes にデプロイし、PR ベースのコードレビュー承認を強制する GitOps CI/CD ワークフローを構築。すべての Terraform 操作で 100% の監査ログ (audit trail) を実現</li>
+      <li>デプロイ時の最小権限を強制する AWS AssumeRole アーキテクチャを設計。開発者のローカル AWS Access Key を 100% 回収し、認証情報漏洩リスクを排除</li>
+      <li>Atlantis OSS のバグ (runAutoplan() で FetchPullStatus() が呼ばれていない) を発見・修正し、PR #6186 が Atlantis v0.41.0 にマージ</li>
+      <li>Gemini 2.5 Flash ベースの LLM 業務自動分類システムを構築。1 日 500 件以上のタスク (業務 13 種・会議 14 種) で 91.7% の精度を達成し、ヒューマンエラーを排除しメンバー別の定量的な Workload 追跡を実現</li>
+      <li>分散していた Notion DB データを統合し、DORA Metrics 自動算出ダッシュボードを設計。4 つの主要指標 (Deploy Frequency, Lead Time, Change Fail Rate, MTTR) を 7 / 30 / 90 日のスライディングウィンドウで計算し、FLEX API 連携で実営業日基準に補正</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">AWS Cloud Club at Dongguk</span>
+      <span class="entry-date">2025.07 - 在職中</span>
+    </div>
+    <div class="entry-sub">
+      <span>Member → Captain (2026.05〜)</span>
+      <span>Amazon Web Services (AWS)</span>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">CSDC Lab, 東国大学校</span>
+      <span class="entry-date">2025.04 - 在職中</span>
+    </div>
+    <div class="entry-sub">
+      <span>学部研究員 / Computer Security &amp; Distributed Computing Lab</span>
+      <span>ソウル, 韓国</span>
+    </div>
+    <ul>
+      <li>ネットワークセキュリティおよび負荷分散に関する研究</li>
+      <li>NLP ベースの IaC セキュリティ分析ツールを開発 — BERT モデルで Terraform のセマンティック異常を検知し、NetworkX のグラフアルゴリズムで IAM 権限昇格パスを可視化</li>
+      <li>SpinKube &amp; WASM IoT ログ処理シミュレーション — Kubernetes 上の SpinKube により、大規模 IoT 環境での WebAssembly インフラを検証</li>
+    </ul>
+  </div>
+</div>
+
+<!-- プロジェクト -->
+<div class="section">
+  <div class="section-title">プロジェクト</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">NanoGrid Plus — ハイブリッド FaaS プラットフォーム (SoftBank Hackathon 本戦)</span>
+      <span class="entry-date">2025.12</span>
+    </div>
+    <div class="entry-sub">
+      <span>Infrastructure Lead</span>
+      <span><a href="https://github.com/Softbank-Final">GitHub</a></span>
+    </div>
+    <ul>
+      <li>AWS EC2 上にセルフホスト型 FaaS プラットフォームを設計。Docker Warm Pool (Pause/Unpause) により Cold Start を 30 倍改善 (3 秒 → 0.2 秒)、リアルタイム Auto-Tuner メモリ分析で最大 96% のコスト削減</li>
+      <li>Data Plane をフルスタックで実装：SQS Long Polling タスクキュー、S3 コードストレージ、Redis Pub/Sub による結果通知、CloudWatch Custom Metrics 自動レポート、MDC ベースの requestId ロギングで完全なトレーサビリティを確保</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Roomeya — サーバーレス寮マッチングプラットフォーム</span>
+      <span class="entry-date">2025.09 - 2025.12</span>
+    </div>
+    <div class="entry-sub">
+      <span>Cloud Architect</span>
+      <span><a href="https://github.com/Roomeya">GitHub</a></span>
+    </div>
+    <ul>
+      <li>Terraform IaC で AWS フルサーバーレスアーキテクチャを設計。Lambda 9 個、Step Functions マッチングワークフロー、DynamoDB 4 テーブル、API Gateway HTTP API v2、Cognito OAuth 2.0、SES メール連携を実装し、オフシーズンの待機コストゼロ (scale-to-zero) を達成</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Deploy Land — ゲーミフィケーション CI/CD プラットフォーム</span>
+      <span class="entry-date">2025.09</span>
+    </div>
+    <div class="entry-sub">
+      <span>AWS Architect &amp; Developer</span>
+      <span><a href="https://github.com/Deploy-Land">GitHub</a></span>
+    </div>
+    <ul>
+      <li>GitHub Push → Build → Deploy → Health Check を自動化したサーバーレス CI/CD プラットフォームを設計。AWS Amplify ベースのリアルタイムモニタリングをゲーム的に可視化し、Discord/Slack 即時通知、config 検証で phantom deploy を防止</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">クラウドインフラ近代化 (CAPS サークル)</span>
+      <span class="entry-date">2022.03 - 2022.09</span>
+    </div>
+    <div class="entry-sub">
+      <span>Cloud Architect</span>
+    </div>
+    <ul>
+      <li>オンプレ物理 PC インフラを AWS クラウド (EC2, EBS, S3, RDS, Docker) に移行し、24/7 のサービス可用性を確保、物理依存を排除</li>
+    </ul>
+  </div>
+</div>
+
+<!-- OSS への貢献 -->
+<div class="section">
+  <div class="section-title">OSS への貢献</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Atlantis — PR #6186 マージ (v0.41.0)</span>
+      <span class="entry-date">2026.03</span>
+    </div>
+    <div class="entry-sub">
+      <span><a href="https://github.com/runatlantis/atlantis/pull/6186">github.com/runatlantis/atlantis/pull/6186</a></span>
+    </div>
+    <ul>
+      <li>autoplan のバグ修正 — FetchPullStatus() が呼ばれず IsMergeable が常に false (Go ゼロ値) となり、plan_requirements: [mergeable] 設定時にクリーンな PR がすべてブロックされる問題を解決</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Spin Framework Python SDK — PR #124, #126, #128</span>
+      <span class="entry-date">2025.12</span>
+    </div>
+    <div class="entry-sub">
+      <span><a href="https://github.com/spinframework/spin-python-sdk/pull/128">github.com/spinframework/spin-python-sdk</a></span>
+    </div>
+    <ul>
+      <li>Spin Framework によるサーバーレス WebAssembly アプリケーション開発のための Python SDK を改善するため、PR 3 件・Issue 3 件を貢献</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 学歴 -->
+<div class="section">
+  <div class="section-title">学歴</div>
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">東国大学校 (Dongguk University)</span>
+      <span class="entry-date">2021.03 - 2027.02 (卒業予定)</span>
+    </div>
+    <div class="entry-sub">
+      <span>工科大学 コンピュータ工学科 学士</span>
+      <span>ソウル, 韓国 | GPA 4.12</span>
+    </div>
+    <ul>
+      <li>工科大学 学期優等生 4 回選出 — 2021-1, 2021-2, 2022-1, 2025-1 学期</li>
+    </ul>
+  </div>
+</div>
+
+<!-- スキル -->
+<div class="section">
+  <div class="section-title">スキル</div>
+  <div class="skills-grid">
+    <div class="row"><span class="label">(クラウド &amp; インフラ)</span> AWS (EC2, SQS, S3, RDS, Lambda, Step Functions, IAM, WAF, ElastiCache, EventBridge, CodePipeline), GCP, Azure, Terraform, Kubernetes, Docker, Helm</div>
+    <div class="row"><span class="label">(DevOps &amp; 自動化)</span> Atlantis, Argo Workflows, Datadog, Grafana, GitOps, CI/CD</div>
+    <div class="row"><span class="label">(プログラミング)</span> Golang, Python, Java, SQL</div>
+    <div class="row"><span class="label">(AI/ML &amp; セキュリティ)</span> BERT, Hugging Face, NetworkX, NLP, Gemini, WebAssembly, SpinKube</div>
+    <div class="row"><span class="label">(フレームワーク)</span> Spring Boot, Apollo Federation, GraphQL, Django, FastAPI, Node.js</div>
+    <div class="row"><span class="label">(言語)</span> 韓国語 (ネイティブ), 日本語 (日常会話)</div>
+  </div>
+</div>
+
+<!-- 資格 -->
+<div class="section">
+  <div class="section-title">資格</div>
+  <div class="skills-grid">
+    <div class="row"><span class="label">(クラウド)</span> Google Cloud Fundamentals: Core Infrastructure | 2025.10</div>
+    <div class="row"><span class="label">(SQL)</span> SQL Developer (SQLD) | 2024.09</div>
+    <div class="row"><span class="label">(ICT)</span> 情報処理技能士 (정보처리기능사) | 2022.12</div>
+  </div>
+</div>
+
+<!-- 受賞 -->
+<div class="section">
+  <div class="section-title">受賞</div>
+  <div class="achievement">
+    <div class="entry-header">
+      <span class="entry-title">東国大学校 工科大学 学期優等生</span>
+      <span class="entry-date">2021.07</span>
+    </div>
+    <div class="entry-sub"><span>東国大学校 工科大学</span></div>
+    <ul><li>2021 年度 1 学期 学期優等生 選出</li></ul>
+  </div>
+  <div class="achievement">
+    <div class="entry-header">
+      <span class="entry-title">東国大学校 工科大学 学期優等生</span>
+      <span class="entry-date">2022.01</span>
+    </div>
+    <div class="entry-sub"><span>東国大学校 工科大学</span></div>
+    <ul><li>2021 年度 2 学期 学期優等生 選出</li></ul>
+  </div>
+  <div class="achievement">
+    <div class="entry-header">
+      <span class="entry-title">東国大学校 工科大学 学期優等生</span>
+      <span class="entry-date">2022.07</span>
+    </div>
+    <div class="entry-sub"><span>東国大学校 工科大学</span></div>
+    <ul><li>2022 年度 1 学期 学期優等生 選出</li></ul>
+  </div>
+  <div class="achievement">
+    <div class="entry-header">
+      <span class="entry-title">U-LINC 協力事業 アドベンチャーデザインコンテスト — 奨励賞</span>
+      <span class="entry-date">2022.12</span>
+    </div>
+    <div class="entry-sub"><span>東国大学校 LINC 3.0 事業団長</span></div>
+    <ul><li>チームリーダーとして参加し、奨励賞を受賞</li></ul>
+  </div>
+  <div class="achievement">
+    <div class="entry-header">
+      <span class="entry-title">学内学習施設 混雑度分析システム — 奨励賞</span>
+      <span class="entry-date">2022.12</span>
+    </div>
+    <div class="entry-sub"><span>東国大学校 LINC 3.0 事業団長</span></div>
+    <ul>
+      <li>センサーベースのインフラを構築し、図書館以外のラウンジ・カフェなど非指定席の占有状況を可視化</li>
+      <li>入退室の自動検知システムによりエリア別の人数をリアルタイムに判定するシステムを開発</li>
+    </ul>
+  </div>
+  <div class="achievement">
+    <div class="entry-header">
+      <span class="entry-title">トーチ章 (횃불상)</span>
+      <span class="entry-date">2023.08</span>
+    </div>
+    <div class="entry-sub"><span>大韓民国 陸軍情報通信学校長 (准将)</span></div>
+    <ul><li>軍服務後半期教育の修了生 200 名のうち、首席 (1 位) で受賞</li></ul>
+  </div>
+  <div class="achievement">
+    <div class="entry-header">
+      <span class="entry-title">SoftBank Hackathon 2025 — 本戦進出</span>
+      <span class="entry-date">2024.11 - 2024.12</span>
+    </div>
+    <ul><li>NanoGrid Plus プロジェクトで本戦進出</li></ul>
+  </div>
+  <div class="achievement">
+    <div class="entry-header">
+      <span class="entry-title">東国大学校 工科大学 学期優等生</span>
+      <span class="entry-date">2025.07</span>
+    </div>
+    <div class="entry-sub"><span>東国大学校 工科大学</span></div>
+    <ul><li>2025 年度 1 学期 学期優等生 選出</li></ul>
+  </div>
+</div>
+
+<!-- 課外活動 -->
+<div class="section">
+  <div class="section-title">課外活動</div>
+  <div class="skills-grid">
+    <div class="row"><span class="label">CAPS (東国大)</span> — 副会長 &amp; ホームページ管理部 部長 (2022.03 - 2023.09)</div>
+    <div class="row"><span class="label">Cloud Club 1 期</span> — Member (2022.03 - 2023.09)</div>
+    <div class="row"><span class="label">Amazon Cloud Club at Dongguk</span> — Member → Captain (2025.07 - 在職中)</div>
+  </div>
+</div>
+
+<!-- 兵役 -->
+<div class="section">
+  <div class="section-title">兵役</div>
+  <div class="skills-grid">
+    <div class="row">大韓民国 陸軍 | 兵役満了</div>
+  </div>
+</div>
+
+</body>
+</html>

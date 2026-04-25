@@ -115,7 +115,7 @@ export const content = {
         {
           title: 'SQLD (SQL Developer)',
           issuer: '한국데이터산업진흥원',
-          date: '2024.09 ~ 2026.09'
+          date: '2024.09'
         },
         {
           title: '정보처리기능사',
@@ -139,20 +139,32 @@ export const content = {
         {
           title: '동국대학교 공과대학 학기 우등생',
           issuer: '동국대학교 공과대학',
-          date: '2022.01',
-          description: ['학기 우등생 선정']
+          date: '2022.07',
+          description: ['2022학년도 1학기 학기 우등생 선정']
         },
         {
           title: 'U-LINC 협력사업 어드벤처디자인 경진대회 장려상',
-          issuer: 'U-LINC',
+          issuer: '동국대학교 LINC3.0 사업단장',
           date: '2022.12',
           description: ['Team Leader로 참가하여 장려상 수상']
+        },
+        {
+          title: '교내 학습시설 혼잡도 분석 시스템 장려상',
+          issuer: '동국대학교 LINC3.0 사업단장',
+          date: '2022.12',
+          description: ['센서 기반 인프라 구축으로 도서관 외 라운지·카페 등 비지정 좌석의 점유 여부 확인', '출입 자동 감지 시스템을 통한 구역별 실시간 인원 판단 시스템 개발']
+        },
+        {
+          title: '횃불상',
+          issuer: '육군정보통신학교장 (준장)',
+          date: '2023.08',
+          description: ['군생활 후반기 교육 수료생 200명 중 1등 성적으로 수상']
         },
         {
           title: '동국대학교 공과대학 학기 우등생',
           issuer: '동국대학교 공과대학',
           date: '2025.07',
-          description: ['학기 우등생 선정']
+          description: ['2025학년도 1학기 학기 우등생 선정']
         }
       ]
     },
@@ -440,7 +452,8 @@ export const content = {
     resume: {
       title: "Resume & Skills",
       skillsTitle: "Technical Skills",
-      download: "이력서 다운로드"
+      download: "이력서 다운로드 (한국어)",
+      pdfFile: "resume_kr.pdf"
     }
   },
   en: {
@@ -548,7 +561,7 @@ export const content = {
         {
           title: 'SQLD (SQL Developer)',
           issuer: 'Korea Data Agency',
-          date: '2024.09 ~ 2026.09'
+          date: '2024.09'
         },
         {
           title: 'Craftsman Information Processing',
@@ -572,20 +585,32 @@ export const content = {
         {
           title: 'Dongguk Univ. Semester Honors',
           issuer: 'Dongguk University College of Engineering',
-          date: '2022.01',
-          description: ['Dean\'s List']
+          date: '2022.07',
+          description: ['Dean\'s List - 1st Semester 2022']
         },
         {
           title: 'U-LINC Adventure Design Competition - Encouragement Prize',
-          issuer: 'U-LINC',
+          issuer: 'Dongguk University LINC3.0 Project Director',
           date: '2022.12',
           description: ['Participated as Team Leader and won Encouragement Prize']
+        },
+        {
+          title: 'Campus Study Facility Occupancy Analysis System - Encouragement Prize',
+          issuer: 'Dongguk University LINC3.0 Project Director',
+          date: '2022.12',
+          description: ['Built sensor-based infrastructure to detect seat occupancy in non-designated areas such as lounges and cafés beyond the library', 'Developed an automatic entry-detection system for real-time headcount estimation per zone']
+        },
+        {
+          title: 'Torch Award (Hwaetbul-sang)',
+          issuer: 'Commandant of the ROK Army Signal School (Brigadier General)',
+          date: '2023.08',
+          description: ['Awarded for ranking 1st out of 200 trainees during the latter half of military service training']
         },
         {
           title: 'Dongguk Univ. Semester Honors',
           issuer: 'Dongguk University College of Engineering',
           date: '2025.07',
-          description: ['Dean\'s List']
+          description: ['Dean\'s List - 1st Semester 2025']
         }
       ]
     },
@@ -864,7 +889,8 @@ export const content = {
     resume: {
       title: "Resume & Skills",
       skillsTitle: "Technical Skills",
-      download: "Download PDF"
+      download: "Download PDF (English)",
+      pdfFile: "resume_en.pdf"
     }
   },
   jp: {
@@ -981,7 +1007,7 @@ export const content = {
         {
           title: 'SQLD (SQL Developer)',
           issuer: '韓国データ産業振興院',
-          date: '2024.09 ~ 2026.09'
+          date: '2024.09'
         },
         {
           title: '情報処理技能士',
@@ -1005,20 +1031,32 @@ export const content = {
         {
           title: '東国大学校 工科大学 学期優等生',
           issuer: '東国大学校 工科大学',
-          date: '2022.01',
-          description: ['学期優等生選定']
+          date: '2022.07',
+          description: ['2022年度1学期 学期優等生選定']
         },
         {
           title: 'U-LINC アドベンチャーデザインコンペティション 奨励賞',
-          issuer: 'U-LINC',
+          issuer: '東国大学校 LINC3.0事業団長',
           date: '2022.12',
           description: ['Team Leaderとして参加し奨励賞受賞']
+        },
+        {
+          title: '学内学習施設 混雑度分析システム 奨励賞',
+          issuer: '東国大学校 LINC3.0事業団長',
+          date: '2022.12',
+          description: ['センサーベースのインフラを構築し、図書館以外のラウンジ・カフェ等の非指定席の占有状況を確認', '出入自動検知システムによりエリアごとの在席人数をリアルタイムに判定するシステムを開発']
+        },
+        {
+          title: '松明賞 (トーチ賞)',
+          issuer: '陸軍情報通信学校長 (准将)',
+          date: '2023.08',
+          description: ['軍生活後半期教育 受講生200名中 1位の成績により受賞']
         },
         {
           title: '東国大学校 工科大学 学期優等生',
           issuer: '東国大学校 工科大学',
           date: '2025.07',
-          description: ['学期優等生選定']
+          description: ['2025年度1学期 学期優等生選定']
         }
       ]
     },
@@ -1273,7 +1311,8 @@ export const content = {
     resume: {
       title: "Resume & Skills",
       skillsTitle: "Technical Skills",
-      download: "PDFダウンロード"
+      download: "PDFダウンロード (日本語)",
+      pdfFile: "resume_jp.pdf"
     }
   }
 };

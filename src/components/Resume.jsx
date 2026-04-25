@@ -22,8 +22,8 @@ const Resume = () => {
     { name: 'Azure', level: 70 },
   ];
 
-  // Construct the correct path using Vite's BASE_URL
-  const resumePath = `${import.meta.env.BASE_URL}assets/resume.pdf`;
+  // Language-specific PDF (resume_kr.pdf / resume_en.pdf / resume_jp.pdf)
+  const resumePath = `${import.meta.env.BASE_URL}assets/${t.pdfFile}`;
 
   return (
     <section id="resume" className="section resume-section">
@@ -34,7 +34,7 @@ const Resume = () => {
             <FaDownload /> {t.download}
           </a>
         </div>
-        
+
         <div className="resume-grid">
           {/* Left Column: Skills */}
           <div className="skills-column">
@@ -46,7 +46,7 @@ const Resume = () => {
                     <span className="skill-name">{skill.name}</span>
                   </div>
                   <div className="skill-bar-bg">
-                    <motion.div 
+                    <motion.div
                       className="skill-bar-fill"
                       initial={{ width: 0 }}
                       whileInView={{ width: `${skill.level}%` }}
