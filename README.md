@@ -4,7 +4,7 @@
 Building reliable infrastructure and automated delivery pipelines on AWS · GCP · Kubernetes.
 
 > Computer Engineering @ Dongguk University · GPA 4.12 · Dean's List × 4
-> AWS Cloud Club at Dongguk — Captain (2026.05~)
+> AWS Student Builder Group Leader at Dongguk University (2026.05~)
 
 [**🔗 Portfolio**](https://gosorasora.github.io/) · [LinkedIn](https://www.linkedin.com/in/kosora) · [GitHub](https://github.com/Gosorasora) · kodh0204@gmail.com
 
@@ -24,7 +24,7 @@ I design and operate cloud infrastructure for production microservices, with a f
 | | |
 |---|---|
 | **DevOps Engineer (Intern)** · Infra · Platform · AX | BUZZ & BEYOND (vling) · 2026.01 ~ |
-| **Captain** · AWS Cloud Club at Dongguk | AWS · 2026.05 ~ |
+| **Group Leader** · AWS Student Builder Group at Dongguk University | AWS · 2026.05 ~ |
 | **Undergraduate Researcher** · CSDC Lab | Dongguk University · 2025.04 ~ |
 
 ## Featured projects
@@ -37,7 +37,7 @@ I design and operate cloud infrastructure for production microservices, with a f
 ## Tech stack
 
 **Cloud & Infra** &nbsp;AWS · GCP · Azure · Terraform · Kubernetes · Docker · Helm
-**DevOps & Automation** &nbsp;Atlantis · Argo Workflows · Datadog · Grafana · GitOps · CI/CD
+**DevOps & Automation** &nbsp;Atlantis · Argo Workflows · Datadog · Grafana · GitOps · CI/CD · Notion
 **Languages** &nbsp;Go · Python · Java · SQL
 **AI/ML & Security** &nbsp;BERT · Hugging Face · NetworkX · NLP · Gemini · WebAssembly · SpinKube
 **Frameworks** &nbsp;Spring Boot · Apollo Federation · GraphQL · Django · FastAPI · Node.js

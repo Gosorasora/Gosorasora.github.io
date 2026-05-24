@@ -11,6 +11,7 @@ const Resume = () => {
 
   const skills = [
     { name: 'AWS', level: 95 },
+    { name: 'Notion', level: 92 },
     { name: 'Kubernetes', level: 90 },
     { name: 'Terraform', level: 90 },
     { name: 'Docker', level: 90 },

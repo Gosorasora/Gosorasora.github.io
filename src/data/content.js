@@ -29,17 +29,17 @@ export const content = {
           description: [
             'Kubernetes 기반 마이크로서비스 환경에서 인프라 운영/자동화 및 AX(업무 자동화) 과제 수행',
             'Terraform 배포를 Atlantis 기반 PR/GitOps로 전환, AWS AssumeRole 중심 보안 아키텍처 설계·정착',
-            '분산된 Notion DB 데이터를 통합하여 DORA 지표 자동 산출 및 리포팅 파이프라인 구축'
+            'Notion DB 기반 Agent 생성 및 DORA 지표 자동 산출·리포팅 파이프라인 구축'
           ],
           tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
         },
         {
-          title: 'AWS Cloud Club at Dongguk Captain',
+          title: 'AWS Student Builder Group Leader at Dongguk University',
           company: 'Amazon Web Services (AWS)',
           period: '2025.07 ~ 재직중',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Cloud Club at Dongguk Captain (2026.05 ~ )'
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )'
           ],
           tags: ['AWS', 'Leadership']
         },
@@ -93,7 +93,7 @@ export const content = {
           period: '2025.07 ~ ',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Cloud Club at Dongguk Captain (2026.05 ~ )'
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )'
           ]
         },
         {
@@ -486,17 +486,17 @@ export const content = {
           description: [
             'Kubernetes-based microservice infra operations/automation and AX tasks',
             'Transformed Terraform deployments to Atlantis PR-based GitOps with AWS AssumeRole security architecture',
-            'Consolidated distributed Notion DB data to build automated DORA metrics calculation and reporting pipeline'
+            'Built a Notion DB-based agent and automated DORA metrics calculation and reporting pipeline'
           ],
           tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
         },
         {
-          title: 'AWS Cloud Club at Dongguk Captain',
+          title: 'AWS Student Builder Group Leader at Dongguk University',
           company: 'Amazon Web Services (AWS)',
           period: '2025.07 ~ Present',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Cloud Club at Dongguk Captain (2026.05 ~ )'
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )'
           ],
           tags: ['AWS', 'Cloud']
         },
@@ -543,7 +543,7 @@ export const content = {
           title: 'Amazon Cloud Club at Dongguk',
           role: 'Member → Captain (2026.05~)',
           period: '2025.07 ~ ',
-          description: ['AWS Cloud Club Member (2025.07 ~ 2026.04)', 'AWS Cloud Club at Dongguk Captain (2026.05 ~ )']
+          description: ['AWS Cloud Club Member (2025.07 ~ 2026.04)', 'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )']
         },
         {
           title: 'SoftBank Hackathon 2025',
@@ -923,17 +923,17 @@ export const content = {
           description: [
             'Kubernetes基盤マイクロサービス環境でのインフラ運用/自動化およびAX（業務自動化）課題遂行',
             'Terraform デプロイをAtlantis基盤PR/GitOpsに転換、AWS AssumeRole中心のセキュリティアーキテクチャ設計・定着',
-            '分散されたNotion DBデータを統合しDORA指標自動算出およびレポーティングパイプライン構築'
+            'Notion DB 基盤の Agent を構築し、DORA 指標の自動算出およびレポーティングパイプラインを構築'
           ],
           tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
         },
         {
-          title: 'AWS Cloud Club at Dongguk Captain',
+          title: 'AWS Student Builder Group Leader at Dongguk University',
           company: 'Amazon Web Services (AWS)',
           period: '2025.07 ~ 現在',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Cloud Club at Dongguk Captain (2026.05 ~ )'
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )'
           ],
           tags: ['AWS', 'Leadership']
         },
@@ -985,7 +985,7 @@ export const content = {
           period: '2025.07 ~ ',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Cloud Club at Dongguk Captain (2026.05 ~ )'
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )'
           ]
         },
         {
