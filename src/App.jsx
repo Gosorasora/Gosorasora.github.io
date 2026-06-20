@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Game from './pages/Game';
+import AX from './pages/AX';
 import FirebaseStatus from './components/FirebaseStatus';
 import './index.css';
 
@@ -16,6 +17,7 @@ const AnimatedRoutes = () => {
     <Routes location={location} key={location.pathname}>
       <Route path="/" element={<Home />} />
       <Route path="/game" element={<Game />} />
+      <Route path="/ax" element={<AX />} />
     </Routes>
   );
 };

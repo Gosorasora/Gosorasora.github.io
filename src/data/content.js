@@ -28,10 +28,13 @@ export const content = {
           period: '2026.01 ~ 재직중',
           description: [
             'Kubernetes 기반 마이크로서비스 환경에서 인프라 운영/자동화 및 AX(업무 자동화) 과제 수행',
-            'Terraform 배포를 Atlantis 기반 PR/GitOps로 전환, AWS AssumeRole 중심 보안 아키텍처 설계·정착',
-            'Notion DB 기반 Agent 생성 및 DORA 지표 자동 산출·리포팅 파이프라인 구축'
+            'Terraform 배포를 Atlantis 기반 PR/GitOps로 전환, AWS AssumeRole 중심 최소권한 보안 아키텍처 설계·정착 (Atlantis 오픈소스 기여 PR #6186 머지)',
+            'Gemini 2.5 Flash 기반 Notion TASK 업무/미팅 유형 자동 분류 파이프라인 구축 (정확도 91.7%, 일 500+ TASK)',
+            'Notion Custom Agent로 DORA 4대 지표 자동 산출·리포팅',
+            'Notion Custom Agent·Workers 기반 배포 품질 자동 검수 체계 및 사내 AX(업무 자동화) 구축',
+            '벤더별(Vertex AI·AI Studio·OpenAI) LLM 비용 라벨링 체계 도입으로 비용 모니터링 기반 마련'
           ],
-          tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
+          tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Notion', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
         },
         {
           title: 'AWS Student Builder Group Leader at Dongguk University',
@@ -39,7 +42,8 @@ export const content = {
           period: '2025.07 ~ 재직중',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )'
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'AWS 공식 인증 — 전공 무관 학생 대상 클라우드 컴퓨팅 교육 그룹 운영 (AWS 제품 실습 세션)'
           ],
           tags: ['AWS', 'Leadership']
         },
@@ -60,7 +64,7 @@ export const content = {
           title: '동국대학교',
           degree: '공과대학 컴퓨터공학과 학사 (재학중)',
           period: '2021.03 ~ 2027.02 (예정)',
-          description: ['학점 4.12', '공과대학 학기 우등생 4회 선정']
+          description: ['학점 4.12 / 4.5', '공과대학 학기 우등생 4회 선정']
         },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
@@ -89,7 +93,7 @@ export const content = {
         },
         {
           title: 'Amazon Cloud Club at Dongguk',
-          role: 'Member → Captain (2026.05~)',
+          role: 'Member → Group Leader (2026.05~)',
           period: '2025.07 ~ ',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
@@ -454,6 +458,81 @@ export const content = {
       skillsTitle: "Technical Skills",
       download: "이력서 다운로드 (한국어)",
       pdfFile: "resume_kr.pdf"
+    },
+    ax: {
+      title: "AX · 업무 자동화",
+      subtitle: "DevOps / AX 인턴 — BUZZ & BEYOND (vling)",
+      intro: "2026년 상반기, Notion을 SDLC 전반을 아우르는 전사 자동화 플랫폼(Custom Agents + Workers)으로 재구성하고 소프트웨어 딜리버리 라이프사이클을 자동화했습니다.",
+      stats: [
+        { value: "76", label: "프로덕션 릴리스", note: "New/Change 73건, Recovery 3건" },
+        { value: "7", label: "OKR 로드맵", note: "Q1 5건, Q2 2건" },
+        { value: "24", label: "기술·운영 문서", note: "설계서, 플레이북, 릴리스 기준 정의" }
+      ],
+      initiatives: [
+        {
+          period: "2026년 1월",
+          title: "LLM 비용 라벨링",
+          summary: "코드 레벨 라벨링을 추가해 벤더별 LLM 지출을 모니터링할 수 있게 하고, 비용 모니터링 기반을 마련했습니다.",
+          points: [
+            "Vertex AI·AI Studio·OpenAI 벤더별 지출을 모니터링 가능하게 구성",
+            "전사 비용 모니터링 기반 구축"
+          ],
+          tech: ["GraphQL", "LLM API", "FinOps"]
+        },
+        {
+          period: "2026년 1~2월",
+          title: "Atlantis IaC 자동화",
+          summary: "Atlantis로 Terraform을 PR 기반 GitOps로 전환하고 최소 권한 AWS AssumeRole을 적용했습니다.",
+          points: [
+            "Terraform을 PR 기반 GitOps 워크플로로 전환",
+            "최소 권한 AWS AssumeRole 설계·적용",
+            "Atlantis OSS 버그를 발견·수정, PR #6186이 v0.41.0에 머지"
+          ],
+          tech: ["Terraform", "Atlantis", "Kubernetes", "Helm", "AWS IAM", "Go"]
+        },
+        {
+          period: "2026년 2~3월",
+          title: "Notion 태스크 자동 분류",
+          summary: "subgql_notion_classifier 서비스를 설계·배포해 Gemini 2.5 Flash로 작업 유형·회의 유형을 자동 분류했습니다.",
+          points: [
+            "하루 500건 이상 태스크를 91.7% 정확도로 분류",
+            "정량적 업무량 트래킹을 가능하게 함"
+          ],
+          tech: ["Gemini 2.5 Flash", "Notion API", "GraphQL"]
+        },
+        {
+          period: "2026년 3~4월",
+          title: "전사 DORA 모니터링",
+          summary: "DORA 4대 지표를 자동 산출하고 등급/점수 모델과 조직·팀·개인 대시보드를 구축했습니다.",
+          points: [
+            "Notion Agent 리포트 발행 자동화",
+            "FLEX 영업일 보정 적용",
+            "조직이 처음으로 딜리버리 생산성을 객관적으로 측정"
+          ],
+          tech: ["Notion Custom Agent", "DORA", "FLEX API"]
+        },
+        {
+          period: "2026년 4~6월",
+          title: "Notion Custom Agent 릴리스 거버넌스",
+          summary: "Release.Check와 팀 릴리스 기준 문서·프롬프트를 구축해 배포 품질을 자동 감사했습니다.",
+          points: [
+            "AgentB.Release.Check으로 배포 품질 자동 점검",
+            "AgentB.Release.Task.Mapper로 미연결 태스크 자동 매핑",
+            "DORA 점수 리포트를 완전 자동화"
+          ],
+          tech: ["Notion Custom Agent", "프롬프트 엔지니어링"]
+        },
+        {
+          period: "2026년 5~6월",
+          title: "Notion Workers: 캘린더 → 회의록",
+          summary: "AWS Lambda에 준하는 서버리스 Notion Workers 파이프라인을 구축해 전사에 배포했습니다.",
+          points: [
+            "캘린더 일정에서 구조화된 회의록을 자동 생성",
+            "서버리스 구성으로 전사 운영"
+          ],
+          tech: ["Notion Workers (서버리스)", "Notion API"]
+        }
+      ]
     }
   },
   en: {
@@ -484,11 +563,14 @@ export const content = {
           company: 'BUZZ & BEYOND',
           period: '2026.01 ~ Present',
           description: [
-            'Kubernetes-based microservice infra operations/automation and AX tasks',
-            'Transformed Terraform deployments to Atlantis PR-based GitOps with AWS AssumeRole security architecture',
-            'Built a Notion DB-based agent and automated DORA metrics calculation and reporting pipeline'
+            'Operated and automated infrastructure for a Kubernetes-based microservice platform, owning internal automation (AX) initiatives',
+            'Migrated Terraform deployments to Atlantis PR-based GitOps with a least-privilege AWS AssumeRole security architecture (contributed Atlantis OSS fix, PR #6186 merged into v0.41.0)',
+            'Built a Gemini 2.5 Flash pipeline that auto-classifies Notion tasks by work and meeting type (91.7% accuracy across 500+ daily tasks)',
+            'Built Notion custom agents that auto-calculate and report the four DORA metrics',
+            'Built deployment-quality auto-review and internal AX automation on Notion custom agents and Workers (serverless)',
+            'Introduced per-vendor (Vertex AI, AI Studio, OpenAI) LLM cost labeling to enable spend monitoring'
           ],
-          tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
+          tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Notion', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
         },
         {
           title: 'AWS Student Builder Group Leader at Dongguk University',
@@ -496,7 +578,8 @@ export const content = {
           period: '2025.07 ~ Present',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )'
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'AWS-certified — lead a university cloud-computing education group with applied AWS-product sessions for students of all majors'
           ],
           tags: ['AWS', 'Cloud']
         },
@@ -517,7 +600,7 @@ export const content = {
           title: 'Dongguk University',
           degree: 'B.S. in Computer Science Engineering (In Progress)',
           period: '2021.03 ~ 2027.02 (Expected)',
-          description: ['GPA 4.12', 'Dean\'s List (Semester Honors) - 4 times']
+          description: ['GPA 4.12 / 4.5', 'Dean\'s List (Semester Honors) - 4 times']
         },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
@@ -541,7 +624,7 @@ export const content = {
         },
         {
           title: 'Amazon Cloud Club at Dongguk',
-          role: 'Member → Captain (2026.05~)',
+          role: 'Member → Group Leader (2026.05~)',
           period: '2025.07 ~ ',
           description: ['AWS Cloud Club Member (2025.07 ~ 2026.04)', 'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )']
         },
@@ -891,6 +974,81 @@ export const content = {
       skillsTitle: "Technical Skills",
       download: "Download PDF (English)",
       pdfFile: "resume_en.pdf"
+    },
+    ax: {
+      title: "AX · Work Automation",
+      subtitle: "DevOps / AX Intern — BUZZ & BEYOND (vling)",
+      intro: "In H1 2026, I turned Notion into a company-wide automation platform (Custom Agents + Workers), automating the software delivery lifecycle end to end across the SDLC.",
+      stats: [
+        { value: "76", label: "Production Releases", note: "73 New/Change, 3 Recovery" },
+        { value: "7", label: "OKR Roadmaps", note: "5 in Q1, 2 in Q2" },
+        { value: "24", label: "Technical & Ops Docs", note: "Designs, playbooks, release-criteria definitions" }
+      ],
+      initiatives: [
+        {
+          period: "Jan 2026",
+          title: "LLM Cost Labeling",
+          summary: "Added code-level labeling so per-vendor LLM spend could be monitored, establishing the cost-monitoring foundation.",
+          points: [
+            "Enabled per-vendor spend monitoring across Vertex AI, AI Studio, and OpenAI",
+            "Established the company-wide cost-monitoring foundation"
+          ],
+          tech: ["GraphQL", "LLM API", "FinOps"]
+        },
+        {
+          period: "Jan–Feb 2026",
+          title: "Atlantis IaC Automation",
+          summary: "Migrated Terraform to PR-based GitOps via Atlantis with least-privilege AWS AssumeRole.",
+          points: [
+            "Migrated Terraform to a PR-based GitOps workflow",
+            "Implemented least-privilege AWS AssumeRole access",
+            "Discovered and fixed an Atlantis OSS bug; PR #6186 merged into v0.41.0"
+          ],
+          tech: ["Terraform", "Atlantis", "Kubernetes", "Helm", "AWS IAM", "Go"]
+        },
+        {
+          period: "Feb–Mar 2026",
+          title: "Notion Task Auto-Classification",
+          summary: "Designed and deployed the subgql_notion_classifier service to auto-classify work type and meeting type using Gemini 2.5 Flash.",
+          points: [
+            "Achieved 91.7% accuracy across 500+ tasks per day",
+            "Enabled quantitative workload tracking for the org"
+          ],
+          tech: ["Gemini 2.5 Flash", "Notion API", "GraphQL"]
+        },
+        {
+          period: "Mar–Apr 2026",
+          title: "Company-wide DORA Monitoring",
+          summary: "Auto-computed the four DORA metrics and built a grade/score model with org, team, and individual dashboards.",
+          points: [
+            "Automated Notion-Agent report publishing",
+            "Applied FLEX business-day correction for accuracy",
+            "Gave the org its first objective measure of delivery productivity"
+          ],
+          tech: ["Notion Custom Agent", "DORA", "FLEX API"]
+        },
+        {
+          period: "Apr–Jun 2026",
+          title: "Notion Custom-Agent Release Governance",
+          summary: "Built Release.Check plus team release-criteria docs and prompts to auto-audit deployment quality.",
+          points: [
+            "Deployed AgentB.Release.Check to audit deployment quality automatically",
+            "Built AgentB.Release.Task.Mapper to auto-map release-unlinked tasks",
+            "Fully automated the DORA score report"
+          ],
+          tech: ["Notion Custom Agent", "Prompt Engineering"]
+        },
+        {
+          period: "May–Jun 2026",
+          title: "Notion Workers: Calendar → Notes",
+          summary: "Built a serverless Notion Workers pipeline (akin to AWS Lambda) that auto-generates structured meeting notes from calendar events.",
+          points: [
+            "Auto-generated structured meeting notes from calendar events",
+            "Rolled out the serverless pipeline company-wide"
+          ],
+          tech: ["Notion Workers (serverless)", "Notion API"]
+        }
+      ]
     }
   },
   jp: {
@@ -922,10 +1080,13 @@ export const content = {
           period: '2026.01 ~ 現在',
           description: [
             'Kubernetes基盤マイクロサービス環境でのインフラ運用/自動化およびAX（業務自動化）課題遂行',
-            'Terraform デプロイをAtlantis基盤PR/GitOpsに転換、AWS AssumeRole中心のセキュリティアーキテクチャ設計・定着',
-            'Notion DB 基盤の Agent を構築し、DORA 指標の自動算出およびレポーティングパイプラインを構築'
+            'TerraformデプロイをAtlantis基盤PR/GitOpsに転換、AWS AssumeRole中心の最小権限セキュリティアーキテクチャを設計・定着（Atlantis OSS貢献 PR #6186 マージ）',
+            'Gemini 2.5 Flash基盤でNotion TASKの業務/ミーティング種別を自動分類するパイプラインを構築（精度91.7%、1日500+ TASK）',
+            'Notion Custom AgentでDORA 4大指標を自動算出・レポーティング',
+            'Notion Custom Agent・Workers基盤のデプロイ品質自動検収体系および社内AX（業務自動化）を構築',
+            'ベンダー別（Vertex AI・AI Studio・OpenAI）LLMコストラベリング体系を導入しコストモニタリング基盤を整備'
           ],
-          tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
+          tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Notion', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
         },
         {
           title: 'AWS Student Builder Group Leader at Dongguk University',
@@ -933,7 +1094,8 @@ export const content = {
           period: '2025.07 ~ 現在',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )'
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'AWS公式認定 — 専攻を問わない学生向けクラウドコンピューティング教育グループを運営（AWS製品の実践セッション）'
           ],
           tags: ['AWS', 'Leadership']
         },
@@ -954,7 +1116,7 @@ export const content = {
           title: '東国大学校',
           degree: '工科大学 コンピュータ工学科 学士（在学中）',
           period: '2021.03 ~ 2027.02（予定）',
-          description: ['GPA 4.12', '工科大学 学期優等生 4回選定']
+          description: ['GPA 4.12 / 4.5', '工科大学 学期優等生 4回選定']
         },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
@@ -981,7 +1143,7 @@ export const content = {
         },
         {
           title: 'Amazon Cloud Club at Dongguk',
-          role: 'Member → Captain (2026.05~)',
+          role: 'Member → Group Leader (2026.05~)',
           period: '2025.07 ~ ',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
@@ -1313,6 +1475,81 @@ export const content = {
       skillsTitle: "Technical Skills",
       download: "PDFダウンロード (日本語)",
       pdfFile: "resume_jp.pdf"
+    },
+    ax: {
+      title: "AX · 業務自動化",
+      subtitle: "DevOps / AX インターン — BUZZ & BEYOND (vling)",
+      intro: "2026年上半期、NotionをSDLC全体をカバーする全社的な自動化プラットフォーム（Custom Agents + Workers）へと再構築し、ソフトウェアデリバリーのライフサイクルを自動化しました。",
+      stats: [
+        { value: "76", label: "本番リリース", note: "New/Change 73件、Recovery 3件" },
+        { value: "7", label: "OKRロードマップ", note: "Q1 5件、Q2 2件" },
+        { value: "24", label: "技術・運用ドキュメント", note: "設計書、プレイブック、リリース基準の定義" }
+      ],
+      initiatives: [
+        {
+          period: "2026年1月",
+          title: "LLMコストのラベリング",
+          summary: "コードレベルのラベリングを導入し、ベンダー別のLLM支出を可視化。コスト監視の基盤を確立しました。",
+          points: [
+            "Vertex AI・AI Studio・OpenAIのベンダー別支出をモニタリング可能に",
+            "全社的なコスト監視の土台を構築"
+          ],
+          tech: ["GraphQL", "LLM API", "FinOps"]
+        },
+        {
+          period: "2026年1〜2月",
+          title: "Atlantis による IaC 自動化",
+          summary: "Atlantisを用いてTerraformをPRベースのGitOpsへ移行し、最小権限のAWS AssumeRoleを実現しました。",
+          points: [
+            "PRベースのGitOpsワークフローへ移行",
+            "最小権限の AWS AssumeRole を設計・適用",
+            "Atlantis OSS のバグを発見・修正し、PR #6186 が v0.41.0 にマージ"
+          ],
+          tech: ["Terraform", "Atlantis", "Kubernetes", "Helm", "AWS IAM", "Go"]
+        },
+        {
+          period: "2026年2〜3月",
+          title: "Notion タスクの自動分類",
+          summary: "subgql_notion_classifier サービスを設計・デプロイし、Gemini 2.5 Flash で作業種別・会議種別を自動分類しました。",
+          points: [
+            "1日500件以上のタスクを 91.7% の精度で分類",
+            "作業量の定量的なトラッキングを実現"
+          ],
+          tech: ["Gemini 2.5 Flash", "Notion API", "GraphQL"]
+        },
+        {
+          period: "2026年3〜4月",
+          title: "全社 DORA モニタリング",
+          summary: "DORAの4指標を自動算出し、グレード/スコアモデルと組織・チーム・個人別のダッシュボードを構築しました。",
+          points: [
+            "Notion Agent によるレポート公開を自動化",
+            "FLEX の営業日補正を適用",
+            "組織が初めてデリバリー生産性を客観的に計測可能に"
+          ],
+          tech: ["Notion Custom Agent", "DORA", "FLEX API"]
+        },
+        {
+          period: "2026年4〜6月",
+          title: "Notion Custom Agent によるリリースガバナンス",
+          summary: "Release.Check とチームのリリース基準ドキュメント/プロンプトを構築し、デプロイ品質を自動監査しました。",
+          points: [
+            "AgentB.Release.Check でデプロイ品質を自動チェック",
+            "AgentB.Release.Task.Mapper で未連携タスクを自動マッピング",
+            "DORA スコアレポートを完全自動化"
+          ],
+          tech: ["Notion Custom Agent", "プロンプトエンジニアリング"]
+        },
+        {
+          period: "2026年5〜6月",
+          title: "Notion Workers：カレンダー → 議事録",
+          summary: "AWS Lambda に相当するサーバーレスの Notion Workers パイプラインを構築し、全社へ展開しました。",
+          points: [
+            "カレンダーイベントから構造化された議事録を自動生成",
+            "サーバーレス構成で全社的に運用"
+          ],
+          tech: ["Notion Workers (サーバーレス)", "Notion API"]
+        }
+      ]
     }
   }
 };

@@ -3,7 +3,7 @@
 **DevOps Engineer & Cloud Infra Architect**
 Building reliable infrastructure and automated delivery pipelines on AWS · GCP · Kubernetes.
 
-> Computer Engineering @ Dongguk University · GPA 4.12 · Dean's List × 4
+> Computer Engineering @ Dongguk University · GPA 4.12 / 4.5 · Dean's List × 4
 > AWS Student Builder Group Leader at Dongguk University (2026.05~)
 
 [**🔗 Portfolio**](https://gosorasora.github.io/) · [LinkedIn](https://www.linkedin.com/in/kosora) · [GitHub](https://github.com/Gosorasora) · kodh0204@gmail.com

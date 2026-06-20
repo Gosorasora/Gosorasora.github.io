@@ -50,6 +50,12 @@ const Navbar = () => {
     navigate('/game');
   };
 
+  const handleAXClick = (e) => {
+    e.preventDefault();
+    setMenuOpen(false);
+    navigate('/ax');
+  };
+
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-container">
@@ -68,6 +74,7 @@ const Navbar = () => {
           <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>About</a></li>
           <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Projects</a></li>
           <li><a href="#resume" onClick={(e) => handleNavClick(e, '#resume')}>Resume</a></li>
+          <li><a href="/ax" onClick={handleAXClick} className="nav-highlight">AX</a></li>
           <li><a href="/game" onClick={handleGameClick} className="nav-highlight">Enjoy 🎮</a></li>
           <li className="lang-buttons">
             <button className={`lang-btn ${language === 'kr' ? 'active' : ''}`} onClick={() => setLang('kr')}>KR</button>
