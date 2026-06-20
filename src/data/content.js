@@ -450,6 +450,73 @@ export const content = {
             demo: null,
             github: null
           }
+        },
+        {
+          id: 12,
+          title: 'LLM 비용 라벨링 체계 구축',
+          category: 'AX 업무자동화',
+          image: null,
+          description: '코드 레벨 라벨링으로 벤더별(Vertex AI·AI Studio·OpenAI) LLM 비용 모니터링 기반 마련',
+          details: {
+            problem: '사내 LLM 사용이 늘면서 어떤 벤더·기능에 비용이 발생하는지 추적할 수 없어 비용 관리가 어려운 상황',
+            solution: '사내 LLM 서버 코드에 벤더·용도 기반 라벨링 방식을 추가하여 Vertex AI, AI Studio, OpenAI 등 벤더별 LLM 지출을 모니터링할 수 있는 기반을 마련했습니다. 입사 초기 과제로 진행하며 사내 코드 규칙과 GQL 컨벤션을 빠르게 익히는 계기가 되었습니다.',
+            role: 'AX / Platform Engineer',
+            tech: ['GraphQL', 'LLM API', 'FinOps'],
+            features: [
+              '벤더별(Vertex AI·AI Studio·OpenAI) LLM 비용 라벨링',
+              '코드 레벨 비용 추적 기반 구축',
+              'LLM 비용 추적 라벨링 작성 가이드 문서화'
+            ]
+          },
+          links: {
+            demo: null,
+            github: null
+          }
+        },
+        {
+          id: 13,
+          title: 'Notion Custom Agent 배포 검수 봇 & 릴리스 거버넌스',
+          category: 'AX 업무자동화',
+          image: null,
+          description: 'Release.Check 커스텀 에이전트와 팀별 배포 기준을 정립해 배포 품질을 자동 검수하는 체계 구축',
+          details: {
+            problem: '배포 품질 점검과 릴리스 기준이 사람에 의존해 누락·편차가 발생하고, 릴리스와 TASK 연결이 수작업으로 관리되던 문제',
+            solution: 'Notion Custom Agent(AgentB.Release.Check)와 팀별 배포 기준 문서·프롬프트를 정립하여 배포 품질을 자동 점검하는 체계를 구축했습니다. 릴리스에 연결되지 않은 TASK를 자동 매핑하는 봇(AgentB.Release.Task.Mapper)을 함께 만들고, 앞서 구축한 DORA 점수 리포트 또한 커스텀 에이전트로 완전 자동화했습니다.',
+            role: 'AX Engineer',
+            tech: ['Notion Custom Agent', '프롬프트 엔지니어링', 'Notion API'],
+            features: [
+              'AgentB.Release.Check 기반 배포 품질 자동 점검',
+              'AgentB.Release.Task.Mapper로 릴리스 미연결 TASK 자동 매핑',
+              '팀별 배포 기준 문서·프롬프트 정립',
+              'DORA 점수 리포트 완전 자동 발행'
+            ]
+          },
+          links: {
+            demo: null,
+            github: null
+          }
+        },
+        {
+          id: 14,
+          title: 'Notion Workers 기반 회의록 자동화',
+          category: 'AX 업무자동화',
+          image: null,
+          description: '서버리스 Notion Workers로 캘린더 일정 → 구조화된 회의록 자동 생성 파이프라인 전사 배포',
+          details: {
+            problem: '애자일 회고에서 회의록 작성이 반복적이고 번거로운 수작업으로 지적되어 전사적으로 비효율이 누적되던 문제',
+            solution: 'Notion Workers(서버리스)를 활용해 캘린더 일정에서 구조화된 회의록을 자동 생성하는 파이프라인을 구축하고 전사에 배포했습니다. AWS Lambda와 유사한 서버리스 모델로, 이전 TASK 자동 분류와 달리 전사 단위로 적용되어 자동화 효과가 컸습니다.',
+            role: 'AX Engineer',
+            tech: ['Notion Workers (서버리스)', 'Notion API', 'Calendar API'],
+            features: [
+              '캘린더 일정에서 구조화된 회의록 자동 생성',
+              'AWS Lambda 유사 서버리스 구성',
+              '전사 단위 배포·운영'
+            ]
+          },
+          links: {
+            demo: null,
+            github: null
+          }
         }
       ]
     },
@@ -458,81 +525,6 @@ export const content = {
       skillsTitle: "Technical Skills",
       download: "이력서 다운로드 (한국어)",
       pdfFile: "resume_kr.pdf"
-    },
-    ax: {
-      title: "AX · 업무 자동화",
-      subtitle: "DevOps / AX 인턴 — BUZZ & BEYOND (vling)",
-      intro: "2026년 상반기, Notion을 SDLC 전반을 아우르는 전사 자동화 플랫폼(Custom Agents + Workers)으로 재구성하고 소프트웨어 딜리버리 라이프사이클을 자동화했습니다.",
-      stats: [
-        { value: "76", label: "프로덕션 릴리스", note: "New/Change 73건, Recovery 3건" },
-        { value: "7", label: "OKR 로드맵", note: "Q1 5건, Q2 2건" },
-        { value: "24", label: "기술·운영 문서", note: "설계서, 플레이북, 릴리스 기준 정의" }
-      ],
-      initiatives: [
-        {
-          period: "2026년 1월",
-          title: "LLM 비용 라벨링",
-          summary: "코드 레벨 라벨링을 추가해 벤더별 LLM 지출을 모니터링할 수 있게 하고, 비용 모니터링 기반을 마련했습니다.",
-          points: [
-            "Vertex AI·AI Studio·OpenAI 벤더별 지출을 모니터링 가능하게 구성",
-            "전사 비용 모니터링 기반 구축"
-          ],
-          tech: ["GraphQL", "LLM API", "FinOps"]
-        },
-        {
-          period: "2026년 1~2월",
-          title: "Atlantis IaC 자동화",
-          summary: "Atlantis로 Terraform을 PR 기반 GitOps로 전환하고 최소 권한 AWS AssumeRole을 적용했습니다.",
-          points: [
-            "Terraform을 PR 기반 GitOps 워크플로로 전환",
-            "최소 권한 AWS AssumeRole 설계·적용",
-            "Atlantis OSS 버그를 발견·수정, PR #6186이 v0.41.0에 머지"
-          ],
-          tech: ["Terraform", "Atlantis", "Kubernetes", "Helm", "AWS IAM", "Go"]
-        },
-        {
-          period: "2026년 2~3월",
-          title: "Notion 태스크 자동 분류",
-          summary: "subgql_notion_classifier 서비스를 설계·배포해 Gemini 2.5 Flash로 작업 유형·회의 유형을 자동 분류했습니다.",
-          points: [
-            "하루 500건 이상 태스크를 91.7% 정확도로 분류",
-            "정량적 업무량 트래킹을 가능하게 함"
-          ],
-          tech: ["Gemini 2.5 Flash", "Notion API", "GraphQL"]
-        },
-        {
-          period: "2026년 3~4월",
-          title: "전사 DORA 모니터링",
-          summary: "DORA 4대 지표를 자동 산출하고 등급/점수 모델과 조직·팀·개인 대시보드를 구축했습니다.",
-          points: [
-            "Notion Agent 리포트 발행 자동화",
-            "FLEX 영업일 보정 적용",
-            "조직이 처음으로 딜리버리 생산성을 객관적으로 측정"
-          ],
-          tech: ["Notion Custom Agent", "DORA", "FLEX API"]
-        },
-        {
-          period: "2026년 4~6월",
-          title: "Notion Custom Agent 릴리스 거버넌스",
-          summary: "Release.Check와 팀 릴리스 기준 문서·프롬프트를 구축해 배포 품질을 자동 감사했습니다.",
-          points: [
-            "AgentB.Release.Check으로 배포 품질 자동 점검",
-            "AgentB.Release.Task.Mapper로 미연결 태스크 자동 매핑",
-            "DORA 점수 리포트를 완전 자동화"
-          ],
-          tech: ["Notion Custom Agent", "프롬프트 엔지니어링"]
-        },
-        {
-          period: "2026년 5~6월",
-          title: "Notion Workers: 캘린더 → 회의록",
-          summary: "AWS Lambda에 준하는 서버리스 Notion Workers 파이프라인을 구축해 전사에 배포했습니다.",
-          points: [
-            "캘린더 일정에서 구조화된 회의록을 자동 생성",
-            "서버리스 구성으로 전사 운영"
-          ],
-          tech: ["Notion Workers (서버리스)", "Notion API"]
-        }
-      ]
     }
   },
   en: {
@@ -966,6 +958,73 @@ export const content = {
             demo: null,
             github: null
           }
+        },
+        {
+          id: 12,
+          title: 'LLM Cost Labeling System',
+          category: 'AX Automation',
+          image: null,
+          description: 'Code-level labeling to monitor per-vendor (Vertex AI, AI Studio, OpenAI) LLM spend',
+          details: {
+            problem: 'As internal LLM usage grew, there was no way to track which vendor or feature was driving cost, making spend management impossible.',
+            solution: 'Added a vendor/purpose-based labeling scheme to the internal LLM server code, establishing a foundation to monitor LLM spend per vendor (Vertex AI, AI Studio, OpenAI). As an early onboarding task, it was also a fast way to learn the internal code conventions and GraphQL standards.',
+            role: 'AX / Platform Engineer',
+            tech: ['GraphQL', 'LLM API', 'FinOps'],
+            features: [
+              'Per-vendor (Vertex AI, AI Studio, OpenAI) LLM cost labeling',
+              'Code-level cost-tracking foundation',
+              'Authored an LLM cost-labeling guide'
+            ]
+          },
+          links: {
+            demo: null,
+            github: null
+          }
+        },
+        {
+          id: 13,
+          title: 'Notion Custom-Agent Release Governance',
+          category: 'AX Automation',
+          image: null,
+          description: 'Built the Release.Check custom agent and team release criteria to auto-audit deployment quality',
+          details: {
+            problem: 'Deployment-quality checks and release criteria relied on people, causing omissions and inconsistency, while release-to-task links were managed by hand.',
+            solution: 'Established Notion custom agents (AgentB.Release.Check) plus team-specific release-criteria docs and prompts to auto-audit deployment quality. Built a companion bot (AgentB.Release.Task.Mapper) that auto-maps release-unlinked tasks, and fully automated the previously built DORA score report through a custom agent.',
+            role: 'AX Engineer',
+            tech: ['Notion Custom Agent', 'Prompt Engineering', 'Notion API'],
+            features: [
+              'Auto deployment-quality checks via AgentB.Release.Check',
+              'Auto-mapping of release-unlinked tasks via AgentB.Release.Task.Mapper',
+              'Team-specific release-criteria docs and prompts',
+              'Fully automated DORA score report publishing'
+            ]
+          },
+          links: {
+            demo: null,
+            github: null
+          }
+        },
+        {
+          id: 14,
+          title: 'Notion Workers Meeting-Note Automation',
+          category: 'AX Automation',
+          image: null,
+          description: 'Company-wide serverless Notion Workers pipeline turning calendar events into structured meeting notes',
+          details: {
+            problem: 'In agile retros, writing meeting notes was flagged as repetitive manual work, accumulating company-wide inefficiency.',
+            solution: 'Used Notion Workers (serverless) to build a pipeline that auto-generates structured meeting notes from calendar events, rolled out company-wide. Built on a serverless model similar to AWS Lambda, and unlike the earlier task-classification work it applied org-wide, so the automation impact was large.',
+            role: 'AX Engineer',
+            tech: ['Notion Workers (serverless)', 'Notion API', 'Calendar API'],
+            features: [
+              'Auto-generates structured meeting notes from calendar events',
+              'Serverless model similar to AWS Lambda',
+              'Company-wide rollout and operation'
+            ]
+          },
+          links: {
+            demo: null,
+            github: null
+          }
         }
       ]
     },
@@ -974,81 +1033,6 @@ export const content = {
       skillsTitle: "Technical Skills",
       download: "Download PDF (English)",
       pdfFile: "resume_en.pdf"
-    },
-    ax: {
-      title: "AX · Work Automation",
-      subtitle: "DevOps / AX Intern — BUZZ & BEYOND (vling)",
-      intro: "In H1 2026, I turned Notion into a company-wide automation platform (Custom Agents + Workers), automating the software delivery lifecycle end to end across the SDLC.",
-      stats: [
-        { value: "76", label: "Production Releases", note: "73 New/Change, 3 Recovery" },
-        { value: "7", label: "OKR Roadmaps", note: "5 in Q1, 2 in Q2" },
-        { value: "24", label: "Technical & Ops Docs", note: "Designs, playbooks, release-criteria definitions" }
-      ],
-      initiatives: [
-        {
-          period: "Jan 2026",
-          title: "LLM Cost Labeling",
-          summary: "Added code-level labeling so per-vendor LLM spend could be monitored, establishing the cost-monitoring foundation.",
-          points: [
-            "Enabled per-vendor spend monitoring across Vertex AI, AI Studio, and OpenAI",
-            "Established the company-wide cost-monitoring foundation"
-          ],
-          tech: ["GraphQL", "LLM API", "FinOps"]
-        },
-        {
-          period: "Jan–Feb 2026",
-          title: "Atlantis IaC Automation",
-          summary: "Migrated Terraform to PR-based GitOps via Atlantis with least-privilege AWS AssumeRole.",
-          points: [
-            "Migrated Terraform to a PR-based GitOps workflow",
-            "Implemented least-privilege AWS AssumeRole access",
-            "Discovered and fixed an Atlantis OSS bug; PR #6186 merged into v0.41.0"
-          ],
-          tech: ["Terraform", "Atlantis", "Kubernetes", "Helm", "AWS IAM", "Go"]
-        },
-        {
-          period: "Feb–Mar 2026",
-          title: "Notion Task Auto-Classification",
-          summary: "Designed and deployed the subgql_notion_classifier service to auto-classify work type and meeting type using Gemini 2.5 Flash.",
-          points: [
-            "Achieved 91.7% accuracy across 500+ tasks per day",
-            "Enabled quantitative workload tracking for the org"
-          ],
-          tech: ["Gemini 2.5 Flash", "Notion API", "GraphQL"]
-        },
-        {
-          period: "Mar–Apr 2026",
-          title: "Company-wide DORA Monitoring",
-          summary: "Auto-computed the four DORA metrics and built a grade/score model with org, team, and individual dashboards.",
-          points: [
-            "Automated Notion-Agent report publishing",
-            "Applied FLEX business-day correction for accuracy",
-            "Gave the org its first objective measure of delivery productivity"
-          ],
-          tech: ["Notion Custom Agent", "DORA", "FLEX API"]
-        },
-        {
-          period: "Apr–Jun 2026",
-          title: "Notion Custom-Agent Release Governance",
-          summary: "Built Release.Check plus team release-criteria docs and prompts to auto-audit deployment quality.",
-          points: [
-            "Deployed AgentB.Release.Check to audit deployment quality automatically",
-            "Built AgentB.Release.Task.Mapper to auto-map release-unlinked tasks",
-            "Fully automated the DORA score report"
-          ],
-          tech: ["Notion Custom Agent", "Prompt Engineering"]
-        },
-        {
-          period: "May–Jun 2026",
-          title: "Notion Workers: Calendar → Notes",
-          summary: "Built a serverless Notion Workers pipeline (akin to AWS Lambda) that auto-generates structured meeting notes from calendar events.",
-          points: [
-            "Auto-generated structured meeting notes from calendar events",
-            "Rolled out the serverless pipeline company-wide"
-          ],
-          tech: ["Notion Workers (serverless)", "Notion API"]
-        }
-      ]
     }
   },
   jp: {
@@ -1467,6 +1451,64 @@ export const content = {
             ]
           },
           links: { demo: null, github: null }
+        },
+        {
+          id: 12,
+          title: 'LLMコストラベリング体系の構築',
+          category: 'AX 業務自動化',
+          image: null,
+          description: 'コードレベルのラベリングでベンダー別（Vertex AI・AI Studio・OpenAI）LLMコストのモニタリング基盤を整備',
+          details: {
+            problem: '社内のLLM利用が増える中、どのベンダー・機能でコストが発生しているか追跡できず、コスト管理が困難な状況。',
+            solution: '社内LLMサーバーのコードにベンダー・用途ベースのラベリング方式を追加し、Vertex AI、AI Studio、OpenAIなどベンダー別のLLM支出をモニタリングできる基盤を整備しました。入社初期の課題として進め、社内コード規約やGraphQLコンベンションを素早く習得する機会にもなりました。',
+            role: 'AX / Platform Engineer',
+            tech: ['GraphQL', 'LLM API', 'FinOps'],
+            features: [
+              'ベンダー別（Vertex AI・AI Studio・OpenAI）LLMコストラベリング',
+              'コードレベルのコスト追跡基盤を構築',
+              'LLMコストラベリング作成ガイドを文書化'
+            ]
+          },
+          links: { demo: null, github: null }
+        },
+        {
+          id: 13,
+          title: 'Notion Custom Agent デプロイ検収ボット & リリースガバナンス',
+          category: 'AX 業務自動化',
+          image: null,
+          description: 'Release.Check カスタムエージェントとチーム別リリース基準を整備し、デプロイ品質を自動検収する体系を構築',
+          details: {
+            problem: 'デプロイ品質の点検やリリース基準が人に依存し、漏れやばらつきが発生。リリースとTASKの連携も手作業で管理されていた。',
+            solution: 'Notion Custom Agent（AgentB.Release.Check）とチーム別のリリース基準ドキュメント・プロンプトを整備し、デプロイ品質を自動点検する体系を構築しました。リリースに未連携のTASKを自動マッピングするボット（AgentB.Release.Task.Mapper）も併せて作成し、先に構築したDORAスコアレポートもカスタムエージェントで完全自動化しました。',
+            role: 'AX Engineer',
+            tech: ['Notion Custom Agent', 'プロンプトエンジニアリング', 'Notion API'],
+            features: [
+              'AgentB.Release.Check によるデプロイ品質の自動点検',
+              'AgentB.Release.Task.Mapper でリリース未連携TASKを自動マッピング',
+              'チーム別リリース基準ドキュメント・プロンプトの整備',
+              'DORAスコアレポートの完全自動発行'
+            ]
+          },
+          links: { demo: null, github: null }
+        },
+        {
+          id: 14,
+          title: 'Notion Workers による議事録自動化',
+          category: 'AX 業務自動化',
+          image: null,
+          description: 'サーバーレスNotion Workersでカレンダー予定 → 構造化された議事録を自動生成するパイプラインを全社展開',
+          details: {
+            problem: 'アジャイル振り返りで議事録作成が反復的で煩雑な手作業として指摘され、全社的に非効率が蓄積していた。',
+            solution: 'Notion Workers（サーバーレス）を活用し、カレンダー予定から構造化された議事録を自動生成するパイプラインを構築して全社に展開しました。AWS Lambdaに類似したサーバーレスモデルで、以前のTASK自動分類と異なり全社単位で適用されたため、自動化の効果が大きいものでした。',
+            role: 'AX Engineer',
+            tech: ['Notion Workers (サーバーレス)', 'Notion API', 'Calendar API'],
+            features: [
+              'カレンダー予定から構造化された議事録を自動生成',
+              'AWS Lambda に類似したサーバーレス構成',
+              '全社単位での展開・運用'
+            ]
+          },
+          links: { demo: null, github: null }
         }
       ]
     },
@@ -1475,81 +1517,6 @@ export const content = {
       skillsTitle: "Technical Skills",
       download: "PDFダウンロード (日本語)",
       pdfFile: "resume_jp.pdf"
-    },
-    ax: {
-      title: "AX · 業務自動化",
-      subtitle: "DevOps / AX インターン — BUZZ & BEYOND (vling)",
-      intro: "2026年上半期、NotionをSDLC全体をカバーする全社的な自動化プラットフォーム（Custom Agents + Workers）へと再構築し、ソフトウェアデリバリーのライフサイクルを自動化しました。",
-      stats: [
-        { value: "76", label: "本番リリース", note: "New/Change 73件、Recovery 3件" },
-        { value: "7", label: "OKRロードマップ", note: "Q1 5件、Q2 2件" },
-        { value: "24", label: "技術・運用ドキュメント", note: "設計書、プレイブック、リリース基準の定義" }
-      ],
-      initiatives: [
-        {
-          period: "2026年1月",
-          title: "LLMコストのラベリング",
-          summary: "コードレベルのラベリングを導入し、ベンダー別のLLM支出を可視化。コスト監視の基盤を確立しました。",
-          points: [
-            "Vertex AI・AI Studio・OpenAIのベンダー別支出をモニタリング可能に",
-            "全社的なコスト監視の土台を構築"
-          ],
-          tech: ["GraphQL", "LLM API", "FinOps"]
-        },
-        {
-          period: "2026年1〜2月",
-          title: "Atlantis による IaC 自動化",
-          summary: "Atlantisを用いてTerraformをPRベースのGitOpsへ移行し、最小権限のAWS AssumeRoleを実現しました。",
-          points: [
-            "PRベースのGitOpsワークフローへ移行",
-            "最小権限の AWS AssumeRole を設計・適用",
-            "Atlantis OSS のバグを発見・修正し、PR #6186 が v0.41.0 にマージ"
-          ],
-          tech: ["Terraform", "Atlantis", "Kubernetes", "Helm", "AWS IAM", "Go"]
-        },
-        {
-          period: "2026年2〜3月",
-          title: "Notion タスクの自動分類",
-          summary: "subgql_notion_classifier サービスを設計・デプロイし、Gemini 2.5 Flash で作業種別・会議種別を自動分類しました。",
-          points: [
-            "1日500件以上のタスクを 91.7% の精度で分類",
-            "作業量の定量的なトラッキングを実現"
-          ],
-          tech: ["Gemini 2.5 Flash", "Notion API", "GraphQL"]
-        },
-        {
-          period: "2026年3〜4月",
-          title: "全社 DORA モニタリング",
-          summary: "DORAの4指標を自動算出し、グレード/スコアモデルと組織・チーム・個人別のダッシュボードを構築しました。",
-          points: [
-            "Notion Agent によるレポート公開を自動化",
-            "FLEX の営業日補正を適用",
-            "組織が初めてデリバリー生産性を客観的に計測可能に"
-          ],
-          tech: ["Notion Custom Agent", "DORA", "FLEX API"]
-        },
-        {
-          period: "2026年4〜6月",
-          title: "Notion Custom Agent によるリリースガバナンス",
-          summary: "Release.Check とチームのリリース基準ドキュメント/プロンプトを構築し、デプロイ品質を自動監査しました。",
-          points: [
-            "AgentB.Release.Check でデプロイ品質を自動チェック",
-            "AgentB.Release.Task.Mapper で未連携タスクを自動マッピング",
-            "DORA スコアレポートを完全自動化"
-          ],
-          tech: ["Notion Custom Agent", "プロンプトエンジニアリング"]
-        },
-        {
-          period: "2026年5〜6月",
-          title: "Notion Workers：カレンダー → 議事録",
-          summary: "AWS Lambda に相当するサーバーレスの Notion Workers パイプラインを構築し、全社へ展開しました。",
-          points: [
-            "カレンダーイベントから構造化された議事録を自動生成",
-            "サーバーレス構成で全社的に運用"
-          ],
-          tech: ["Notion Workers (サーバーレス)", "Notion API"]
-        }
-      ]
     }
   }
 };
