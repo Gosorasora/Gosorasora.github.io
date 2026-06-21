@@ -101,9 +101,8 @@
     <ul>
       <li>Helm Chart で Atlantis を Kubernetes にデプロイし、PR ベースのコードレビュー承認を強制する GitOps CI/CD ワークフローを構築。すべての Terraform 操作で 100% の監査ログ (audit trail) を実現</li>
       <li>デプロイ時の最小権限を強制する AWS AssumeRole アーキテクチャを設計。開発者のローカル AWS Access Key を 100% 回収し、認証情報漏洩リスクを排除</li>
-      <li>Atlantis OSS のバグ (runAutoplan() で FetchPullStatus() が呼ばれていない) を発見・修正し、PR #6186 が Atlantis v0.41.0 にマージ</li>
       <li>Gemini 2.5 Flash ベースの LLM 業務自動分類システムを構築。1 日 500 件以上のタスク (業務 13 種・会議 14 種) で 91.7% の精度を達成し、ヒューマンエラーを排除しメンバー別の定量的な Workload 追跡を実現</li>
-      <li>Notion Custom Agent と DORA Metrics 自動算出ダッシュボードを構築。4 つの主要指標 (Deployment Frequency, Lead Time for Changes, Change Failure Rate, MTTR) を 7 / 30 / 90 日のスライディングウィンドウで計算し、FLEX API 連携で実営業日基準に補正、上半期の運用リリース 76 件を管制</li>
+      <li>Notion Custom Agent と DORA Metrics 自動算出ダッシュボードを構築</li>
       <li>Notion Custom Agent・Workers (サーバーレス) 基盤のデプロイ品質自動検収体系および社内 AX (業務自動化) を構築</li>
     </ul>
   </div>
@@ -188,7 +187,7 @@
 
   <div class="entry">
     <div class="entry-header">
-      <span class="entry-title">クラウドインフラ近代化 (CAPS サークル)</span>
+      <span class="entry-title">AWS クラウド移行 (CAPS サークル)</span>
       <span class="entry-date">2022.03 - 2022.09</span>
     </div>
     <div class="entry-sub">
@@ -275,71 +274,15 @@
 <!-- 受賞 -->
 <div class="section">
   <div class="section-title">受賞</div>
-  <div class="achievement">
-    <div class="entry-header">
-      <span class="entry-title">東国大学校 工科大学 学期優等生</span>
-      <span class="entry-date">2021.07</span>
-    </div>
-    <div class="entry-sub"><span>東国大学校 工科大学</span></div>
-    <ul><li>2021 年度 1 学期 学期優等生 選出</li></ul>
-  </div>
-  <div class="achievement">
-    <div class="entry-header">
-      <span class="entry-title">東国大学校 工科大学 学期優等生</span>
-      <span class="entry-date">2022.01</span>
-    </div>
-    <div class="entry-sub"><span>東国大学校 工科大学</span></div>
-    <ul><li>2021 年度 2 学期 学期優等生 選出</li></ul>
-  </div>
-  <div class="achievement">
-    <div class="entry-header">
-      <span class="entry-title">東国大学校 工科大学 学期優等生</span>
-      <span class="entry-date">2022.07</span>
-    </div>
-    <div class="entry-sub"><span>東国大学校 工科大学</span></div>
-    <ul><li>2022 年度 1 学期 学期優等生 選出</li></ul>
-  </div>
-  <div class="achievement">
-    <div class="entry-header">
-      <span class="entry-title">U-LINC 協力事業 アドベンチャーデザインコンテスト — 奨励賞</span>
-      <span class="entry-date">2022.12</span>
-    </div>
-    <div class="entry-sub"><span>東国大学校 LINC 3.0 事業団長</span></div>
-    <ul><li>チームリーダーとして参加し、奨励賞を受賞</li></ul>
-  </div>
-  <div class="achievement">
-    <div class="entry-header">
-      <span class="entry-title">学内学習施設 混雑度分析システム — 奨励賞</span>
-      <span class="entry-date">2022.12</span>
-    </div>
-    <div class="entry-sub"><span>東国大学校 LINC 3.0 事業団長</span></div>
-    <ul>
-      <li>センサーベースのインフラを構築し、図書館以外のラウンジ・カフェなど非指定席の占有状況を可視化</li>
-      <li>入退室の自動検知システムによりエリア別の人数をリアルタイムに判定するシステムを開発</li>
-    </ul>
-  </div>
-  <div class="achievement">
-    <div class="entry-header">
-      <span class="entry-title">トーチ章 (횃불상)</span>
-      <span class="entry-date">2023.08</span>
-    </div>
-    <div class="entry-sub"><span>大韓民国 陸軍情報通信学校長 (准将)</span></div>
-    <ul><li>軍服務後半期教育の修了生 200 名のうち、首席 (1 位) で受賞</li></ul>
-  </div>
-  <div class="achievement">
-    <div class="entry-header">
-      <span class="entry-title">SoftBank Hackathon 2025 — 本戦進出</span>
-      <span class="entry-date">2024.11 - 2024.12</span>
-    </div>
-    <ul><li>NanoGrid Plus プロジェクトで本戦進出</li></ul>
-  </div>
-  <div class="achievement">
-    <div class="entry-header">
-      <span class="entry-title">東国大学校 工科大学 学期優等生</span>
-      <span class="entry-date">2025.07</span>
-    </div>
-    <div class="entry-sub"><span>東国大学校 工科大学</span></div>
-    <ul><li>2025 年度 1 学期 学期優等生 選出</li></ul>
+  <div class="skills-grid">
+    <div class="row"><span class="label">東国大学校 工科大学 学期優等生</span> — 2021 年度 1 学期 (2021.07)</div>
+    <div class="row"><span class="label">東国大学校 工科大学 学期優等生</span> — 2021 年度 2 学期 (2022.01)</div>
+    <div class="row"><span class="label">東国大学校 工科大学 学期優等生</span> — 2022 年度 1 学期 (2022.07)</div>
+    <div class="row"><span class="label">U-LINC アドベンチャーデザインコンテスト 奨励賞</span> — 2022.12 · 東国大学校 LINC 3.0 事業団長</div>
+    <div class="row"><span class="label">学内学習施設 混雑度分析システム 奨励賞</span> — 2022.12 · 東国大学校 LINC 3.0 事業団長</div>
+    <div class="row"><span class="label">トーチ章 (횃불상)</span> — 2023.08 · 大韓民国 陸軍情報通信学校長</div>
+    <div class="row"><span class="label">SoftBank Hackathon 2025 本戦進出</span> — 2024.11~12 · NanoGrid Plus</div>
+    <div class="row"><span class="label">東国大学校 工科大学 学期優等生</span> — 2025 年度 1 学期 (2025.07)</div>
   </div>
 </div>
 

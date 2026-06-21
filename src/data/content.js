@@ -430,7 +430,7 @@ export const content = {
         },
         {
           id: 11,
-          title: 'Cloud Infrastructure Modernization',
+          title: 'AWS 클라우드 마이그레이션 (CAPS 동아리)',
           category: 'DevOps & Infra',
           image: null,
           description: 'CAPS 동아리 온프레미스 인프라의 AWS 클라우드 마이그레이션',
@@ -938,10 +938,10 @@ export const content = {
         },
         {
           id: 11,
-          title: 'Cloud Infrastructure Modernization',
+          title: 'AWS Cloud Migration (CAPS Club)',
           category: 'DevOps & Infra',
           image: null,
-          description: 'Full AWS cloud migration for CAPS programming club on-premise infrastructure.',
+          description: 'Full AWS cloud migration for CAPS programming club on-premises infrastructure.',
           details: {
             problem: 'Chronic downtime and maintenance inefficiencies from relying on physical on-premise PCs.',
             solution: 'Architected and executed a full migration to AWS Cloud, ensuring 24/7 service availability and eliminating physical dependency.',
@@ -1434,10 +1434,10 @@ export const content = {
         },
         {
           id: 11,
-          title: 'Cloud Infrastructure Modernization',
+          title: 'AWS クラウド移行 (CAPS サークル)',
           category: 'DevOps & Infra',
           image: null,
-          description: 'CAPSサークル オンプレミスインフラのAWSクラウドマイグレーション',
+          description: 'CAPSサークル オンプレミスインフラのAWSクラウド移行',
           details: {
             problem: '物理PC基盤オンプレミスサーバーの慢性的ダウンタイムとメンテナンス非効率',
             solution: '全インフラをAWSクラウドにマイグレーションし、24/7サービス可用性を確保して物理的依存を排除しました。',
