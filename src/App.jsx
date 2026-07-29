@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { MotionConfig } from 'framer-motion';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -23,17 +24,20 @@ const AnimatedRoutes = () => {
 function App() {
   return (
     <LanguageProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="App">
-          <Navbar />
-          <main>
-            <AnimatedRoutes />
-          </main>
-          <Footer />
-          <FirebaseStatus />
-        </div>
-      </Router>
+      {/* reducedMotion="user" honours the OS prefers-reduced-motion setting */}
+      <MotionConfig reducedMotion="user">
+        <Router>
+          <ScrollToTop />
+          <div className="App">
+            <Navbar />
+            <main>
+              <AnimatedRoutes />
+            </main>
+            <Footer />
+            <FirebaseStatus />
+          </div>
+        </Router>
+      </MotionConfig>
     </LanguageProvider>
   );
 }

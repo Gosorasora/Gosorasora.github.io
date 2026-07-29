@@ -1,31 +1,105 @@
 .hero-section {
+    position: relative;
+    overflow: hidden;
     width: 100%;
+    min-height: 88vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 80px 0 40px 0;
     margin: 0;
-    background-image: linear-gradient(rgba(27, 38, 59, 0.65), rgba(27, 38, 59, 0.75)), url('../assets/background.png');
+    background-color: #1B263B;
+}
+
+/* Parallax layer. Inset past the edges so the scroll drift never exposes a gap. */
+.hero-bg {
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    bottom: -80px;
+    left: -80px;
+    z-index: 0;
+    background-image: linear-gradient(rgba(27, 38, 59, 0.65), rgba(27, 38, 59, 0.75)),
+        url('../assets/background.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    will-change: transform;
+}
+
+/* Infra grid. The drift distance matches the cell size, so the loop is seamless. */
+.hero-grid-mask {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 45%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 45%, #000 20%, transparent 75%);
+}
+
+.hero-grid {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 120px);
+    background-image:
+        linear-gradient(rgba(119, 141, 169, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(119, 141, 169, 0.14) 1px, transparent 1px);
+    background-size: 60px 60px;
+    will-change: transform;
+}
+
+/* Cursor spotlight. Sized 600px with a -300px origin so x/y land it dead centre. */
+.hero-spotlight {
+    position: absolute;
+    top: -300px;
+    left: -300px;
+    width: 600px;
+    height: 600px;
+    z-index: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(119, 141, 169, 0.22) 0%, transparent 65%);
+    filter: blur(40px);
+    pointer-events: none;
+    will-change: transform;
 }
 
 .hero-container {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    z-index: 1;
     width: 100%;
-    /* Ensure container takes full width */
+}
+
+/* Each split unit transforms on its own, so it must be a block box.
+   `pre` keeps the trailing space in word mode from collapsing. */
+.split-unit {
+    display: inline-block;
+    white-space: pre;
+    will-change: transform, opacity, filter;
 }
 
 .hero-greeting {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     color: #778DA9;
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 20px;
     font-family: monospace;
+}
+
+.greeting-rule {
+    display: inline-block;
+    width: 42px;
+    height: 1.5px;
+    background-color: #778DA9;
+    opacity: 0.6;
 }
 
 .hero-title {
@@ -72,7 +146,7 @@
     font-size: 0.85rem;
     font-family: monospace;
     font-weight: 600;
-    transition: var(--transition);
+    transition: background-color 0.25s ease;
     background-color: transparent;
 }
 
@@ -81,10 +155,41 @@
     /* Mint tint on hover */
 }
 
+.hero-scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    width: 22px;
+    height: 36px;
+    border: 1.5px solid rgba(119, 141, 169, 0.5);
+    border-radius: 11px;
+    display: flex;
+    justify-content: center;
+    padding-top: 7px;
+    pointer-events: none;
+}
+
+.scroll-dot {
+    width: 3px;
+    height: 7px;
+    border-radius: 2px;
+    background-color: #778DA9;
+}
+
 @media (max-width: 768px) {
 
     /* Ensure it still fits on very small screens */
     .hero-subtitle {
         font-size: clamp(1rem, 5vw, 2.5rem);
+    }
+
+    .hero-spotlight {
+        display: none;
+    }
+
+    .hero-scroll-hint {
+        display: none;
     }
 }

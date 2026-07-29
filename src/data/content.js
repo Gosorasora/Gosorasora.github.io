@@ -3,16 +3,16 @@ export const content = {
     hero: {
       greeting: "Hello, I'm",
       title: "Ko Donghyeon.",
-      subtitle: "DevOps Engineer & Cloud Infra Architect.",
-      description: "안정적인 인프라와 자동화된 배포 파이프라인으로 가치를 만듭니다.\n클라우드 환경에서 확장 가능한 시스템을 설계하고 운영하는 엔지니어입니다.",
+      subtitle: "DevOps Engineer & Forward Deployed Engineer.",
+      description: "인프라 자동화로 배포를 안정시키고, AI로 사내 업무를 자동화합니다.\n문제가 있는 현장에 직접 들어가서 푸는 엔지니어입니다.",
       cta: "프로젝트 보기"
     },
     about: {
       title: "About Me",
       intro: [
-        "안녕하세요! 저는 **DevOps Engineer**이자 **Cloud Infra Architect**인 **고동현**입니다.",
-        "컴퓨터 공학에 대한 깊이 있는 이해를 바탕으로, **클라우드 인프라 설계**와 **자동화된 배포 파이프라인** 구축에 집중하고 있습니다. Cloud Club, Amazon Cloud Club 등 클라우드 커뮤니티 활동과 보안 연구를 병행하며 폭넓은 경험을 쌓아왔습니다.",
-        "현재는 **AWS**, **GCP** 등 클라우드 환경에서 안정적이고 확장 가능한 시스템을 설계하고 운영하는 데 집중하고 있습니다."
+        "안녕하세요! 저는 **DevOps Engineer**이자 **Forward Deployed Engineer**인 **고동현**입니다.",
+        "Terraform·Kubernetes 기반 인프라와 GitOps 배포 환경을 직접 구축하고 운영합니다. 반복 업무가 사람의 시간을 먹는 것을 싫어해서, 최근에는 **AI를 활용한 AX(업무 자동화)**로 사내 반복 업무와 개발 생산성 지표를 자동화하는 일에 집중하고 있습니다. 인프라 안에만 머무르기보다 문제가 있는 팀 옆에 가서 직접 듣고 고치는 방식을 좋아합니다.",
+        "저는 사람들이 모여서 함께 생각해 나온 결과물은 그 무엇보다 강력하다고 생각합니다. 그래서 커뮤니티를 좋아하고, 이러한 관심이 지금의 저를 만들었다고 생각합니다. 다른 사람들에게도 이런 경험을 주고 싶어 현재 **AWS Student Builders Group Leader**로 활동하고 있습니다."
       ],
       tabs: {
         experience: "Experience",
@@ -23,29 +23,32 @@ export const content = {
       },
       experience: [
         {
-          title: 'DevOps Engineer (Intern) / Infra·Platform·AX',
+          title: 'DevOps Engineer / Infra·Platform·AX',
           company: 'BUZZ & BEYOND (버즈앤비)',
-          period: '2026.01 ~ 재직중',
+          period: '2026.01 ~ 재직중 (인턴 2026.01~06 · 정규직 2026.07~)',
           description: [
-            'Kubernetes 기반 마이크로서비스 환경에서 인프라 운영/자동화 및 AX(업무 자동화) 과제 수행',
-            'Terraform 배포를 Atlantis 기반 PR/GitOps로 전환, AWS AssumeRole 중심 최소권한 보안 아키텍처 설계·정착 (Atlantis 오픈소스 기여 PR #6186 머지)',
-            'Gemini 2.5 Flash 기반 Notion TASK 업무/미팅 유형 자동 분류 파이프라인 구축 (정확도 91.7%, 일 500+ TASK)',
-            'Notion Custom Agent로 DORA 4대 지표 자동 산출·리포팅',
-            'Notion Custom Agent·Workers 기반 배포 품질 자동 검수 체계 및 사내 AX(업무 자동화) 구축',
-            '벤더별(Vertex AI·AI Studio·OpenAI) LLM 비용 라벨링 체계 도입으로 비용 모니터링 기반 마련'
+            'Terraform·Atlantis로 사내 GitOps 환경 구축',
+            [
+              'PR 단위 승인 강제로 Terraform 작업 전건 감사 추적 확보',
+              'AWS AssumeRole 최소 권한 전환, 개발자 로컬 Access Key 전량 회수',
+              'Atlantis 오픈소스 기여 [PR #6186](https://github.com/runatlantis/atlantis/pull/6186) 머지 (v0.41.0 반영)'
+            ],
+            'DORA 4대 지표 자동 산출·리포팅',
+            [
+              '일 500건 이상 업무 자동 분류 (정확도 91.7%)'
+            ],
+            '인바운드 리드 SLA 체계 구축',
+            [
+              '접수 → 담당자 배정 평균 33.6시간을 0.4시간으로 단축 (98.7% 단축), 1시간 내 배정 9% → 86%',
+              '영업시간 기준 SLA 자동 측정, 방치 리드 알림·에스컬레이션 체계 구축'
+            ],
+            'Notion 사내 에이전트 구축·운영',
+            [
+              '배포 품질 검수 자동화',
+              '벤더별 LLM 비용 라벨링으로 사용량 모니터링'
+            ]
           ],
           tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Notion', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
-        },
-        {
-          title: 'AWS Student Builder Group Leader at Dongguk University',
-          company: 'Amazon Web Services (AWS)',
-          period: '2025.07 ~ 재직중',
-          description: [
-            'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
-            'AWS 공식 인증 — 전공 무관 학생 대상 클라우드 컴퓨팅 교육 그룹 운영 (AWS 제품 실습 세션)'
-          ],
-          tags: ['AWS', 'Leadership']
         },
         {
           title: '학부연구생 (CSDC Lab)',
@@ -53,10 +56,31 @@ export const content = {
           period: '2025.04 ~ 재직중',
           description: [
             '네트워크 보안 및 부하 분산 관련 연구 수행',
-            'NLP 기반 IaC 보안 분석 도구 개별연구 — BERT 모델로 Terraform 시맨틱 이상 탐지 및 IAM 권한 상승 경로 시각화',
-            'SpinKube & WASM IoT 로그 처리 시뮬레이션 개별연구 — WebAssembly 기반 대규모 IoT 환경 인프라 검증'
+            'NLP 기반 IaC 보안 분석 도구 개별연구. BERT 모델로 Terraform 시맨틱 이상 탐지 및 IAM 권한 상승 경로 시각화',
+            'SpinKube & WASM IoT 로그 처리 시뮬레이션 개별연구. WebAssembly 기반 대규모 IoT 환경 인프라 검증'
           ],
           tags: ['Network Security', 'Load Balancing', 'AWS', 'NLP', 'WebAssembly']
+        },
+
+        {
+          title: 'AWS Student Builder Group Leader at Dongguk University',
+          company: 'Amazon Web Services (AWS)',
+          period: '2025.07 ~ 재직중',
+          description: [
+            'AWS Cloud Club Member (2025.07 ~ 2026.04)',
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'LinkedIn [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) 페이지 운영',
+          ],
+          tags: ['AWS', 'Leadership']
+        },
+        {
+          title: 'Notion Campus Leader at Dongguk University',
+          company: 'Notion',
+          period: '2026.09 ~',
+          description: [
+            '교내 Notion 공식 캠퍼스 리더로 학생 대상 Notion 활용 확산 활동'
+          ],
+          tags: ['Notion', 'Community']
         }
       ],
       education: [
@@ -65,12 +89,6 @@ export const content = {
           degree: '공과대학 컴퓨터공학과 학사 (재학중)',
           period: '2021.03 ~ 2027.02 (예정)',
           description: ['학점 4.12 / 4.5', '공과대학 학기 우등생 4회 선정']
-        },
-        {
-          title: 'Google Cloud Fundamentals: Core Infrastructure',
-          degree: 'Google Cloud',
-          period: '2025.10.18 수료',
-          description: ['GCP 핵심 인프라 과정 수료']
         }
       ],
       activities: [
@@ -85,23 +103,15 @@ export const content = {
         },
         {
           title: 'Cloud Club 1기',
-          role: 'Member',
+          role: '1st Member',
           period: '2022.03 ~ 2023.09',
           description: [
-            '클라우드 기술 학습 및 프로젝트 참여'
+            '특정 벤더에 종속되지 않는(vendor-neutral) IT 연합 동아리 1기 멤버',
+            'AWS·GCP 등 벤더를 가리지 않고 클라우드 인프라를 폭넓게 다루며 학습·프로젝트 진행'
           ]
         },
         {
-          title: 'Amazon Cloud Club at Dongguk',
-          role: 'Member → Group Leader (2026.05~)',
-          period: '2025.07 ~ ',
-          description: [
-            'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )'
-          ]
-        },
-        {
-          title: 'SoftBank Hackathon 2025',
+          title: 'SoftBank Hackathon',
           role: 'Participant',
           period: '2024.11 ~ 2024.12',
           description: [
@@ -111,6 +121,12 @@ export const content = {
         }
       ],
       certs: [
+        {
+          title: 'Notion Badge: Essentials · Workflows · Advanced',
+          issuer: 'Notion',
+          date: '2026.06',
+          description: ['배지 인증: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', '유효기간 2028.06']
+        },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
           issuer: 'Google Cloud Skills Boost',
@@ -129,22 +145,10 @@ export const content = {
       ],
       awards: [
         {
-          title: '동국대학교 공과대학 학기 우등생',
+          title: '동국대학교 공과대학 학기 우등생 (4회)',
           issuer: '동국대학교 공과대학',
-          date: '2021.07',
-          description: ['2021학년도 1학기 학기 우등생 선정']
-        },
-        {
-          title: '동국대학교 공과대학 학기 우등생',
-          issuer: '동국대학교 공과대학',
-          date: '2022.01',
-          description: ['2021학년도 2학기 학기 우등생 선정']
-        },
-        {
-          title: '동국대학교 공과대학 학기 우등생',
-          issuer: '동국대학교 공과대학',
-          date: '2022.07',
-          description: ['2022학년도 1학기 학기 우등생 선정']
+          date: '2021.07 ~ 2025.07',
+          description: ['2021-1학기, 2021-2학기, 2022-1학기, 2025-1학기 선정']
         },
         {
           title: 'U-LINC 협력사업 어드벤처디자인 경진대회 장려상',
@@ -163,12 +167,6 @@ export const content = {
           issuer: '육군정보통신학교장 (준장)',
           date: '2023.08',
           description: ['군생활 후반기 교육 수료생 200명 중 1등 성적으로 수상']
-        },
-        {
-          title: '동국대학교 공과대학 학기 우등생',
-          issuer: '동국대학교 공과대학',
-          date: '2025.07',
-          description: ['2025학년도 1학기 학기 우등생 선정']
         }
       ]
     },
@@ -182,6 +180,7 @@ export const content = {
         security: "Security"
       },
       modal: {
+        detail: "자세히 보기",
         overview: "개요",
         role: "역할",
         techStack: "기술 스택",
@@ -198,7 +197,7 @@ export const content = {
           title: 'Atlantis 기반 GitOps Terraform CI/CD 구축',
           category: 'DevOps & Infra',
           image: null,
-          description: 'PR 기반 GitOps 전환으로 인프라 변경 추적성 100% 달성 — Helm 기반 Atlantis 배포 및 AWS AssumeRole 보안 체계 구축',
+          description: 'PR 기반 GitOps 전환으로 인프라 변경 추적성 100% 달성. Helm 기반 Atlantis 배포 및 AWS AssumeRole 보안 체계 구축',
           details: {
             problem: '엔지니어가 로컬에서 Terraform을 직접 실행하여 상태 파일 충돌, 변경 이력 추적 불가, 환경 간 정합성 문제가 빈번하게 발생',
             solution: 'Atlantis를 Kubernetes 클러스터에 Helm Chart 기반으로 배포하고, PR 기반 GitOps 워크플로우로 전환했습니다. 모든 인프라 변경이 코드 리뷰를 거쳐 승인된 후에만 적용되도록 하여 운영 투명성을 확보했습니다. AWS AssumeRole 아키텍처를 설계하고 개발자 로컬 Access Key를 전면 회수하여 최소 권한 원칙 기반 보안 체계를 구축했습니다.',
@@ -241,10 +240,10 @@ export const content = {
         },
         {
           id: 3,
-          title: 'LLM 기반 업무 분류 자동화 — Workload 추적 체계 구축',
+          title: 'LLM 기반 업무 분류 자동화: Workload 추적 체계 구축',
           category: 'AX 업무자동화',
           image: null,
-          description: '일 500건+ 태스크 자동 분류, 정확도 91.7% 달성 — 휴먼에러 제거 및 조직 Workload 가시화',
+          description: '일 500건+ 태스크 자동 분류, 정확도 91.7% 달성. 휴먼에러 제거 및 조직 Workload 가시화',
           details: {
             problem: '수동 분류에서 발생하는 휴먼에러로 인해 태스크 분류가 일관되지 않아, 조직 구성원의 실제 Workload가 어디에 사용되는지 추적이 불가능한 상태',
             solution: '기존 분산된 Notion 태스크 데이터를 통합하고, Gemini 2.5 Flash 기반 계층적 분류 로직(로드맵 성격 + 태스크 컨텍스트)을 적용하여 13개 업무유형·14개 미팅유형으로 자동 분류했습니다. 분류 정확도 91.7%를 달성하여 휴먼에러를 원천 차단하고, 구성원별 Workload가 실제로 어디에 투입되는지 정량적으로 추적할 수 있는 기반을 확보했습니다.',
@@ -252,7 +251,7 @@ export const content = {
             tech: ['Gemini', 'Argo Workflows', 'Python', 'Apollo Federation', 'GraphQL'],
             features: [
               '분산된 Notion 데이터 통합 및 Gemini 2.5 Flash 계층적 분류',
-              '일 500건+ 자동 분류, 정확도 91.7% — 휴먼에러 원천 차단',
+              '일 500건+ 자동 분류, 정확도 91.7%. 휴먼에러 원천 차단',
               '구성원별 Workload 투입 현황 정량적 추적 체계 구축',
               'Argo CronWorkflow 매일 정기 실행',
               'Apollo Federation Subgraph 분리로 재사용성 확보'
@@ -268,7 +267,7 @@ export const content = {
           title: 'DORA Metrics 자동화 대시보드 구축',
           category: 'AX 업무자동화',
           image: null,
-          description: '분산된 Notion DB 통합 → DORA 4대 지표 자동 산출 (7/30/90일 윈도우) — FLEX API 연동 실질 영업일 보정',
+          description: '분산된 Notion DB 통합 → DORA 4대 지표 자동 산출 (7/30/90일 윈도우). FLEX API 연동 실질 영업일 보정',
           details: {
             problem: 'DORA 지표 수동 산출의 비효율성, 분산된 Notion DB 데이터로 인한 집계 어려움, 비가동 시간 미반영으로 인한 공정성 이슈',
             solution: '여러 Notion DB에 분산된 배포·장애 데이터를 통합하여 별도 도구 도입 없이 7일·30일·90일 슬라이딩 윈도우로 DORA 4대 지표(Deploy Frequency, Lead Time to Changes, Change Fail Rate, MTTR)를 매일 자동 산출했습니다. 팀별·개인별 가중치 기반 DORA Score 체계를 설계하고, FLEX API를 연동하여 휴가·공휴일 등 비가동 시간을 반영한 실질 영업일 기준으로 Deploy Frequency를 보정했습니다. 크루·리더 대시보드에 DORA Metric 뷰를 추가하여 스프린트 회고와 1on1에서 데이터 기반 의사결정이 가능한 환경을 구축했습니다.',
@@ -335,10 +334,10 @@ export const content = {
         },
         {
           id: 7,
-          title: 'NanoGrid Plus — Hybrid FaaS Platform',
+          title: 'NanoGrid Plus: Hybrid FaaS Platform',
           category: 'DevOps & Infra',
           image: null,
-          description: 'Cold Start 30배 개선(3초→0.2초), 비용 96% 절감 — EC2 기반 자체 호스팅 FaaS 플랫폼 (SoftBank Hackathon 본선)',
+          description: 'Cold Start 30배 개선(3초→0.2초), 비용 96% 절감. EC2 기반 자체 호스팅 FaaS 플랫폼 (SoftBank Hackathon 본선)',
           details: {
             problem: 'Lambda 실행 제한(시간/메모리)으로 인한 FaaS 확장성 한계와 Cold Start 지연',
             solution: 'AWS EC2 기반의 자체 호스팅 FaaS 플랫폼을 설계했습니다. Docker Warm Pool(Pause/Unpause) 기술로 Cold Start를 30배 개선(3초→0.2초)하고, Auto-Tuner가 실시간 메모리 사용량을 분석하여 최대 96% 비용 절감을 제안합니다. SQS 기반 작업 큐, S3 코드 저장소, CloudWatch 메트릭 자동 전송, Redis Pub/Sub 결과 반환까지 전체 Data Plane을 구현했습니다.',
@@ -359,10 +358,10 @@ export const content = {
         },
         {
           id: 8,
-          title: 'Roomeya — Serverless Dormitory Matching',
+          title: 'Roomeya: Serverless Dormitory Matching',
           category: 'DevOps & Infra',
           image: null,
-          description: '시즌별 기숙사 매칭 서비스 — AWS 풀 서버리스 아키텍처 + Terraform IaC (Lambda 9개, Step Functions, DynamoDB)',
+          description: '시즌별 기숙사 매칭 서비스. AWS 풀 서버리스 아키텍처 + Terraform IaC (Lambda 9개, Step Functions, DynamoDB)',
           details: {
             problem: '시즌별 운영 특성에 따른 유휴 비용 발생과 매칭 워크플로우 복잡성',
             solution: 'Lambda 9개 함수, Step Functions 매칭 워크플로우, DynamoDB 4개 테이블, API Gateway(HTTP API v2), Cognito OAuth 2.0 인증, SES 이메일 발송까지 전체 인프라를 Terraform으로 코드화했습니다. Scale-to-zero로 비시즌 유휴 비용을 완전 제거했습니다.',
@@ -383,10 +382,10 @@ export const content = {
         },
         {
           id: 9,
-          title: 'Deploy Land — Gamified CI/CD Platform',
+          title: 'Deploy Land: Gamified CI/CD Platform',
           category: 'DevOps & Infra',
           image: null,
-          description: 'GitHub Push→Build→Deploy→검증 전 과정 자동화 — 게이미피케이션 실시간 모니터링 서버리스 CI/CD 플랫폼',
+          description: 'GitHub Push→Build→Deploy→검증 전 과정 자동화. 게이미피케이션 실시간 모니터링 서버리스 CI/CD 플랫폼',
           details: {
             problem: '표준 배포 로그의 가독성 부족, 배포 실패 시 즉각 인지 어려움, Phantom 배포 위험',
             solution: 'GitHub Push부터 Build, Deploy, Health Check까지 전 과정을 자동화하는 서버리스 CI/CD 플랫폼을 설계했습니다. AWS Amplify 기반 게이미피케이션 모니터링으로 배포 상태를 실시간 시각화하고, 성공/실패 시 Discord·Slack 즉시 알림을 구현했습니다. 배포 후 자동 Health Check와 설정 검증으로 Phantom 배포를 방지합니다.',
@@ -474,6 +473,29 @@ export const content = {
           }
         },
         {
+          id: 15,
+          title: '인바운드 리드 SLA 체계 구축',
+          category: 'AX 업무자동화',
+          image: null,
+          description: '접수 → 담당자 배정 평균 33.6시간을 0.4시간으로 단축 (98.7% 단축). SLA 정의부터 영업시간 기준 측정, 알림·에스컬레이션까지 구축',
+          details: {
+            problem: '상반기 사내 리드 응답은 1시간 내 응답 45.5%, 평균 응답 4.3시간, 9시간 초과 방치 4건이었습니다. 초기 대응이 늦을수록 상담 전환이 떨어져 그대로 영업 기회 손실로 이어지는 상태였습니다.',
+            solution: '접수·담당자 배정·첫 고객 컨택 시각을 같은 기준으로 자동 기록하고, 영업시간 기준으로 SLA를 측정하도록 정의했습니다. 담당자가 대응 가능한 시간에만 알림이 가도록 발송 조건을 바꾸고, 방치 리드 에스컬레이션을 추가했습니다. 그 결과 접수에서 담당자 배정까지 평균 33.6시간이 0.4시간으로 줄었고, 1시간 내 배정 비율은 9%에서 86%로 올랐습니다.',
+            role: 'DevOps / FDE',
+            tech: ['Notion', 'Backoffice', 'SLA Metrics', 'Alerting', 'Data Backfill'],
+            features: [
+              '접수 → 담당자 배정 평균 33.6시간 → 0.4시간 (98.7% 단축)',
+              '1시간 내 담당자 배정 비율 9% → 86%',
+              '영업시간 기준 SLA 자동 측정 (주말·공휴일·업무시간 외 제외)',
+              '방치 리드 알림·에스컬레이션 체계 구축'
+            ]
+          },
+          links: {
+            demo: null,
+            github: null
+          }
+        },
+        {
           id: 13,
           title: 'Notion Custom Agent 배포 검수 봇 & 릴리스 거버넌스',
           category: 'AX 업무자동화',
@@ -531,16 +553,16 @@ export const content = {
     hero: {
       greeting: "Hi, I am",
       title: "Ko Donghyeon.",
-      subtitle: "DevOps Engineer & Cloud Infra Architect.",
-      description: "I build reliable infrastructure and automated deployment pipelines.\nSpecializing in designing and operating scalable systems in cloud environments.",
+      subtitle: "DevOps Engineer & Forward Deployed Engineer.",
+      description: "I keep deployments boring through infrastructure automation, and put AI to work on internal operations.\nI prefer to sit next to the problem and fix it there.",
       cta: "Check out my work"
     },
     about: {
       title: "About Me",
       intro: [
-        "Hello! I'm **Ko Donghyeon**, a passionate **DevOps Engineer** and **Cloud Infra Architect**. I specialize in building scalable infrastructure and automated deployment pipelines.",
-        "With a strong foundation in Computer Science, I've been actively involved in cloud communities like **Cloud Club** and **Amazon Cloud Club**, while conducting security research at Dongguk University's Computer Security & Distributed Computing Lab.",
-        "I am currently focused on designing and operating reliable, scalable systems in **AWS** and **GCP** cloud environments."
+        "Hello! I'm **Ko Donghyeon**, a **DevOps Engineer** and **Forward Deployed Engineer**.",
+        "I build and run Terraform- and Kubernetes-based infrastructure with GitOps deployment. I dislike watching repetitive work eat people's time, so my focus now is **AX (internal automation) with AI** that takes over repeated work and reports engineering productivity metrics. Rather than staying inside the infrastructure, I would rather sit next to the team that has the problem, hear it firsthand, and fix it there.",
+        "I believe nothing beats what people come up with when they think together. That is why I love communities, and that interest is what shaped me into the engineer I am today. I want to pass that experience on to others, so I currently serve as an **AWS Student Builders Group Leader**."
       ],
       tabs: {
         experience: "Experience",
@@ -551,29 +573,32 @@ export const content = {
       },
       experience: [
         {
-          title: 'DevOps Engineer (Intern) / Infra·Platform·AX',
+          title: 'DevOps Engineer / Infra·Platform·AX',
           company: 'BUZZ & BEYOND',
-          period: '2026.01 ~ Present',
+          period: '2026.01 ~ Present (Intern 2026.01–06 · Full-time 2026.07~)',
           description: [
-            'Operated and automated infrastructure for a Kubernetes-based microservice platform, owning internal automation (AX) initiatives',
-            'Migrated Terraform deployments to Atlantis PR-based GitOps with a least-privilege AWS AssumeRole security architecture (contributed Atlantis OSS fix, PR #6186 merged into v0.41.0)',
-            'Built a Gemini 2.5 Flash pipeline that auto-classifies Notion tasks by work and meeting type (91.7% accuracy across 500+ daily tasks)',
-            'Built Notion custom agents that auto-calculate and report the four DORA metrics',
-            'Built deployment-quality auto-review and internal AX automation on Notion custom agents and Workers (serverless)',
-            'Introduced per-vendor (Vertex AI, AI Studio, OpenAI) LLM cost labeling to enable spend monitoring'
+            'Built the company GitOps environment with Terraform and Atlantis',
+            [
+              'PR-level approval required, giving every Terraform operation an audit trail',
+              'Moved AWS access to least-privilege AssumeRole, removing all local developer keys',
+              'Atlantis OSS contribution, [PR #6186](https://github.com/runatlantis/atlantis/pull/6186) merged (shipped in v0.41.0)'
+            ],
+            'Automated calculation and reporting of the four DORA metrics',
+            [
+              'Auto-classifies 500+ tasks per day at 91.7% accuracy'
+            ],
+            'Built an SLA system for inbound leads',
+            [
+              'Cut intake-to-owner assignment from 33.6h to 0.4h on average (98.7% faster); assignment within 1h rose from 9% to 86%',
+              'Measures SLA on business hours only, with alerts and escalation for leads left untouched'
+            ],
+            'Built and ran internal Notion agents',
+            [
+              'Automated deployment-quality review',
+              'Per-vendor LLM cost labeling to track spend'
+            ]
           ],
           tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Notion', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
-        },
-        {
-          title: 'AWS Student Builder Group Leader at Dongguk University',
-          company: 'Amazon Web Services (AWS)',
-          period: '2025.07 ~ Present',
-          description: [
-            'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
-            'AWS-certified — lead a university cloud-computing education group with applied AWS-product sessions for students of all majors'
-          ],
-          tags: ['AWS', 'Cloud']
         },
         {
           title: 'Undergraduate Researcher (CSDC Lab)',
@@ -581,10 +606,31 @@ export const content = {
           period: '2025.04 ~ Present',
           description: [
             'Conducting research on Network Security and Load Balancing',
-            'NLP-based IaC Security Analyzer — BERT model for Terraform semantic anomaly detection & IAM privilege escalation path visualization',
-            'SpinKube & WASM IoT Log Processing Simulation — Validating WebAssembly infra for high-throughput IoT environments'
+            'NLP-based IaC Security Analyzer. BERT model for Terraform semantic anomaly detection & IAM privilege escalation path visualization',
+            'SpinKube & WASM IoT Log Processing Simulation. Validating WebAssembly infra for high-throughput IoT environments'
           ],
           tags: ['Network Security', 'Load Balancing', 'AWS', 'NLP', 'WebAssembly']
+        },
+
+        {
+          title: 'AWS Student Builder Group Leader at Dongguk University',
+          company: 'Amazon Web Services (AWS)',
+          period: '2025.07 ~ Present',
+          description: [
+            'AWS Cloud Club Member (2025.07 ~ 2026.04)',
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'Run the [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) LinkedIn page',
+          ],
+          tags: ['AWS', 'Cloud']
+        },
+        {
+          title: 'Notion Campus Leader at Dongguk University',
+          company: 'Notion',
+          period: '2026.09 ~',
+          description: [
+            'Official Notion Campus Leader on campus, spreading Notion adoption among students'
+          ],
+          tags: ['Notion', 'Community']
         }
       ],
       education: [
@@ -593,12 +639,6 @@ export const content = {
           degree: 'B.S. in Computer Science Engineering (In Progress)',
           period: '2021.03 ~ 2027.02 (Expected)',
           description: ['GPA 4.12 / 4.5', 'Dean\'s List (Semester Honors) - 4 times']
-        },
-        {
-          title: 'Google Cloud Fundamentals: Core Infrastructure',
-          degree: 'Google Cloud',
-          period: '2025.10.18',
-          description: ['Completed GCP Core Infrastructure course']
         }
       ],
       activities: [
@@ -610,24 +650,24 @@ export const content = {
         },
         {
           title: 'Cloud Club 1st Gen',
-          role: 'Member',
+          role: '1st Member',
           period: '2022.03 ~ 2023.09',
-          description: ['Cloud technology study and project participation']
+          description: ['1st-generation member of a vendor-neutral inter-university cloud community', 'Studied and built across AWS, GCP and other providers without locking into a single vendor']
         },
         {
-          title: 'Amazon Cloud Club at Dongguk',
-          role: 'Member → Group Leader (2026.05~)',
-          period: '2025.07 ~ ',
-          description: ['AWS Cloud Club Member (2025.07 ~ 2026.04)', 'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )']
-        },
-        {
-          title: 'SoftBank Hackathon 2025',
+          title: 'SoftBank Hackathon',
           role: 'Finalist',
           period: '2024.11 ~ 2024.12',
           description: ['Preliminary round (2024.11.08 ~ 2024.11.09)', 'Advanced to Final round (2024.12.06 ~ 2024.12.07)']
         }
       ],
       certs: [
+        {
+          title: 'Notion Badge: Essentials · Workflows · Advanced',
+          issuer: 'Notion',
+          date: '2026.06',
+          description: ['Verify: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', 'Valid through 2028.06']
+        },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
           issuer: 'Google Cloud Skills Boost',
@@ -646,22 +686,10 @@ export const content = {
       ],
       awards: [
         {
-          title: 'Dongguk Univ. Semester Honors',
+          title: 'Dongguk Univ. Semester Honors (4 times)',
           issuer: 'Dongguk University College of Engineering',
-          date: '2021.07',
-          description: ['Dean\'s List - 1st Semester 2021']
-        },
-        {
-          title: 'Dongguk Univ. Semester Honors',
-          issuer: 'Dongguk University College of Engineering',
-          date: '2022.01',
-          description: ['Dean\'s List - 2nd Semester 2021']
-        },
-        {
-          title: 'Dongguk Univ. Semester Honors',
-          issuer: 'Dongguk University College of Engineering',
-          date: '2022.07',
-          description: ['Dean\'s List - 1st Semester 2022']
+          date: '2021.07 ~ 2025.07',
+          description: ['Dean\'s List - 2021 Spring, 2021 Fall, 2022 Spring, 2025 Spring']
         },
         {
           title: 'U-LINC Adventure Design Competition - Encouragement Prize',
@@ -680,12 +708,6 @@ export const content = {
           issuer: 'Commandant of the ROK Army Signal School (Brigadier General)',
           date: '2023.08',
           description: ['Awarded for ranking 1st out of 200 trainees during the latter half of military service training']
-        },
-        {
-          title: 'Dongguk Univ. Semester Honors',
-          issuer: 'Dongguk University College of Engineering',
-          date: '2025.07',
-          description: ['Dean\'s List - 1st Semester 2025']
         }
       ]
     },
@@ -699,6 +721,7 @@ export const content = {
         security: "Security"
       },
       modal: {
+        detail: "View details",
         overview: "Overview",
         role: "Role",
         techStack: "Tech Stack",
@@ -715,7 +738,7 @@ export const content = {
           title: 'DORA Metrics Auto Dashboard',
           category: 'AX Automation',
           image: null,
-          description: 'Consolidated distributed Notion DB → DORA 4 metrics auto-calculation (7/30/90-day windows) — FLEX API business-day correction',
+          description: 'Consolidated distributed Notion DB → DORA 4 metrics auto-calculation (7/30/90-day windows). FLEX API business-day correction',
           details: {
             problem: 'Manual DORA metric calculation inefficiency, scattered data across multiple Notion DBs, unfair metrics due to unaccounted non-working days.',
             solution: 'Consolidated deployment and incident data scattered across multiple Notion DBs into a unified pipeline, auto-calculating DORA 4 metrics (Deploy Frequency, Lead Time, Change Fail Rate, MTTR) daily with 7/30/90-day sliding windows. Designed weighted team/individual DORA Score system and integrated FLEX API to correct Deploy Frequency based on actual business days (excluding holidays/PTO).',
@@ -733,10 +756,10 @@ export const content = {
         },
         {
           id: 2,
-          title: 'LLM Task Auto-Classification — Workload Tracking',
+          title: 'LLM Task Auto-Classification: Workload Tracking',
           category: 'AX Automation',
           image: null,
-          description: '500+ daily tasks auto-classified with 91.7% accuracy — Eliminated human error and enabled quantitative Workload tracking',
+          description: '500+ daily tasks auto-classified with 91.7% accuracy. Eliminated human error and enabled quantitative Workload tracking',
           details: {
             problem: 'Inconsistent manual task classification causing human errors, making it impossible to track where team members actual Workload is being spent.',
             solution: 'Consolidated scattered Notion task data and applied Gemini 2.5 Flash hierarchical classification (roadmap context + task context) into 13 task types and 14 meeting types. Achieved 91.7% accuracy, eliminating human error and enabling quantitative tracking of per-member Workload allocation.',
@@ -744,7 +767,7 @@ export const content = {
             tech: ['Gemini', 'Argo Workflows', 'Python', 'Apollo Federation', 'GraphQL'],
             features: [
               'Consolidated scattered Notion data + Gemini 2.5 Flash hierarchical classification',
-              '500+ daily auto-classification, 91.7% accuracy — human error eliminated',
+              '500+ daily auto-classification, 91.7% accuracy. human error eliminated',
               'Per-member Workload allocation quantitative tracking',
               'Argo CronWorkflow daily scheduled execution',
               'Apollo Federation Subgraph separation for reusability'
@@ -843,10 +866,10 @@ export const content = {
         },
         {
           id: 7,
-          title: 'NanoGrid Plus — Hybrid FaaS Platform',
+          title: 'NanoGrid Plus: Hybrid FaaS Platform',
           category: 'DevOps & Infra',
           image: null,
-          description: '30x Cold Start improvement (3s→0.2s), 96% cost reduction — Self-hosted FaaS on EC2 (SoftBank Hackathon Final)',
+          description: '30x Cold Start improvement (3s→0.2s), 96% cost reduction. Self-hosted FaaS on EC2 (SoftBank Hackathon Finalist)',
           details: {
             problem: 'Lambda execution limits (time/memory) hindering FaaS scalability and Cold Start latency.',
             solution: 'Architected a self-hosted FaaS platform on AWS EC2. Achieved 30x Cold Start improvement (3s→0.2s) via Docker Warm Pool (Pause/Unpause), with Auto-Tuner analyzing real-time memory usage for up to 96% cost reduction. Implemented full Data Plane: SQS task queue, S3 code storage, CloudWatch custom metrics, and Redis Pub/Sub result delivery.',
@@ -867,13 +890,13 @@ export const content = {
         },
         {
           id: 8,
-          title: 'Roomeya — Serverless Dormitory Matching',
+          title: 'Roomeya: Serverless Dormitory Matching',
           category: 'DevOps & Infra',
           image: null,
           description: 'Full serverless AWS architecture + Terraform IaC for seasonal dormitory matching (9 Lambdas, Step Functions, DynamoDB)',
           details: {
             problem: 'Idle cost during off-season and matching workflow complexity.',
-            solution: 'Designed full serverless architecture: 9 Lambda functions, Step Functions matching workflow, 4 DynamoDB tables, API Gateway HTTP API v2, Cognito OAuth 2.0 auth, SES email — all codified with Terraform. Scale-to-zero eliminates off-season costs entirely.',
+            solution: 'Designed full serverless architecture: 9 Lambda functions, Step Functions matching workflow, 4 DynamoDB tables, API Gateway HTTP API v2, Cognito OAuth 2.0 auth, SES email. all codified with Terraform. Scale-to-zero eliminates off-season costs entirely.',
             role: 'Cloud Architect',
             tech: ['Terraform', 'AWS Lambda', 'AWS Step Functions', 'DynamoDB', 'API Gateway', 'Cognito'],
             features: [
@@ -891,10 +914,10 @@ export const content = {
         },
         {
           id: 9,
-          title: 'Deploy Land — Gamified CI/CD Platform',
+          title: 'Deploy Land: Gamified CI/CD Platform',
           category: 'DevOps & Infra',
           image: null,
-          description: 'GitHub Push→Build→Deploy→Validation fully automated — Gamified real-time monitoring serverless CI/CD platform',
+          description: 'GitHub Push→Build→Deploy→Validation fully automated. Gamified real-time monitoring serverless CI/CD platform',
           details: {
             problem: 'Poor deployment log readability, delayed failure detection, and phantom deployment risks.',
             solution: 'Designed a serverless CI/CD platform automating the full cycle from GitHub Push to Build, Deploy, and Health Check. Built gamified real-time monitoring via AWS Amplify, instant Discord/Slack notifications on success/failure, and automatic Health Check + config validation to prevent phantom deployments.',
@@ -982,6 +1005,29 @@ export const content = {
           }
         },
         {
+          id: 15,
+          title: 'Inbound Lead SLA System',
+          category: 'AX Automation',
+          image: null,
+          description: 'Cut intake-to-owner assignment from 33.6h to 0.4h on average (98.7% faster), covering SLA definition, business-hours measurement, alerts and escalation',
+          details: {
+            problem: 'In the first half of the year, 45.5% of leads were answered within an hour, average response was 4.3 hours, and 4 leads sat untouched past 9 hours. Slow first responses cut straight into conversion.',
+            solution: 'Recorded intake, owner assignment and first customer contact on the same basis, and defined SLA measurement on business hours. Changed alert delivery so it only fires when an owner can act, and added escalation for untouched leads. Intake-to-assignment then fell from 33.6 hours to 0.4 hours on average, and assignment within an hour rose from 9% to 86%.',
+            role: 'DevOps / FDE',
+            tech: ['Notion', 'Backoffice', 'SLA Metrics', 'Alerting', 'Data Backfill'],
+            features: [
+              'Intake to owner assignment: 33.6h → 0.4h (98.7% faster)',
+              'Assignment within 1 hour: 9% → 86%',
+              'SLA measured on business hours only (weekends, holidays, after-hours excluded)',
+              'Alerting and escalation for leads left untouched'
+            ]
+          },
+          links: {
+            demo: null,
+            github: null
+          }
+        },
+        {
           id: 13,
           title: 'Notion Custom-Agent Release Governance',
           category: 'AX Automation',
@@ -1039,16 +1085,16 @@ export const content = {
     hero: {
       greeting: "Hello, I'm",
       title: "Ko Donghyeon.",
-      subtitle: "DevOps Engineer & Cloud Architect.",
-      description: "安定したインフラと自動化されたデプロイパイプラインで価値を創出します。\nクラウド環境でスケーラブルなシステムを設計・運用するエンジニアです。",
+      subtitle: "DevOps Engineer & Forward Deployed Engineer.",
+      description: "インフラ自動化でデプロイを安定させ、AIで社内業務を自動化します。\n問題のある現場に入って直接解決するエンジニアです。",
       cta: "プロジェクトを見る"
     },
     about: {
       title: "About Me",
       intro: [
-        "こんにちは！**DevOps Engineer**かつ**Cloud Architect**の**高東見**（コ・ドンヒョン）です。",
-        "コンピュータ工学の深い理解をもとに、**クラウドインフラ設計**と**自動化デプロイパイプライン**の構築に注力しています。Cloud Club、Amazon Cloud Clubなどのクラウドコミュニティ活動とセキュリティ研究を並行し、幅広い経験を積んできました。",
-        "現在は**AWS**、**GCP**などのクラウド環境で、安定的かつスケーラブルなシステムの設計・運用に集中しています。"
+        "こんにちは！**DevOps Engineer**かつ**Forward Deployed Engineer**の**高東見**（コ・ドンヒョン）です。",
+        "Terraform・Kubernetesベースのインフラと GitOps デプロイ環境を自ら構築・運用しています。反復業務が人の時間を奪うことが好きではなく、最近は**AIを活用したAX（業務自動化）**で社内の反復業務と開発生産性指標の自動化に注力しています。インフラの中に留まるより、問題を抱えたチームのそばに行って直接聞き、その場で直すやり方を好みます。",
+        "人が集まって一緒に考えて生まれたものは、何よりも強いと思っています。だからコミュニティが好きで、その関心が今の自分をつくったと考えています。同じ経験を他の人にも届けたく、現在**AWS Student Builders Group Leader**として活動しています。"
       ],
       tabs: {
         experience: "経歴",
@@ -1059,29 +1105,32 @@ export const content = {
       },
       experience: [
         {
-          title: 'DevOps Engineer (Intern) / Infra・Platform・AX',
+          title: 'DevOps Engineer / Infra・Platform・AX',
           company: 'BUZZ & BEYOND',
-          period: '2026.01 ~ 現在',
+          period: '2026.01 ~ 現在 (インターン 2026.01~06 · 正社員 2026.07~)',
           description: [
-            'Kubernetes基盤マイクロサービス環境でのインフラ運用/自動化およびAX（業務自動化）課題遂行',
-            'TerraformデプロイをAtlantis基盤PR/GitOpsに転換、AWS AssumeRole中心の最小権限セキュリティアーキテクチャを設計・定着（Atlantis OSS貢献 PR #6186 マージ）',
-            'Gemini 2.5 Flash基盤でNotion TASKの業務/ミーティング種別を自動分類するパイプラインを構築（精度91.7%、1日500+ TASK）',
-            'Notion Custom AgentでDORA 4大指標を自動算出・レポーティング',
-            'Notion Custom Agent・Workers基盤のデプロイ品質自動検収体系および社内AX（業務自動化）を構築',
-            'ベンダー別（Vertex AI・AI Studio・OpenAI）LLMコストラベリング体系を導入しコストモニタリング基盤を整備'
+            'Terraform・Atlantisで社内GitOps環境を構築',
+            [
+              'PR単位の承認を強制し、Terraform作業の監査証跡を全件確保',
+              'AWS AssumeRoleの最小権限に移行、開発者ローカルのAccess Keyを全量回収',
+              'Atlantis OSS貢献 [PR #6186](https://github.com/runatlantis/atlantis/pull/6186) マージ（v0.41.0に反映）'
+            ],
+            'DORA 4大指標を自動算出・レポーティング',
+            [
+              '1日500件以上の業務を自動分類（精度91.7%）'
+            ],
+            'インバウンドリードの SLA 体系を構築',
+            [
+              '受付 → 担当者アサインの平均を 33.6 時間から 0.4 時間へ短縮（98.7% 短縮）、1 時間以内アサイン率 9% → 86%',
+              '営業時間基準で SLA を自動計測し、放置リードの通知・エスカレーション体系を構築'
+            ],
+            'Notionの社内エージェントを構築・運用',
+            [
+              'デプロイ品質の検収を自動化',
+              'ベンダー別LLMコストラベリングで使用量をモニタリング'
+            ]
           ],
           tags: ['Kubernetes', 'Terraform', 'Atlantis', 'AWS', 'Notion', 'Argo Workflows', 'Datadog', 'Gemini', 'Python']
-        },
-        {
-          title: 'AWS Student Builder Group Leader at Dongguk University',
-          company: 'Amazon Web Services (AWS)',
-          period: '2025.07 ~ 現在',
-          description: [
-            'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
-            'AWS公式認定 — 専攻を問わない学生向けクラウドコンピューティング教育グループを運営（AWS製品の実践セッション）'
-          ],
-          tags: ['AWS', 'Leadership']
         },
         {
           title: '学部研究生 (CSDC Lab)',
@@ -1089,10 +1138,31 @@ export const content = {
           period: '2025.04 ~ 現在',
           description: [
             'ネットワークセキュリティおよび負荷分散関連研究遂行',
-            'NLP基盤IaCセキュリティ分析ツール個別研究 — BERTモデルでTerraformセマンティック異常検知およびIAM権限昇格経路可視化',
-            'SpinKube & WASM IoTログ処理シミュレーション個別研究 — WebAssembly基盤大規模IoT環境インフラ検証'
+            'NLP基盤IaCセキュリティ分析ツール個別研究。BERTモデルでTerraformセマンティック異常検知およびIAM権限昇格経路可視化',
+            'SpinKube & WASM IoTログ処理シミュレーション個別研究。WebAssembly基盤大規模IoT環境インフラ検証'
           ],
           tags: ['Network Security', 'Load Balancing', 'AWS', 'NLP', 'WebAssembly']
+        },
+
+        {
+          title: 'AWS Student Builder Group Leader at Dongguk University',
+          company: 'Amazon Web Services (AWS)',
+          period: '2025.07 ~ 現在',
+          description: [
+            'AWS Cloud Club Member (2025.07 ~ 2026.04)',
+            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'LinkedIn [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) ページ運営',
+          ],
+          tags: ['AWS', 'Leadership']
+        },
+        {
+          title: 'Notion Campus Leader at Dongguk University',
+          company: 'Notion',
+          period: '2026.09 ~',
+          description: [
+            '学内の Notion 公式キャンパスリーダーとして、学生への Notion 活用普及活動'
+          ],
+          tags: ['Notion', 'Community']
         }
       ],
       education: [
@@ -1101,12 +1171,6 @@ export const content = {
           degree: '工科大学 コンピュータ工学科 学士（在学中）',
           period: '2021.03 ~ 2027.02（予定）',
           description: ['GPA 4.12 / 4.5', '工科大学 学期優等生 4回選定']
-        },
-        {
-          title: 'Google Cloud Fundamentals: Core Infrastructure',
-          degree: 'Google Cloud',
-          period: '2025.10.18 修了',
-          description: ['GCPコアインフラ課程修了']
         }
       ],
       activities: [
@@ -1121,21 +1185,12 @@ export const content = {
         },
         {
           title: 'Cloud Club 1期',
-          role: 'Member',
+          role: '1st Member',
           period: '2022.03 ~ 2023.09',
-          description: ['クラウド技術学習およびプロジェクト参加']
+          description: ['特定ベンダーに依存しない (vendor-neutral) IT連合サークルの1期メンバー', 'AWS・GCPなどベンダーを問わずクラウドインフラを幅広く扱い、学習とプロジェクトを実施']
         },
         {
-          title: 'Amazon Cloud Club at Dongguk',
-          role: 'Member → Group Leader (2026.05~)',
-          period: '2025.07 ~ ',
-          description: [
-            'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )'
-          ]
-        },
-        {
-          title: 'SoftBank Hackathon 2025',
+          title: 'SoftBank Hackathon',
           role: 'Finalist',
           period: '2024.11 ~ 2024.12',
           description: [
@@ -1145,6 +1200,12 @@ export const content = {
         }
       ],
       certs: [
+        {
+          title: 'Notion Badge: Essentials · Workflows · Advanced',
+          issuer: 'Notion',
+          date: '2026.06',
+          description: ['バッジ認証: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', '有効期限 2028.06']
+        },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
           issuer: 'Google Cloud Skills Boost',
@@ -1163,22 +1224,10 @@ export const content = {
       ],
       awards: [
         {
-          title: '東国大学校 工科大学 学期優等生',
+          title: '東国大学校 工科大学 学期優等生（4回）',
           issuer: '東国大学校 工科大学',
-          date: '2021.07',
-          description: ['2021年度1学期 学期優等生選定']
-        },
-        {
-          title: '東国大学校 工科大学 学期優等生',
-          issuer: '東国大学校 工科大学',
-          date: '2022.01',
-          description: ['2021年度2学期 学期優等生選定']
-        },
-        {
-          title: '東国大学校 工科大学 学期優等生',
-          issuer: '東国大学校 工科大学',
-          date: '2022.07',
-          description: ['2022年度1学期 学期優等生選定']
+          date: '2021.07 ~ 2025.07',
+          description: ['2021年度1学期・2学期、2022年度1学期、2025年度1学期に選定']
         },
         {
           title: 'U-LINC アドベンチャーデザインコンペティション 奨励賞',
@@ -1197,12 +1246,6 @@ export const content = {
           issuer: '陸軍情報通信学校長 (准将)',
           date: '2023.08',
           description: ['軍生活後半期教育 受講生200名中 1位の成績により受賞']
-        },
-        {
-          title: '東国大学校 工科大学 学期優等生',
-          issuer: '東国大学校 工科大学',
-          date: '2025.07',
-          description: ['2025年度1学期 学期優等生選定']
         }
       ]
     },
@@ -1216,6 +1259,7 @@ export const content = {
         security: "Security"
       },
       modal: {
+        detail: "詳細を見る",
         overview: "概要",
         role: "役割",
         techStack: "技術スタック",
@@ -1232,7 +1276,7 @@ export const content = {
           title: 'Atlantis基盤 GitOps Terraform CI/CD構築',
           category: 'DevOps & Infra',
           image: null,
-          description: 'PR基盤GitOps転換でインフラ変更追跡性100%達成 — Helm基盤Atlantisデプロイ及びAWS AssumeRoleセキュリティ体系構築',
+          description: 'PR基盤GitOps転換でインフラ変更追跡性100%達成。Helm基盤Atlantisデプロイ及びAWS AssumeRoleセキュリティ体系構築',
           details: {
             problem: 'エンジニアがローカルでTerraformを直接実行し、状態ファイル衝突・変更履歴追跡不可・環境間整合性問題が頻発',
             solution: 'AtlantisをKubernetesクラスタにHelm Chart基盤でデプロイし、PR基盤GitOpsワークフローに転換しました。全てのインフラ変更がコードレビューを経て承認後にのみ適用されるようにし、運用透明性を確保しました。AWS AssumeRoleアーキテクチャを設計し、開発者ローカルのAccess Keyを全面回収して最小権限原則基盤のセキュリティ体系を構築しました。',
@@ -1269,10 +1313,10 @@ export const content = {
         },
         {
           id: 3,
-          title: 'LLM基盤業務分類自動化 — Workload追跡体系構築',
+          title: 'LLM基盤業務分類自動化: Workload追跡体系構築',
           category: 'AX 業務自動化',
           image: null,
-          description: '日次500件+タスク自動分類、精度91.7%達成 — ヒューマンエラー排除及び組織Workload可視化',
+          description: '日次500件+タスク自動分類、精度91.7%達成。ヒューマンエラー排除及び組織Workload可視化',
           details: {
             problem: '手動分類で発生するヒューマンエラーによりタスク分類が一貫せず、組織構成員の実際のWorkloadがどこに使われているか追跡不可能な状態',
             solution: '既存の分散されたNotionタスクデータを統合し、Gemini 2.5 Flash基盤の階層的分類ロジック（ロードマップ性格＋タスクコンテキスト）を適用して13個の業務タイプ・14個のミーティングタイプに自動分類しました。分類精度91.7%を達成しヒューマンエラーを根本的に遮断、構成員別Workloadが実際にどこに投入されているか定量的に追跡できる基盤を確保しました。',
@@ -1280,7 +1324,7 @@ export const content = {
             tech: ['Gemini', 'Argo Workflows', 'Python', 'Apollo Federation', 'GraphQL'],
             features: [
               '分散Notionデータ統合及びGemini 2.5 Flash階層的分類',
-              '日次500件+自動分類、精度91.7% — ヒューマンエラー根本遮断',
+              '日次500件+自動分類、精度91.7%。ヒューマンエラー根本遮断',
               '構成員別Workload投入現況の定量的追跡体系構築',
               'Argo CronWorkflow毎日定期実行',
               'Apollo Federation Subgraph分離で再利用性確保'
@@ -1293,7 +1337,7 @@ export const content = {
           title: 'DORA Metrics自動化ダッシュボード構築',
           category: 'AX 業務自動化',
           image: null,
-          description: '分散Notion DB統合 → DORA 4大指標自動算出（7/30/90日ウィンドウ）— FLEX API連動 実質営業日補正',
+          description: '分散Notion DB統合 → DORA 4大指標自動算出（7/30/90日ウィンドウ）。FLEX API連動 実質営業日補正',
           details: {
             problem: 'DORA指標手動算出の非効率性、分散されたNotion DBデータによる集計困難、非稼働時間未反映による公平性問題',
             solution: '複数のNotion DBに分散されたデプロイ・障害データを統合し、別途ツール導入なしで7日・30日・90日スライディングウィンドウでDORA 4大指標（Deploy Frequency, Lead Time to Changes, Change Fail Rate, MTTR）を毎日自動算出しました。チーム別・個人別加重値基盤DORA Score体系を設計し、FLEX APIを連動して休暇・祝日等の非稼働時間を反映した実質営業日基準でDeploy Frequencyを補正しました。',
@@ -1351,10 +1395,10 @@ export const content = {
         },
         {
           id: 7,
-          title: 'NanoGrid Plus — Hybrid FaaS Platform',
+          title: 'NanoGrid Plus: Hybrid FaaS Platform',
           category: 'DevOps & Infra',
           image: null,
-          description: 'Cold Start 30倍改善（3秒→0.2秒）、コスト96%削減 — EC2基盤セルフホスティングFaaSプラットフォーム（SoftBank Hackathon本選）',
+          description: 'Cold Start 30倍改善（3秒→0.2秒）、コスト96%削減。EC2基盤セルフホスティングFaaSプラットフォーム（SoftBank Hackathon本選）',
           details: {
             problem: 'Lambda実行制限（時間/メモリ）によるFaaSスケーラビリティ限界とCold Start遅延',
             solution: 'AWS EC2基盤のセルフホスティングFaaSプラットフォームを設計しました。Docker Warm Pool（Pause/Unpause）技術でCold Startを30倍改善（3秒→0.2秒）し、Auto-Tunerがリアルタイムメモリ使用量を分析して最大96%コスト削減を提案します。',
@@ -1372,10 +1416,10 @@ export const content = {
         },
         {
           id: 8,
-          title: 'Roomeya — Serverless Dormitory Matching',
+          title: 'Roomeya: Serverless Dormitory Matching',
           category: 'DevOps & Infra',
           image: null,
-          description: 'シーズン別寮マッチングサービス — AWSフルサーバーレスアーキテクチャ + Terraform IaC（Lambda 9個、Step Functions、DynamoDB）',
+          description: 'シーズン別寮マッチングサービス。AWSフルサーバーレスアーキテクチャ + Terraform IaC（Lambda 9個、Step Functions、DynamoDB）',
           details: {
             problem: 'シーズン別運用特性による遊休コスト発生とマッチングワークフローの複雑性',
             solution: 'Lambda 9個関数、Step Functionsマッチングワークフロー、DynamoDB 4テーブル、API Gateway（HTTP API v2）、Cognito OAuth 2.0認証、SESメール送信まで全インフラをTerraformでコード化しました。Scale-to-zeroでオフシーズン遊休コストを完全排除しました。',
@@ -1393,10 +1437,10 @@ export const content = {
         },
         {
           id: 9,
-          title: 'Deploy Land — Gamified CI/CD Platform',
+          title: 'Deploy Land: Gamified CI/CD Platform',
           category: 'DevOps & Infra',
           image: null,
-          description: 'GitHub Push→Build→Deploy→検証 全過程自動化 — ゲーミフィケーションリアルタイムモニタリング サーバーレスCI/CDプラットフォーム',
+          description: 'GitHub Push→Build→Deploy→検証 全過程自動化。ゲーミフィケーションリアルタイムモニタリング サーバーレスCI/CDプラットフォーム',
           details: {
             problem: '標準デプロイログの可読性不足、デプロイ失敗時の即時認知困難、Phantomデプロイリスク',
             solution: 'GitHub PushからBuild、Deploy、Health Checkまで全過程を自動化するサーバーレスCI/CDプラットフォームを設計しました。AWS Amplify基盤ゲーミフィケーションモニタリングでデプロイ状態をリアルタイム可視化し、成功/失敗時Discord・Slack即時通知を実装しました。',
@@ -1470,6 +1514,29 @@ export const content = {
             ]
           },
           links: { demo: null, github: null }
+        },
+        {
+          id: 15,
+          title: 'インバウンドリード SLA 体系の構築',
+          category: 'AX 業務自動化',
+          image: null,
+          description: '受付 → 担当者アサインの平均を 33.6 時間から 0.4 時間へ短縮（98.7% 短縮）。SLA 定義から営業時間基準の計測、通知・エスカレーションまで構築',
+          details: {
+            problem: '上半期のリード応答は 1 時間以内 45.5%、平均応答 4.3 時間、9 時間超の放置が 4 件でした。初期対応が遅れるほど商談転換が下がり、そのまま機会損失につながる状態でした。',
+            solution: '受付・担当者アサイン・初回顧客コンタクトの時刻を同一基準で自動記録し、営業時間基準で SLA を計測する定義を整えました。担当者が対応できる時間帯にのみ通知が届くよう配信条件を変更し、放置リードのエスカレーションを追加しました。結果として受付から担当者アサインまでの平均は 33.6 時間から 0.4 時間に短縮され、1 時間以内のアサイン率は 9% から 86% に上がりました。',
+            role: 'DevOps / FDE',
+            tech: ['Notion', 'Backoffice', 'SLA Metrics', 'Alerting', 'Data Backfill'],
+            features: [
+              '受付 → 担当者アサイン 平均 33.6 時間 → 0.4 時間（98.7% 短縮）',
+              '1 時間以内の担当者アサイン率 9% → 86%',
+              '営業時間基準の SLA 自動計測（週末・祝日・時間外を除外）',
+              '放置リードの通知・エスカレーション体系を構築'
+            ]
+          },
+          links: {
+            demo: null,
+            github: null
+          }
         },
         {
           id: 13,

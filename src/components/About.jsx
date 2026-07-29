@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
 import { content } from '../data/content';
+import { reveal, revealDelay } from '../utils/motion';
 import './About.css';
 
 const About = () => {
@@ -23,12 +25,16 @@ const About = () => {
     { id: 'awards', label: t.tabs.awards },
   ];
 
-  // Helper to render text with bold markdown (**text**)
+  // Helper to render text with bold (**text**) and link ([text](url)) markdown
   const renderText = (text) => {
-    const parts = text.split(/(\*\*.*?\*\*)/g);
+    const parts = text.split(/(\*\*.*?\*\*|\[[^\]]+\]\([^)]+\))/g);
     return parts.map((part, index) => {
       if (part.startsWith('**') && part.endsWith('**')) {
         return <strong key={index}>{part.slice(2, -2)}</strong>;
+      }
+      const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (link) {
+        return <a key={index} href={link[2]} target="_blank" rel="noopener noreferrer">{link[1]}</a>;
       }
       return part;
     });
@@ -49,10 +55,10 @@ const About = () => {
   return (
     <section id="about" className="section about-section">
       <div className="container">
-        <h2 className="section-title">{t.title}</h2>
-        
+        <motion.h2 className="section-title" {...reveal}>{t.title}</motion.h2>
+
         <div className="about-content">
-          <div className="about-profile">
+          <motion.div className="about-profile" {...revealDelay(0.1)}>
             <div className="profile-image-wrapper">
               {profileImages.length > 1 && (
                 <>
@@ -91,10 +97,21 @@ const About = () => {
               {t.intro.map((paragraph, index) => (
                 <p key={index}>{renderText(paragraph)}</p>
               ))}
+              <div className="about-links">
+                <a href="https://github.com/Gosorasora" target="_blank" rel="noopener noreferrer">
+                  <FaGithub /> GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/kosora" target="_blank" rel="noopener noreferrer">
+                  <FaLinkedin /> LinkedIn
+                </a>
+                <a href="mailto:kodh0204@gmail.com">
+                  <FaEnvelope /> kodh0204@gmail.com
+                </a>
+              </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="about-tabs-container">
+          <motion.div className="about-tabs-container" {...revealDelay(0.2)}>
             <div className="tabs-list">
               {tabs.map(tab => (
                 <button
@@ -127,8 +144,10 @@ const About = () => {
                     
                     {item.description && (
                       <ul className="resume-description">
-                        {item.description.map((desc, i) => (
-                          <li key={i}>{renderText(desc)}</li>
+                        {item.description.flatMap((desc, i) => (
+                          Array.isArray(desc)
+                            ? desc.map((sub, j) => <li key={`${i}-${j}`} className="sub">{renderText(sub)}</li>)
+                            : [<li key={i}>{renderText(desc)}</li>]
                         ))}
                       </ul>
                     )}
@@ -144,7 +163,7 @@ const About = () => {
                 ))}
               </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

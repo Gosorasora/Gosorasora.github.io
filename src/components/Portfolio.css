@@ -101,12 +101,53 @@
     font-size: 1rem;
     color: var(--text-secondary);
     line-height: 1.6;
-    margin-bottom: 20px;
-    flex-grow: 1;
+    margin-bottom: 16px;
 }
 
 .card-footer {
     margin-top: auto;
+}
+
+.card-highlights {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.card-highlights li {
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.card-highlights li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+}
+
+.card-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.card-tech-chip {
+    background-color: var(--bg-light);
+    color: var(--accent-color);
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-family: monospace;
+    font-weight: 500;
+}
+
+.card-tech-chip.more {
+    opacity: 0.7;
 }
 
 .read-more {

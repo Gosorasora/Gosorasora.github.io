@@ -11,37 +11,38 @@
 
   body {
     font-family: 'Inter', sans-serif;
-    font-size: 10.5pt;
-    line-height: 1.45;
+    font-size: 9.5pt;
+    line-height: 1.32;
     color: #1B263B;
     max-width: 850px;
     margin: 0 auto;
-    padding: 40px 50px;
+    padding: 26px 40px;
   }
 
   a { color: #415A77; text-decoration: none; }
   a:hover { text-decoration: underline; }
 
   /* Header */
-  .header { text-align: center; margin-bottom: 8px; }
-  .header h1 { font-size: 22pt; font-weight: 700; margin-bottom: 4px; }
+  .header { text-align: center; margin-bottom: 6px; }
+  .header h1 { font-size: 19pt; font-weight: 700; margin-bottom: 3px; }
   .header .contact { font-size: 10pt; color: #415A77; }
+  .summary { font-size: 9pt; line-height: 1.38; color: #1B263B; }
   .header .contact a { margin: 0 4px; }
 
   /* Section */
-  .section { margin-bottom: 12px; }
+  .section { margin-bottom: 7px; }
   .section-title {
     font-size: 11pt;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     border-bottom: 1.5px solid #1B263B;
-    padding-bottom: 3px;
-    margin-bottom: 8px;
+    padding-bottom: 2px;
+    margin-bottom: 6px;
   }
 
   /* Entry */
-  .entry { margin-bottom: 10px; }
+  .entry { margin-bottom: 5px; }
   .entry-header {
     display: flex;
     justify-content: space-between;
@@ -60,11 +61,11 @@
   }
 
   ul { padding-left: 18px; margin-top: 2px; }
-  ul li { margin-bottom: 2px; font-size: 10pt; }
+  ul li { margin-bottom: 1px; font-size: 9pt; }
 
   /* Skills */
-  .skills-grid { font-size: 10pt; }
-  .skills-grid .row { margin-bottom: 3px; }
+  .skills-grid { font-size: 9pt; }
+  .skills-grid .row { margin-bottom: 2px; }
   .skills-grid .label { font-weight: 600; }
 
   /* Achievement */
@@ -74,7 +75,10 @@
   .achievement li { font-size: 9.5pt; }
 
   @media print {
-    body { padding: 20px 30px; }
+  .entry { break-inside: avoid; page-break-inside: avoid; }
+  .entry-header { break-after: avoid; page-break-after: avoid; }
+  .section-title { break-after: avoid; page-break-after: avoid; }
+    body { padding: 14px 26px; }
     a { color: #1B263B; }
   }
 </style>
@@ -91,6 +95,30 @@
   </div>
 </div>
 
+<!-- Summary -->
+<div class="section">
+  <div class="section-title">Summary</div>
+  <div class="summary">
+    I am Ko Donghyeon, a DevOps Engineer and Forward Deployed Engineer. I build and run Terraform and Kubernetes infrastructure with GitOps deployment.
+    I dislike watching repetitive work eat people's time, so my focus now is AX, internal automation with AI. Rather than staying inside the infrastructure,
+    I sit next to the team that has the problem and fix it there. Nothing beats what people build when they think together, which is why I like communities
+    and serve as an AWS Student Builder Group Leader.
+  </div>
+</div>
+
+<!-- Skills -->
+<div class="section">
+  <div class="section-title">Skills</div>
+  <div class="skills-grid">
+    <div class="row"><span class="label">(Cloud & Infra)</span> AWS (EC2, SQS, S3, RDS, Lambda, Step Functions, IAM, WAF, ElastiCache, EventBridge, CodePipeline), GCP, Azure, Terraform, Kubernetes, Docker, Helm</div>
+    <div class="row"><span class="label">(DevOps & Automation)</span> Atlantis, Argo Workflows, Datadog, Grafana, GitOps, CI/CD, Notion</div>
+    <div class="row"><span class="label">(Programming)</span> Golang, Python, Java, SQL</div>
+    <div class="row"><span class="label">(AI/ML & Security)</span> BERT, Hugging Face, NetworkX, NLP, Gemini, WebAssembly, SpinKube</div>
+    <div class="row"><span class="label">(Frameworks)</span> Spring Boot, Apollo Federation, GraphQL, Django, FastAPI, Node.js</div>
+    <div class="row"><span class="label">(Languages)</span> Korean (Native), English (Conversational), Japanese (Conversational)</div>
+  </div>
+</div>
+
 <!-- Experience -->
 <div class="section">
   <div class="section-title">Experience</div>
@@ -98,32 +126,38 @@
   <div class="entry">
     <div class="entry-header">
       <span class="entry-title">BUZZ & BEYOND (vling)</span>
-      <span class="entry-date">Jan 2026 - Present</span>
+      <span class="entry-date">Jan 2026 - Present (Intern Jan–Jun 2026 · Full-time Jul 2026 - )</span>
     </div>
     <div class="entry-sub">
-      <span>DevOps Engineer Intern / Infra · Platform · AX</span>
+      <span>DevOps Engineer / Infra · Platform · AX</span>
       <span>Seoul, South Korea</span>
     </div>
     <ul>
-      <li>Built a secure GitOps CI/CD workflow by deploying Atlantis on Kubernetes via a Helm chart, enforcing PR-based infrastructure changes with code-review approval and achieving a 100% audit trail for all Terraform operations</li>
-      <li>Designed an AWS AssumeRole architecture to enforce least-privilege access at deploy time, revoking 100% of developers' local AWS access keys and eliminating credential-theft risk</li>
-      <li>Built an LLM task-classification system on Gemini 2.5 Flash that reached 91.7% accuracy across 500+ daily tasks (13 work types, 14 meeting types), eliminating manual triage and enabling per-member workload tracking</li>
-      <li>Built Notion custom agents and a DORA Metrics auto-calculation dashboard</li>
-      <li>Built deployment-quality auto-review and internal automation (AX) on Notion custom agents and Workers (serverless)</li>
-    </ul>
-  </div>
-
-  <div class="entry">
-    <div class="entry-header">
-      <span class="entry-title">AWS Student Builder Group Leader at Dongguk University</span>
-      <span class="entry-date">Jul 2025 - Present</span>
-    </div>
-    <div class="entry-sub">
-      <span>Member → Group Leader (May 2026 – Present)</span>
-      <span>Amazon Web Services (AWS)</span>
-    </div>
-    <ul>
-      <li>Appointed an official, AWS-certified Student Builder Group Leader to lead a university cloud-computing community, running applied-learning sessions on AWS products for students across all majors</li>
+      <li>Built the company GitOps environment with Terraform and Atlantis
+        <ul>
+          <li>Deployed Atlantis on Kubernetes via Helm chart; PR-level approval gives every Terraform operation an audit trail</li>
+          <li>Cut AWS access over to least-privilege AssumeRole and revoked every local developer key</li>
+        </ul>
+      </li>
+      <li>Built an SLA system for inbound leads
+        <ul>
+          <li>Cut intake-to-owner assignment from 33.6h to 0.4h on average (98.7% faster); assignment within 1h rose 9% → 86%</li>
+          <li>SLA measured on business hours only (weekends, holidays, after-hours excluded), with escalation for untouched leads</li>
+        </ul>
+      </li>
+      <li>Automated calculation and reporting of the four DORA metrics
+        <ul>
+          <li>Auto-classifies 500+ tasks per day at 91.7% accuracy to collect deploy and incident data</li>
+          <li>7/30/90-day sliding windows, with FLEX API integration that corrects for real business days</li>
+        </ul>
+      </li>
+      <li>Built and ran internal Notion agents
+        <ul>
+          <li>Release.Check agent reviews deployment quality and maps unlinked release tasks</li>
+          <li>Notion Workers turn calendar events into meeting notes, rolled out company-wide</li>
+          <li>Per-vendor (Vertex AI, AI Studio, OpenAI) LLM cost labeling to track spend</li>
+        </ul>
+      </li>
     </ul>
   </div>
 
@@ -137,9 +171,36 @@
       <span>Seoul, South Korea</span>
     </div>
     <ul>
-      <li>Investigate network security and load-balancing techniques for distributed systems</li>
-      <li>NLP-based IaC Security Analyzer — Developed a semantic security analysis tool using BERT to detect Terraform anomalies and visualize IAM privilege escalation paths via NetworkX graph algorithms</li>
-      <li>SpinKube & WASM IoT Log Processing Simulation — Validated WebAssembly infrastructure for high-throughput IoT environments using SpinKube on Kubernetes</li>
+      <li>NLP-based IaC Security Analyzer: built a semantic security analysis tool using BERT to detect Terraform anomalies and visualize IAM privilege escalation paths via NetworkX graph algorithms</li>
+      <li>SpinKube & WASM IoT Log Processing Simulation: ran SpinKube on Kubernetes to validate WebAssembly infrastructure for high-throughput IoT log pipelines</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">AWS Student Builder Group Leader at Dongguk University</span>
+      <span class="entry-date">Jul 2025 - Present</span>
+    </div>
+    <div class="entry-sub">
+      <span>Member → Group Leader (May 2026 – Present)</span>
+      <span>Amazon Web Services (AWS)</span>
+    </div>
+    <ul>
+      <li>Run the <a href="https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/">AWS Student Builder Group at Dongguk University ↗</a> LinkedIn page</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Notion Campus Leader at Dongguk University</span>
+      <span class="entry-date">Sep 2026 ~</span>
+    </div>
+    <div class="entry-sub">
+      <span>Campus Leader</span>
+      <span>Notion</span>
+    </div>
+    <ul>
+      <li>Official Notion Campus Leader, running Notion sessions for students across majors</li>
     </ul>
   </div>
 </div>
@@ -150,22 +211,22 @@
 
   <div class="entry">
     <div class="entry-header">
-      <span class="entry-title">NanoGrid Plus — Hybrid FaaS Platform (SoftBank Hackathon Final)</span>
-      <span class="entry-date">Dec 2024</span>
+      <span class="entry-title">NanoGrid Plus: Hybrid FaaS Platform (SoftBank Hackathon Finalist)</span>
+      <span class="entry-date">Nov 2024 - Dec 2024</span>
     </div>
     <div class="entry-sub">
       <span>Infrastructure Lead</span>
       <span><a href="https://github.com/Softbank-Final">GitHub</a></span>
     </div>
     <ul>
-      <li>Architected a self-hosted FaaS platform on AWS EC2, achieving a 30× cold-start improvement (3s → 0.2s) via a Docker warm pool (pause/unpause) and up to 96% cost reduction through real-time auto-tuner memory analysis</li>
-      <li>Implemented the full data plane: an SQS long-polling task queue, S3 code storage, Redis Pub/Sub result delivery, CloudWatch custom-metric auto-reporting, and MDC-based requestId logging for end-to-end traceability</li>
+      <li>Built a self-hosted FaaS platform on AWS EC2. A Docker warm pool (pause/unpause) cut cold start 30× (3s → 0.2s), and a real-time memory auto-tuner cut cost by up to 96%</li>
+      <li>Built the data plane: SQS long-polling task queue, S3 code storage, Redis Pub/Sub result delivery, CloudWatch custom metrics, and MDC requestId logs for end-to-end traceability</li>
     </ul>
   </div>
 
   <div class="entry">
     <div class="entry-header">
-      <span class="entry-title">Roomeya — Serverless Dormitory Matching Platform</span>
+      <span class="entry-title">Roomeya: Serverless Dormitory Matching Platform</span>
       <span class="entry-date">Sep 2025 - Dec 2025</span>
     </div>
     <div class="entry-sub">
@@ -173,21 +234,7 @@
       <span><a href="https://github.com/Roomeya">GitHub</a></span>
     </div>
     <ul>
-      <li>Designed a full serverless AWS architecture with Terraform IaC: 9 Lambda functions, Step Functions matching workflow, 4 DynamoDB tables, API Gateway HTTP API v2, Cognito OAuth 2.0, and SES email — achieving scale-to-zero with zero off-season idle cost</li>
-    </ul>
-  </div>
-
-  <div class="entry">
-    <div class="entry-header">
-      <span class="entry-title">Deploy Land — Gamified CI/CD Platform</span>
-      <span class="entry-date">Sep 2025</span>
-    </div>
-    <div class="entry-sub">
-      <span>AWS Architect & Developer</span>
-      <span><a href="https://github.com/Deploy-Land">GitHub</a></span>
-    </div>
-    <ul>
-      <li>Designed a serverless CI/CD platform automating GitHub Push → Build → Deploy → Health Check, with gamified real-time monitoring via AWS Amplify, Discord/Slack instant notifications, and phantom deploy prevention through config validation</li>
+      <li>Designed a full serverless AWS stack in Terraform: 9 Lambda functions, a Step Functions matching workflow, 4 DynamoDB tables, API Gateway HTTP API v2, Cognito, SES. Scale-to-zero cut idle cost to $0</li>
     </ul>
   </div>
 
@@ -200,7 +247,7 @@
       <span>Cloud Architect</span>
     </div>
     <ul>
-      <li>Migrated on-premises physical-PC infrastructure to AWS (EC2, EBS, S3, RDS, Docker), achieving 24/7 service availability and removing hardware dependency</li>
+      <li>Migrated on-premises physical-PC infrastructure to AWS (EC2, EBS, S3, RDS, Docker), which took the club services to 24/7 availability with no hardware to maintain</li>
     </ul>
   </div>
 </div>
@@ -211,7 +258,7 @@
 
   <div class="entry">
     <div class="entry-header">
-      <span class="entry-title">Atlantis — PR #6186 Merged (v0.41.0)</span>
+      <span class="entry-title">Atlantis: PR #6186 Merged (v0.41.0)</span>
       <span class="entry-date">Mar 2026</span>
     </div>
     <div class="entry-sub">
@@ -224,14 +271,14 @@
 
   <div class="entry">
     <div class="entry-header">
-      <span class="entry-title">Spin Framework Python SDK — PR #124, #126, #128</span>
+      <span class="entry-title">Spin Framework Python SDK: PR #124, #126, #128</span>
       <span class="entry-date">Dec 2025</span>
     </div>
     <div class="entry-sub">
       <span><a href="https://github.com/spinframework/spin-python-sdk/pull/128">github.com/spinframework/spin-python-sdk</a></span>
     </div>
     <ul>
-      <li>Contributed 3 PRs and 3 Issues to improve the Python SDK for building serverless WebAssembly applications with the Spin Framework</li>
+      <li>Contributed 3 merged PRs and 3 issues to the Spin Python SDK, the toolchain for running serverless WebAssembly workloads</li>
     </ul>
   </div>
 </div>
@@ -249,21 +296,8 @@
       <span>Seoul, South Korea | GPA: 4.12 / 4.5</span>
     </div>
     <ul>
-      <li>Dean's List (Semester Honors) — 4 times: 2021-1, 2021-2, 2022-1, 2025-1 semesters</li>
+      <li>Dean's List (Semester Honors), 4 times: 2021-1, 2021-2, 2022-1, 2025-1 semesters</li>
     </ul>
-  </div>
-</div>
-
-<!-- Skills -->
-<div class="section">
-  <div class="section-title">Skills</div>
-  <div class="skills-grid">
-    <div class="row"><span class="label">(Cloud & Infra)</span> AWS (EC2, SQS, S3, RDS, Lambda, Step Functions, IAM, WAF, ElastiCache, EventBridge, CodePipeline), GCP, Azure, Terraform, Kubernetes, Docker, Helm</div>
-    <div class="row"><span class="label">(DevOps & Automation)</span> Atlantis, Argo Workflows, Datadog, Grafana, GitOps, CI/CD, Notion</div>
-    <div class="row"><span class="label">(Programming)</span> Golang, Python, Java, SQL</div>
-    <div class="row"><span class="label">(AI/ML & Security)</span> BERT, Hugging Face, NetworkX, NLP, Gemini, WebAssembly, SpinKube</div>
-    <div class="row"><span class="label">(Frameworks)</span> Spring Boot, Apollo Federation, GraphQL, Django, FastAPI, Node.js</div>
-    <div class="row"><span class="label">(Languages)</span> Korean (Native), Japanese (Conversational)</div>
   </div>
 </div>
 
@@ -271,6 +305,7 @@
 <div class="section">
   <div class="section-title">Certifications</div>
   <div class="skills-grid">
+    <div class="row"><span class="label">(Notion)</span> Notion Badge | Jun 2026 (valid to Jun 2028), <a href="https://verify.skilljar.com/c/u3fmkfvpnv26">Essentials ↗</a> · <a href="https://verify.skilljar.com/c/uqe3e88dh56v">Workflows ↗</a> · <a href="https://verify.skilljar.com/c/nvh6hj8dxfrx">Advanced ↗</a></div>
     <div class="row"><span class="label">(Cloud)</span> Google Cloud Fundamentals: Core Infrastructure | Oct 2025</div>
     <div class="row"><span class="label">(SQL)</span> SQL Developer (SQLD) | Sep 2024</div>
     <div class="row"><span class="label">(ICT)</span> Craftsman Information Processing (정보처리기능사) | Dec 2022</div>
@@ -281,14 +316,10 @@
 <div class="section">
   <div class="section-title">Awards & Achievements</div>
   <div class="skills-grid">
-    <div class="row"><span class="label">Dean's List, Dongguk Univ. College of Engineering</span> — 2021 Spring (Jul 2021)</div>
-    <div class="row"><span class="label">Dean's List, Dongguk Univ. College of Engineering</span> — 2021 Fall (Jan 2022)</div>
-    <div class="row"><span class="label">Dean's List, Dongguk Univ. College of Engineering</span> — 2022 Spring (Jul 2022)</div>
-    <div class="row"><span class="label">U-LINC Adventure Design Competition — Encouragement Prize</span> — Dec 2022 · Dongguk LINC 3.0 Director</div>
-    <div class="row"><span class="label">Campus Study-Facility Occupancy Analysis System — Encouragement Prize</span> — Dec 2022 · Dongguk LINC 3.0 Director</div>
-    <div class="row"><span class="label">Torch Award (횃불상)</span> — Aug 2023 · ROK Army Information &amp; Communication School</div>
-    <div class="row"><span class="label">SoftBank Hackathon 2025 — Finalist</span> — Nov–Dec 2024 · NanoGrid Plus</div>
-    <div class="row"><span class="label">Dean's List, Dongguk Univ. College of Engineering</span> — 2025 Spring (Jul 2025)</div>
+    <div class="row"><span class="label">U-LINC Adventure Design Competition, Encouragement Prize</span> · Dec 2022 · Dongguk LINC 3.0 Director</div>
+    <div class="row"><span class="label">Campus Study-Facility Occupancy Analysis System, Encouragement Prize</span> · Dec 2022 · Dongguk LINC 3.0 Director</div>
+    <div class="row"><span class="label">Torch Award (횃불상)</span> · Aug 2023 · ROK Army Information &amp; Communication School</div>
+    <div class="row"><span class="label">SoftBank Hackathon, Finalist</span> · Nov 2024 - Dec 2024 · NanoGrid Plus</div>
   </div>
 </div>
 
@@ -296,9 +327,8 @@
 <div class="section">
   <div class="section-title">Activities</div>
   <div class="skills-grid">
-    <div class="row"><span class="label">CAPS (Dongguk Univ.)</span> — Vice President & Web Admin Lead (Mar 2022 - Sep 2023)</div>
-    <div class="row"><span class="label">Cloud Club 1st Gen</span> — Member (Mar 2022 - Sep 2023)</div>
-    <div class="row"><span class="label">Amazon Cloud Club at Dongguk</span> — Member → Group Leader (Jul 2025 - Present)</div>
+    <div class="row"><span class="label">CAPS (Dongguk Univ.)</span> · Vice President & Web Admin Lead (Mar 2022 - Sep 2023)</div>
+    <div class="row"><span class="label">Cloud Club 1st Gen</span> · 1st Member (Mar 2022 - Sep 2023) · vendor-neutral inter-university cloud community</div>
   </div>
 </div>
 

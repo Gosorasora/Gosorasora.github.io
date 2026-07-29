@@ -11,33 +11,34 @@
 
   body {
     font-family: 'Noto Sans JP', sans-serif;
-    font-size: 10.5pt;
-    line-height: 1.5;
+    font-size: 9.5pt;
+    line-height: 1.3;
     color: #1B263B;
     max-width: 850px;
     margin: 0 auto;
-    padding: 40px 50px;
+    padding: 20px 38px;
   }
 
   a { color: #415A77; text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  .header { text-align: center; margin-bottom: 8px; }
-  .header h1 { font-size: 22pt; font-weight: 700; margin-bottom: 4px; }
+  .header { text-align: center; margin-bottom: 6px; }
+  .header h1 { font-size: 19pt; font-weight: 700; margin-bottom: 3px; }
   .header .contact { font-size: 10pt; color: #415A77; }
+  .summary { font-size: 9pt; line-height: 1.38; color: #1B263B; }
   .header .contact a { margin: 0 4px; }
 
-  .section { margin-bottom: 12px; }
+  .section { margin-bottom: 5px; }
   .section-title {
     font-size: 11pt;
     font-weight: 700;
     letter-spacing: 0.5px;
     border-bottom: 1.5px solid #1B263B;
-    padding-bottom: 3px;
-    margin-bottom: 8px;
+    padding-bottom: 2px;
+    margin-bottom: 5px;
   }
 
-  .entry { margin-bottom: 10px; }
+  .entry { margin-bottom: 4px; }
   .entry-header {
     display: flex;
     justify-content: space-between;
@@ -56,10 +57,10 @@
   }
 
   ul { padding-left: 18px; margin-top: 2px; }
-  ul li { margin-bottom: 2px; font-size: 10pt; }
+  ul li { margin-bottom: 1px; font-size: 8.5pt; }
 
-  .skills-grid { font-size: 10pt; }
-  .skills-grid .row { margin-bottom: 3px; }
+  .skills-grid { font-size: 9pt; }
+  .skills-grid .row { margin-bottom: 2px; }
   .skills-grid .label { font-weight: 600; }
 
   .achievement { margin-bottom: 6px; }
@@ -68,7 +69,10 @@
   .achievement li { font-size: 9.5pt; }
 
   @media print {
-    body { padding: 20px 30px; }
+  .entry { break-inside: avoid; page-break-inside: avoid; }
+  .entry-header { break-after: avoid; page-break-after: avoid; }
+  .section-title { break-after: avoid; page-break-after: avoid; }
+    body { padding: 14px 26px; }
     a { color: #1B263B; }
   }
 </style>
@@ -85,6 +89,30 @@
   </div>
 </div>
 
+<!-- 要約 -->
+<div class="section">
+  <div class="section-title">要約</div>
+  <div class="summary">
+    DevOps Engineer かつ Forward Deployed Engineer の高東見です。Terraform・Kubernetes ベースのインフラと GitOps デプロイ環境を自ら構築・運用しています。
+    反復業務が人の時間を奪うことが好きではなく、最近は AI を活用した AX (業務自動化) で社内の反復業務と開発生産性指標の自動化に注力しています。
+    インフラの中に留まるより、問題を抱えたチームのそばに行って直接聞き、その場で直すやり方を好みます。人が集まって一緒に考えて生まれたものは何よりも強いと思っています。
+    だからコミュニティが好きで、同じ経験を他の人にも届けたく AWS Student Builder Group Leader として活動しています。
+  </div>
+</div>
+
+<!-- スキル -->
+<div class="section">
+  <div class="section-title">スキル</div>
+  <div class="skills-grid">
+    <div class="row"><span class="label">(クラウド &amp; インフラ)</span> AWS (EC2, SQS, S3, RDS, Lambda, Step Functions, IAM, WAF, ElastiCache, EventBridge, CodePipeline), GCP, Azure, Terraform, Kubernetes, Docker, Helm</div>
+    <div class="row"><span class="label">(DevOps &amp; 自動化)</span> Atlantis, Argo Workflows, Datadog, Grafana, GitOps, CI/CD, Notion</div>
+    <div class="row"><span class="label">(プログラミング)</span> Golang, Python, Java, SQL</div>
+    <div class="row"><span class="label">(AI/ML &amp; セキュリティ)</span> BERT, Hugging Face, NetworkX, NLP, Gemini, WebAssembly, SpinKube</div>
+    <div class="row"><span class="label">(フレームワーク)</span> Spring Boot, Apollo Federation, GraphQL, Django, FastAPI, Node.js</div>
+    <div class="row"><span class="label">(言語)</span> 韓国語 (ネイティブ), 英語 (日常会話), 日本語 (日常会話)</div>
+  </div>
+</div>
+
 <!-- 職務経歴 -->
 <div class="section">
   <div class="section-title">職務経歴</div>
@@ -92,32 +120,38 @@
   <div class="entry">
     <div class="entry-header">
       <span class="entry-title">BUZZ &amp; BEYOND (vling)</span>
-      <span class="entry-date">2026.01 - 在職中</span>
+      <span class="entry-date">2026.01 - 在職中 (インターン 2026.01~06 · 正社員 2026.07~)</span>
     </div>
     <div class="entry-sub">
-      <span>DevOps Engineer インターン / Infra · Platform · AX</span>
+      <span>DevOps Engineer / Infra · Platform · AX</span>
       <span>ソウル, 韓国</span>
     </div>
     <ul>
-      <li>Helm Chart で Atlantis を Kubernetes にデプロイし、PR ベースのコードレビュー承認を強制する GitOps CI/CD ワークフローを構築。すべての Terraform 操作で 100% の監査ログ (audit trail) を実現</li>
-      <li>デプロイ時の最小権限を強制する AWS AssumeRole アーキテクチャを設計。開発者のローカル AWS Access Key を 100% 回収し、認証情報漏洩リスクを排除</li>
-      <li>Gemini 2.5 Flash ベースの LLM 業務自動分類システムを構築。1 日 500 件以上のタスク (業務 13 種・会議 14 種) で 91.7% の精度を達成し、ヒューマンエラーを排除しメンバー別の定量的な Workload 追跡を実現</li>
-      <li>Notion Custom Agent と DORA Metrics 自動算出ダッシュボードを構築</li>
-      <li>Notion Custom Agent・Workers (サーバーレス) 基盤のデプロイ品質自動検収体系および社内 AX (業務自動化) を構築</li>
-    </ul>
-  </div>
-
-  <div class="entry">
-    <div class="entry-header">
-      <span class="entry-title">AWS Student Builder Group Leader at Dongguk University</span>
-      <span class="entry-date">2025.07 - 在職中</span>
-    </div>
-    <div class="entry-sub">
-      <span>Member → Group Leader (2026.05〜)</span>
-      <span>Amazon Web Services (AWS)</span>
-    </div>
-    <ul>
-      <li>AWS公式認定 Student Builder Group Leaderに任命 — 専攻を問わない学生向けクラウドコンピューティング教育グループを運営し、AWS製品の実践学習セッションを実施</li>
+      <li>Terraform・Atlantis で社内 GitOps 環境を構築
+        <ul>
+          <li>Helm Chart で Atlantis を Kubernetes にデプロイ、PR 単位の承認を強制し Terraform 作業の監査証跡を全件確保</li>
+          <li>AWS AssumeRole の最小権限に移行、開発者ローカルの Access Key を全量回収</li>
+        </ul>
+      </li>
+      <li>インバウンドリード SLA 体系を構築
+        <ul>
+          <li>受付 → 担当者アサインの平均を 33.6 時間から 0.4 時間へ短縮 (98.7% 短縮)、1 時間以内アサイン率 9% → 86%</li>
+          <li>営業時間 (週末・祝日・時間外を除外) 基準で SLA を自動計測し、放置リードの通知・エスカレーションを構築</li>
+        </ul>
+      </li>
+      <li>DORA 4 大指標を自動算出・レポーティング
+        <ul>
+          <li>1 日 500 件以上の業務を自動分類 (精度 91.7%) しデプロイ・障害データを収集</li>
+          <li>7/30/90 日のスライディングウィンドウで算出、FLEX API 連携で実営業日を補正</li>
+        </ul>
+      </li>
+      <li>Notion の社内エージェントを構築・運用
+        <ul>
+          <li>Release.Check エージェントでデプロイ品質を自動検収、未連携 TASK を自動マッピング</li>
+          <li>Notion Workers でカレンダー予定から議事録を自動生成し全社展開</li>
+          <li>ベンダー別 (Vertex AI・AI Studio・OpenAI) LLM コストラベリングで使用量を監視</li>
+        </ul>
+      </li>
     </ul>
   </div>
 
@@ -132,8 +166,36 @@
     </div>
     <ul>
       <li>ネットワークセキュリティおよび負荷分散に関する研究</li>
-      <li>NLP ベースの IaC セキュリティ分析ツールを開発 — BERT モデルで Terraform のセマンティック異常を検知し、NetworkX のグラフアルゴリズムで IAM 権限昇格パスを可視化</li>
-      <li>SpinKube &amp; WASM IoT ログ処理シミュレーション — Kubernetes 上の SpinKube により、大規模 IoT 環境での WebAssembly インフラを検証</li>
+      <li>NLP ベースの IaC セキュリティ分析ツールを開発: BERT モデルで Terraform のセマンティック異常を検知し、NetworkX のグラフアルゴリズムで IAM 権限昇格パスを可視化</li>
+      <li>SpinKube &amp; WASM IoT ログ処理シミュレーション: Kubernetes 上の SpinKube により、大規模 IoT 環境での WebAssembly インフラを検証</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">AWS Student Builder Group Leader at Dongguk University</span>
+      <span class="entry-date">2025.07 - 在職中</span>
+    </div>
+    <div class="entry-sub">
+      <span>Member → Group Leader (2026.05〜)</span>
+      <span>Amazon Web Services (AWS)</span>
+    </div>
+    <ul>
+      <li>LinkedIn <a href="https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/">AWS Student Builder Group at Dongguk University ↗</a> ページ運営</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Notion Campus Leader at Dongguk University</span>
+      <span class="entry-date">2026.09 ~</span>
+    </div>
+    <div class="entry-sub">
+      <span>Campus Leader</span>
+      <span>Notion</span>
+    </div>
+    <ul>
+      <li>学内の Notion 公式キャンパスリーダーとして、学生への Notion 活用普及活動</li>
     </ul>
   </div>
 </div>
@@ -144,8 +206,8 @@
 
   <div class="entry">
     <div class="entry-header">
-      <span class="entry-title">NanoGrid Plus — ハイブリッド FaaS プラットフォーム (SoftBank Hackathon 本戦)</span>
-      <span class="entry-date">2024.12</span>
+      <span class="entry-title">NanoGrid Plus: ハイブリッド FaaS プラットフォーム (SoftBank Hackathon 本戦)</span>
+      <span class="entry-date">2024.11 - 2024.12</span>
     </div>
     <div class="entry-sub">
       <span>Infrastructure Lead</span>
@@ -159,7 +221,7 @@
 
   <div class="entry">
     <div class="entry-header">
-      <span class="entry-title">Roomeya — サーバーレス寮マッチングプラットフォーム</span>
+      <span class="entry-title">Roomeya: サーバーレス寮マッチングプラットフォーム</span>
       <span class="entry-date">2025.09 - 2025.12</span>
     </div>
     <div class="entry-sub">
@@ -168,20 +230,6 @@
     </div>
     <ul>
       <li>Terraform IaC で AWS フルサーバーレスアーキテクチャを設計。Lambda 9 個、Step Functions マッチングワークフロー、DynamoDB 4 テーブル、API Gateway HTTP API v2、Cognito OAuth 2.0、SES メール連携を実装し、オフシーズンの待機コストゼロ (scale-to-zero) を達成</li>
-    </ul>
-  </div>
-
-  <div class="entry">
-    <div class="entry-header">
-      <span class="entry-title">Deploy Land — ゲーミフィケーション CI/CD プラットフォーム</span>
-      <span class="entry-date">2025.09</span>
-    </div>
-    <div class="entry-sub">
-      <span>AWS Architect &amp; Developer</span>
-      <span><a href="https://github.com/Deploy-Land">GitHub</a></span>
-    </div>
-    <ul>
-      <li>GitHub Push → Build → Deploy → Health Check を自動化したサーバーレス CI/CD プラットフォームを設計。AWS Amplify ベースのリアルタイムモニタリングをゲーム的に可視化し、Discord/Slack 即時通知、config 検証で phantom deploy を防止</li>
     </ul>
   </div>
 
@@ -205,20 +253,20 @@
 
   <div class="entry">
     <div class="entry-header">
-      <span class="entry-title">Atlantis — PR #6186 マージ (v0.41.0)</span>
+      <span class="entry-title">Atlantis: PR #6186 マージ (v0.41.0)</span>
       <span class="entry-date">2026.03</span>
     </div>
     <div class="entry-sub">
       <span><a href="https://github.com/runatlantis/atlantis/pull/6186">github.com/runatlantis/atlantis/pull/6186</a></span>
     </div>
     <ul>
-      <li>autoplan のバグ修正 — FetchPullStatus() が呼ばれず IsMergeable が常に false (Go ゼロ値) となり、plan_requirements: [mergeable] 設定時にクリーンな PR がすべてブロックされる問題を解決</li>
+      <li>autoplan のバグ修正: FetchPullStatus() が呼ばれず IsMergeable が常に false (Go ゼロ値) となり、plan_requirements: [mergeable] 設定時にクリーンな PR がすべてブロックされる問題を解決</li>
     </ul>
   </div>
 
   <div class="entry">
     <div class="entry-header">
-      <span class="entry-title">Spin Framework Python SDK — PR #124, #126, #128</span>
+      <span class="entry-title">Spin Framework Python SDK: PR #124, #126, #128</span>
       <span class="entry-date">2025.12</span>
     </div>
     <div class="entry-sub">
@@ -243,21 +291,8 @@
       <span>ソウル, 韓国 | GPA 4.12 / 4.5</span>
     </div>
     <ul>
-      <li>工科大学 学期優等生 4 回選出 — 2021-1, 2021-2, 2022-1, 2025-1 学期</li>
+      <li>工科大学 学期優等生 4 回選出, 2021-1, 2021-2, 2022-1, 2025-1 学期</li>
     </ul>
-  </div>
-</div>
-
-<!-- スキル -->
-<div class="section">
-  <div class="section-title">スキル</div>
-  <div class="skills-grid">
-    <div class="row"><span class="label">(クラウド &amp; インフラ)</span> AWS (EC2, SQS, S3, RDS, Lambda, Step Functions, IAM, WAF, ElastiCache, EventBridge, CodePipeline), GCP, Azure, Terraform, Kubernetes, Docker, Helm</div>
-    <div class="row"><span class="label">(DevOps &amp; 自動化)</span> Atlantis, Argo Workflows, Datadog, Grafana, GitOps, CI/CD, Notion</div>
-    <div class="row"><span class="label">(プログラミング)</span> Golang, Python, Java, SQL</div>
-    <div class="row"><span class="label">(AI/ML &amp; セキュリティ)</span> BERT, Hugging Face, NetworkX, NLP, Gemini, WebAssembly, SpinKube</div>
-    <div class="row"><span class="label">(フレームワーク)</span> Spring Boot, Apollo Federation, GraphQL, Django, FastAPI, Node.js</div>
-    <div class="row"><span class="label">(言語)</span> 韓国語 (ネイティブ), 日本語 (日常会話)</div>
   </div>
 </div>
 
@@ -265,6 +300,7 @@
 <div class="section">
   <div class="section-title">資格</div>
   <div class="skills-grid">
+    <div class="row"><span class="label">(Notion)</span> Notion Badge | 2026.06 (~2028.06), <a href="https://verify.skilljar.com/c/u3fmkfvpnv26">Essentials ↗</a> · <a href="https://verify.skilljar.com/c/uqe3e88dh56v">Workflows ↗</a> · <a href="https://verify.skilljar.com/c/nvh6hj8dxfrx">Advanced ↗</a></div>
     <div class="row"><span class="label">(クラウド)</span> Google Cloud Fundamentals: Core Infrastructure | 2025.10</div>
     <div class="row"><span class="label">(SQL)</span> SQL Developer (SQLD) | 2024.09</div>
     <div class="row"><span class="label">(ICT)</span> 情報処理技能士 (정보처리기능사) | 2022.12</div>
@@ -275,14 +311,10 @@
 <div class="section">
   <div class="section-title">受賞</div>
   <div class="skills-grid">
-    <div class="row"><span class="label">東国大学校 工科大学 学期優等生</span> — 2021 年度 1 学期 (2021.07)</div>
-    <div class="row"><span class="label">東国大学校 工科大学 学期優等生</span> — 2021 年度 2 学期 (2022.01)</div>
-    <div class="row"><span class="label">東国大学校 工科大学 学期優等生</span> — 2022 年度 1 学期 (2022.07)</div>
-    <div class="row"><span class="label">U-LINC アドベンチャーデザインコンテスト 奨励賞</span> — 2022.12 · 東国大学校 LINC 3.0 事業団長</div>
-    <div class="row"><span class="label">学内学習施設 混雑度分析システム 奨励賞</span> — 2022.12 · 東国大学校 LINC 3.0 事業団長</div>
-    <div class="row"><span class="label">トーチ章 (횃불상)</span> — 2023.08 · 大韓民国 陸軍情報通信学校長</div>
-    <div class="row"><span class="label">SoftBank Hackathon 2025 本戦進出</span> — 2024.11~12 · NanoGrid Plus</div>
-    <div class="row"><span class="label">東国大学校 工科大学 学期優等生</span> — 2025 年度 1 学期 (2025.07)</div>
+    <div class="row"><span class="label">U-LINC アドベンチャーデザインコンテスト 奨励賞</span> · 2022.12 · 東国大学校 LINC 3.0 事業団長</div>
+    <div class="row"><span class="label">学内学習施設 混雑度分析システム 奨励賞</span> · 2022.12 · 東国大学校 LINC 3.0 事業団長</div>
+    <div class="row"><span class="label">トーチ章 (횃불상)</span> · 2023.08 · 大韓民国 陸軍情報通信学校長</div>
+    <div class="row"><span class="label">SoftBank Hackathon 本戦進出</span> · 2024.11 - 2024.12 · NanoGrid Plus</div>
   </div>
 </div>
 
@@ -290,9 +322,8 @@
 <div class="section">
   <div class="section-title">課外活動</div>
   <div class="skills-grid">
-    <div class="row"><span class="label">CAPS (東国大)</span> — 副会長 &amp; ホームページ管理部 部長 (2022.03 - 2023.09)</div>
-    <div class="row"><span class="label">Cloud Club 1 期</span> — Member (2022.03 - 2023.09)</div>
-    <div class="row"><span class="label">Amazon Cloud Club at Dongguk</span> — Member → Group Leader (2025.07 - 在職中)</div>
+    <div class="row"><span class="label">CAPS (東国大)</span> · 副会長 &amp; ホームページ管理部 部長 (2022.03 - 2023.09)</div>
+    <div class="row"><span class="label">Cloud Club 1 期</span> · 1st Member (2022.03 - 2023.09) · ベンダーに依存しない (vendor-neutral) IT 連合サークル</div>
   </div>
 </div>
 

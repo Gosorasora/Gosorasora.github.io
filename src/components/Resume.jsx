@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FaDownload } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import { content } from '../data/content';
+import { reveal, revealDelay } from '../utils/motion';
 import './Resume.css';
 
 const Resume = () => {
@@ -29,19 +30,25 @@ const Resume = () => {
   return (
     <section id="resume" className="section resume-section">
       <div className="container">
-        <div className="resume-header-row">
+        <motion.div className="resume-header-row" {...reveal}>
           <h2 className="section-title">{t.title}</h2>
-          <a href={resumePath} download className="btn-download">
+          <motion.a
+            href={resumePath}
+            download
+            className="btn-download"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+          >
             <FaDownload /> {t.download}
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
 
         <div className="resume-grid">
           {/* Left Column: Skills */}
-          <div className="skills-column">
+          <motion.div className="skills-column" {...revealDelay(0.1)}>
             <h3>{t.skillsTitle}</h3>
             <div className="skills-list">
-              {skills.map(skill => (
+              {skills.map((skill, index) => (
                 <div key={skill.name} className="skill-item">
                   <div className="skill-info">
                     <span className="skill-name">{skill.name}</span>
@@ -51,17 +58,17 @@ const Resume = () => {
                       className="skill-bar-fill"
                       initial={{ width: 0 }}
                       whileInView={{ width: `${skill.level}%` }}
-                      transition={{ duration: 1, ease: "easeOut" }}
+                      transition={{ duration: 0.9, delay: index * 0.06, ease: "easeOut" }}
                       viewport={{ once: true }}
                     />
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: PDF Viewer */}
-          <div className="pdf-column">
+          <motion.div className="pdf-column" {...revealDelay(0.2)}>
             <div className="pdf-viewer">
               <object data={resumePath} type="application/pdf" width="100%" height="800px">
                 <iframe src={resumePath} width="100%" height="800px" title="Resume PDF">
@@ -69,7 +76,7 @@ const Resume = () => {
                 </iframe>
               </object>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
