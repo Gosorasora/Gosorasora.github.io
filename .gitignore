@@ -29,3 +29,8 @@ dist-ssr
 # !assets/
 sendbird_setup_guide.md
 .env
+_workspace/
+
+# 지원서·자소서 (커밋 제외)
+applications/
+*-application*.md

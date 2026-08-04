@@ -286,6 +286,7 @@
     color: var(--text-secondary);
     line-height: 1.7;
     margin-bottom: 15px;
+    white-space: pre-line; /* solution 본문의 문단 구분 유지 */
 }
 
 .modal-row {

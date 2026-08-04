@@ -91,7 +91,8 @@
     (+82) 10-3590-5395 |
     <a href="mailto:kodh0204@gmail.com">kodh0204@gmail.com</a> |
     <a href="https://github.com/Gosorasora">Github</a> |
-    <a href="https://www.linkedin.com/in/kosora">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/kosora">LinkedIn</a> |
+    <a href="https://gosorasora.github.io">Portfolio</a>
   </div>
 </div>
 
@@ -100,7 +101,7 @@
   <div class="section-title">Summary</div>
   <div class="summary">
     I am Ko Donghyeon, a DevOps Engineer and Forward Deployed Engineer. I build and run Terraform and Kubernetes infrastructure with GitOps deployment.
-    I dislike watching repetitive work eat people's time, so my focus now is AX, internal automation with AI. Rather than staying inside the infrastructure,
+    I dislike watching repetitive work eat people's time, so my focus now is AX, internal automation with AI. The more a backend leans on AI, the more its model-call cost and pipeline stability come back as infrastructure problems, so I want to put what I learned in infrastructure to work underneath AI systems. Rather than staying inside the infrastructure,
     I sit next to the team that has the problem and fix it there. Nothing beats what people build when they think together, which is why I like communities
     and serve as an AWS Student Builder Group Leader.
   </div>
@@ -110,9 +111,10 @@
 <div class="section">
   <div class="section-title">Skills</div>
   <div class="skills-grid">
-    <div class="row"><span class="label">(Cloud & Infra)</span> AWS (EC2, SQS, S3, RDS, Lambda, Step Functions, IAM, WAF, ElastiCache, EventBridge, CodePipeline), GCP, Azure, Terraform, Kubernetes, Docker, Helm</div>
+    <div class="row"><span class="label">(Cloud & Infra)</span> AWS (EC2, SQS, S3, RDS, Lambda, Step Functions, IAM, WAF, ElastiCache, EventBridge, CodePipeline), GCP, Azure(AKS), Terraform, Kubernetes, Docker, Helm</div>
     <div class="row"><span class="label">(DevOps & Automation)</span> Atlantis, Argo Workflows, Datadog, Grafana, GitOps, CI/CD, Notion</div>
     <div class="row"><span class="label">(Programming)</span> Golang, Python, Java, SQL</div>
+    <div class="row"><span class="label">(AI Dev Tools)</span> Claude Code, Codex, Gemini, Notion Custom Agent, Obsidian, MCP</div>
     <div class="row"><span class="label">(AI/ML & Security)</span> BERT, Hugging Face, NetworkX, NLP, Gemini, WebAssembly, SpinKube</div>
     <div class="row"><span class="label">(Frameworks)</span> Spring Boot, Apollo Federation, GraphQL, Django, FastAPI, Node.js</div>
     <div class="row"><span class="label">(Languages)</span> Korean (Native), English (Conversational), Japanese (Conversational)</div>
@@ -145,17 +147,17 @@
           <li>SLA measured on business hours only (weekends, holidays, after-hours excluded), with escalation for untouched leads</li>
         </ul>
       </li>
-      <li>Automated calculation and reporting of the four DORA metrics
+      <li>Built the internal AX productivity metric system (DORA adopted as the measure)
         <ul>
-          <li>Auto-classifies 500+ tasks per day at 91.7% accuracy to collect deploy and incident data</li>
-          <li>7/30/90-day sliding windows, with FLEX API integration that corrects for real business days</li>
+          <li>Auto-classifies 200+ tasks per day at 91.7% accuracy to collect deploy and incident data</li>
+          <li>Agreed and documented per-team deploy criteria as the fixed basis; used by C-level for R&amp;R and 1on1s</li>
         </ul>
       </li>
       <li>Built and ran internal Notion agents
         <ul>
-          <li>Release.Check agent reviews deployment quality and maps unlinked release tasks</li>
+          <li>Agent reviews deployment quality automatically and links release-related tasks, keeping the data consistent</li>
           <li>Notion Workers turn calendar events into meeting notes, rolled out company-wide</li>
-          <li>Per-vendor (Vertex AI, AI Studio, OpenAI) LLM cost labeling to track spend</li>
+          <li>Per-vendor (Vertex AI, AI Studio, OpenAI) LLM cost labeling; built the usage monitoring and alerting system</li>
         </ul>
       </li>
     </ul>
@@ -172,7 +174,7 @@
     </div>
     <ul>
       <li>NLP-based IaC Security Analyzer: built a semantic security analysis tool using BERT to detect Terraform anomalies and visualize IAM privilege escalation paths via NetworkX graph algorithms</li>
-      <li>SpinKube & WASM IoT Log Processing Simulation: ran SpinKube on Kubernetes to validate WebAssembly infrastructure for high-throughput IoT log pipelines</li>
+      <li>WebAssembly vs containers, empirical study (2 papers): measured an IoT log pipeline on AKS across the Edge, Transform and Ingestion layers and derived layer-specific runtime allocation criteria with statistical testing. Migrating Python Wasm to Rust cut binary size 91× and raised throughput 7.8×</li>
     </ul>
   </div>
 
@@ -193,14 +195,14 @@
   <div class="entry">
     <div class="entry-header">
       <span class="entry-title">Notion Campus Leader at Dongguk University</span>
-      <span class="entry-date">Sep 2026 ~</span>
+      <span class="entry-date">Sep 2026 ~ (upcoming)</span>
     </div>
     <div class="entry-sub">
       <span>Campus Leader</span>
       <span>Notion</span>
     </div>
     <ul>
-      <li>Official Notion Campus Leader, running Notion sessions for students across majors</li>
+      <li>Selected as official Notion Campus Leader; running Notion sessions for students from Sep 2026</li>
     </ul>
   </div>
 </div>
@@ -219,7 +221,7 @@
       <span><a href="https://github.com/Softbank-Final">GitHub</a></span>
     </div>
     <ul>
-      <li>Built a self-hosted FaaS platform on AWS EC2. A Docker warm pool (pause/unpause) cut cold start 30× (3s → 0.2s), and a real-time memory auto-tuner cut cost by up to 96%</li>
+      <li>Built a self-hosted FaaS platform on AWS EC2. A Docker warm pool (pause/unpause) cut cold start 30× (3s → 0.2s), and a real-time memory auto-tuner sized per-function memory (analysis showed up to 96% over-allocation)</li>
       <li>Built the data plane: SQS long-polling task queue, S3 code storage, Redis Pub/Sub result delivery, CloudWatch custom metrics, and MDC requestId logs for end-to-end traceability</li>
     </ul>
   </div>
@@ -293,7 +295,7 @@
     </div>
     <div class="entry-sub">
       <span>B.S. in Computer Science Engineering, College of Engineering</span>
-      <span>Seoul, South Korea | GPA: 4.12 / 4.5</span>
+      <span>Seoul, South Korea | GPA: 4.09 / 4.5</span>
     </div>
     <ul>
       <li>Dean's List (Semester Honors), 4 times: 2021-1, 2021-2, 2022-1, 2025-1 semesters</li>
@@ -327,7 +329,7 @@
 <div class="section">
   <div class="section-title">Activities</div>
   <div class="skills-grid">
-    <div class="row"><span class="label">CAPS (Dongguk Univ.)</span> · Vice President & Web Admin Lead (Mar 2022 - Sep 2023)</div>
+    <div class="row"><span class="label">CAPS (Dongguk Univ.)</span> · Vice President & Web Admin Lead (Mar 2022 - Dec 2022)</div>
     <div class="row"><span class="label">Cloud Club 1st Gen</span> · 1st Member (Mar 2022 - Sep 2023) · vendor-neutral inter-university cloud community</div>
   </div>
 </div>
@@ -336,7 +338,7 @@
 <div class="section">
   <div class="section-title">Military Service</div>
   <div class="skills-grid">
-    <div class="row">Republic of Korea Army | Completed mandatory military service.</div>
+    <div class="row">Republic of Korea Army | Jun 2023 - Dec 2024, completed service</div>
   </div>
 </div>
 

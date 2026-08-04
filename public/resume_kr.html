@@ -85,7 +85,8 @@
     (+82) 10-3590-5395 |
     <a href="mailto:kodh0204@gmail.com">kodh0204@gmail.com</a> |
     <a href="https://github.com/Gosorasora">Github</a> |
-    <a href="https://www.linkedin.com/in/kosora">LinkedIn</a>
+    <a href="https://www.linkedin.com/in/kosora">LinkedIn</a> |
+    <a href="https://gosorasora.github.io">포트폴리오</a>
   </div>
 </div>
 
@@ -95,7 +96,7 @@
   <div class="summary">
     DevOps Engineer이자 Forward Deployed Engineer인 고동현입니다. Terraform·Kubernetes 기반 인프라와 GitOps 배포 환경을 직접 구축하고 운영합니다.
     반복 업무가 사람의 시간을 먹는 것을 싫어해서, 최근에는 AI를 활용한 AX(업무 자동화)로 사내 반복 업무와 개발 생산성 지표를 자동화하는 일에 집중하고 있습니다.
-    인프라 안에만 머무르기보다 문제가 있는 팀 옆에 가서 직접 듣고 고치는 방식을 좋아합니다. 저는 사람들이 모여서 함께 생각해 나온 결과물은 그 무엇보다 강력하다고 생각합니다.
+    AI를 쓰는 백엔드일수록 모델 호출 비용과 파이프라인 안정성이 결국 인프라 문제로 돌아온다고 보고, 인프라에서 익힌 자동화와 최적화를 AI 시스템을 떠받치는 쪽에 쓰려고 합니다. 인프라 안에만 머무르기보다 문제가 있는 팀 옆에 가서 직접 듣고 고치는 방식을 좋아합니다. 저는 사람들이 모여서 함께 생각해 나온 결과물은 그 무엇보다 강력하다고 생각합니다.
     그래서 커뮤니티를 좋아하고, 이러한 관심이 지금의 저를 만들었다고 생각합니다. 다른 사람들에게도 이런 경험을 주고 싶어 현재 AWS Student Builder Group Leader로 활동하고 있습니다.
   </div>
 </div>
@@ -104,9 +105,10 @@
 <div class="section">
   <div class="section-title">기술 스택</div>
   <div class="skills-grid">
-    <div class="row"><span class="label">(클라우드 &amp; 인프라)</span> AWS (EC2, SQS, S3, RDS, Lambda, Step Functions, IAM, WAF, ElastiCache, EventBridge, CodePipeline), GCP, Azure, Terraform, Kubernetes, Docker, Helm</div>
+    <div class="row"><span class="label">(클라우드 &amp; 인프라)</span> AWS (EC2, SQS, S3, RDS, Lambda, Step Functions, IAM, WAF, ElastiCache, EventBridge, CodePipeline), GCP, Azure(AKS), Terraform, Kubernetes, Docker, Helm</div>
     <div class="row"><span class="label">(DevOps &amp; 자동화)</span> Atlantis, Argo Workflows, Datadog, Grafana, GitOps, CI/CD, Notion</div>
     <div class="row"><span class="label">(프로그래밍)</span> Golang, Python, Java, SQL</div>
+    <div class="row"><span class="label">(AI 개발 도구)</span> Claude Code, Codex, Gemini, Notion Custom Agent, Obsidian, MCP</div>
     <div class="row"><span class="label">(AI/ML &amp; 보안)</span> BERT, Hugging Face, NetworkX, NLP, Gemini, WebAssembly, SpinKube</div>
     <div class="row"><span class="label">(프레임워크)</span> Spring Boot, Apollo Federation, GraphQL, Django, FastAPI, Node.js</div>
     <div class="row"><span class="label">(언어)</span> 한국어 (Native), 영어 (일상 회화), 일본어 (회화 가능)</div>
@@ -139,17 +141,17 @@
           <li>영업시간(주말·공휴일·시간외 제외) 기준 SLA 자동 측정, 방치 리드 알림·에스컬레이션 구축</li>
         </ul>
       </li>
-      <li>DORA 4대 지표 자동 산출·리포팅
+      <li>사내 AX 생산성 지표 체계 구축 (측정 지표로 DORA 채택)
         <ul>
-          <li>일 500건 이상 업무 자동 분류 (정확도 91.7%)로 배포·장애 데이터 수집</li>
-          <li>7/30/90일 슬라이딩 윈도우 산출, FLEX API 연동으로 실질 영업일 보정</li>
+          <li>일 200건 이상 업무 자동 분류 (정확도 91.7%)로 배포·장애 데이터 수집</li>
+          <li>팀별 배포 기준을 합의·문서화해 산출 기준으로 고정, C레벨 R&amp;R 조정·1on1 근거로 사용</li>
         </ul>
       </li>
       <li>Notion 사내 에이전트 구축·운영
         <ul>
-          <li>Release.Check 에이전트로 배포 품질 자동 검수, 릴리스 미연결 TASK 자동 매핑</li>
+          <li>에이전트로 배포 품질 자동 검수, 릴리스 연관 태스크 추적·연결로 데이터 정합성 확보</li>
           <li>Notion Workers로 캘린더 일정에서 회의록 자동 생성, 전사 배포</li>
-          <li>벤더별(Vertex AI·AI Studio·OpenAI) LLM 비용 라벨링으로 사용량 모니터링</li>
+          <li>벤더별(Vertex AI·AI Studio·OpenAI) LLM 비용 라벨링, 사용량 모니터링 환경과 Alert 시스템 구축</li>
         </ul>
       </li>
     </ul>
@@ -166,7 +168,7 @@
     </div>
     <ul>
       <li>NLP 기반 IaC 보안 분석 도구 개발: BERT 모델로 Terraform 시맨틱 이상 탐지 및 NetworkX 그래프 알고리즘으로 IAM 권한 상승 경로 시각화</li>
-      <li>SpinKube &amp; WASM IoT 로그 처리 시뮬레이션: Kubernetes 위 SpinKube로 대규모 IoT 환경의 WebAssembly 인프라 검증</li>
+      <li>WebAssembly vs 컨테이너 실환경 비교 (논문 2편): AKS에서 IoT 로그 파이프라인을 Edge·Transform·Ingestion 계층별로 실측, 통계 검정으로 계층별 런타임 할당 기준 도출. Python Wasm → Rust 마이그레이션으로 바이너리 91배 감소·처리량 7.8배</li>
     </ul>
   </div>
 
@@ -187,14 +189,14 @@
   <div class="entry">
     <div class="entry-header">
       <span class="entry-title">Notion Campus Leader at Dongguk University</span>
-      <span class="entry-date">2026.09 ~</span>
+      <span class="entry-date">2026.09 ~ (예정)</span>
     </div>
     <div class="entry-sub">
       <span>Campus Leader</span>
       <span>Notion</span>
     </div>
     <ul>
-      <li>교내 Notion 공식 캠퍼스 리더로 학생 대상 Notion 활용 확산 활동</li>
+      <li>교내 Notion 공식 캠퍼스 리더 선발, 2026.09부터 학생 대상 Notion 활용 확산 활동 예정</li>
     </ul>
   </div>
 </div>
@@ -213,8 +215,8 @@
       <span><a href="https://github.com/Softbank-Final">GitHub</a></span>
     </div>
     <ul>
-      <li>AWS EC2 위에 self-hosted FaaS 플랫폼 설계, Docker Warm Pool(Pause/Unpause) 적용으로 Cold Start 30배 개선 (3초 → 0.2초), 실시간 Auto-Tuner 메모리 분석으로 최대 96% 비용 절감</li>
-      <li>Data Plane 풀스택 구현: SQS Long Polling 작업 큐, S3 코드 저장소, Redis Pub/Sub 결과 전달, CloudWatch Custom Metrics 자동 보고, MDC 기반 requestId 로깅으로 완전한 추적성 확보</li>
+      <li>AWS EC2 위에 self-hosted FaaS 플랫폼 설계, Docker Warm Pool(Pause/Unpause) 적용으로 Cold Start 30배 개선 (3초 → 0.2초), 실시간 메모리 분석 Auto-Tuner로 함수별 적정 메모리 산정 (분석 기준 최대 96% 과다 할당)</li>
+      <li>Data Plane 풀스택 구현: SQS Long Polling 작업 큐, S3 코드 저장소, Redis Pub/Sub 결과 전달, CloudWatch Custom Metrics 자동 보고, MDC 기반 requestId 로깅으로 요청 단위 전 구간 추적</li>
     </ul>
   </div>
 
@@ -287,7 +289,7 @@
     </div>
     <div class="entry-sub">
       <span>공과대학 컴퓨터공학과 학사</span>
-      <span>서울, 대한민국 | GPA 4.12 / 4.5</span>
+      <span>서울, 대한민국 | GPA 4.09 / 4.5</span>
     </div>
     <ul>
       <li>공과대학 학기 우등생 4회 선정, 2021-1, 2021-2, 2022-1, 2025-1학기</li>
@@ -321,7 +323,7 @@
 <div class="section">
   <div class="section-title">활동</div>
   <div class="skills-grid">
-    <div class="row"><span class="label">CAPS (동국대)</span> · 부회장 &amp; 홈페이지관리부 부장 (2022.03 - 2023.09)</div>
+    <div class="row"><span class="label">CAPS (동국대)</span> · 부회장 &amp; 홈페이지관리부 부장 (2022.03 - 2022.12)</div>
     <div class="row"><span class="label">Cloud Club 1기</span> · 1st Member (2022.03 - 2023.09) · 벤더에 종속되지 않는(vendor-neutral) IT 연합 동아리</div>
   </div>
 </div>
@@ -330,7 +332,7 @@
 <div class="section">
   <div class="section-title">병역</div>
   <div class="skills-grid">
-    <div class="row">대한민국 육군 | 군 복무 만기 전역</div>
+    <div class="row">대한민국 육군 | 2023.06 - 2024.12 만기 전역</div>
   </div>
 </div>
 

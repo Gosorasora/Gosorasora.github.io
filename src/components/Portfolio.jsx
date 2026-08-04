@@ -23,7 +23,7 @@ const Portfolio = () => {
   };
 
   // 임팩트 순 노출 (현업 성과 · 수치 · 외부 검증 우선)
-  const impactOrder = [1, 15, 2, 3, 4, 7, 13, 14, 12, 5, 9, 8, 10, 6, 11];
+  const impactOrder = [1, 15, 2, 3, 4, 7, 6, 13, 14, 12, 5, 9, 8, 10, 11];
   const byImpact = (a, b) => impactOrder.indexOf(a.id) - impactOrder.indexOf(b.id);
 
   const filteredProjects = (filter === 'all'
@@ -136,6 +136,11 @@ const Portfolio = () => {
                           <FaFileAlt /> {t.modal.links.paper}
                         </a>
                       )}
+                      {(selectedProject.links.papers || []).map(paper => (
+                        <a key={paper.url} href={paper.url} target="_blank" rel="noopener noreferrer" className="icon-link">
+                          <FaFileAlt /> {paper.label}
+                        </a>
+                      ))}
                     </div>
                   </div>
                 </div>

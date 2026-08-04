@@ -22,6 +22,7 @@ const Resume = () => {
     { name: 'Python', level: 80 },
     { name: 'Datadog', level: 75 },
     { name: 'Azure', level: 70 },
+    { name: 'Grafana', level: 75 },
   ];
 
   // Language-specific PDF (resume_kr.pdf / resume_en.pdf / resume_jp.pdf)
