@@ -127,7 +127,7 @@ export const content = {
         {
           title: 'AWS SBG Ignite Badge',
           issuer: 'AWS Community',
-          date: '2026',
+          date: '2026.08',
           description: ['AWS Student Builder Group Leader가 두 번째 이벤트를 주최하면 수여되는 배지']
         },
         {
@@ -686,7 +686,7 @@ export const content = {
         {
           title: 'AWS SBG Ignite Badge',
           issuer: 'AWS Community',
-          date: '2026',
+          date: '2026.08',
           description: ['Awarded to AWS Student Builder Group Leaders after hosting their second event']
         },
         {
@@ -1239,7 +1239,7 @@ export const content = {
         {
           title: 'AWS SBG Ignite Badge',
           issuer: 'AWS Community',
-          date: '2026',
+          date: '2026.08',
           description: ['AWS Student Builder Group Leader が 2 回目のイベントを主催すると授与されるバッジ']
         },
         {
