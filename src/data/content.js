@@ -70,6 +70,8 @@ export const content = {
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
             'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'Group Leader로 코어 멤버를 구성해 SNS 활동과 교내 커뮤니티 환경 구성, 전공 무관 학생 대상 클라우드 실습 세션 운영',
+            '두 번째 세션 주최 후 수여되는 AWS SBG Ignite Badge 획득 (AWS Community 발급)',
             'LinkedIn [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) 페이지 운영',
           ],
           tags: ['AWS', 'Leadership']
@@ -123,15 +125,21 @@ export const content = {
       ],
       certs: [
         {
-          title: 'Notion Badge: Essentials · Workflows · Advanced',
-          issuer: 'Notion',
-          date: '2026.06',
-          description: ['배지 인증: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', '유효기간 2028.06']
+          title: 'AWS SBG Ignite Badge',
+          issuer: 'AWS Community',
+          date: '2026',
+          description: ['AWS Student Builder Group Leader가 두 번째 이벤트를 주최하면 수여되는 배지']
         },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
           issuer: 'Google Cloud Skills Boost',
           date: '2025.10'
+        },
+        {
+          title: 'Notion Badge: Essentials · Workflows · Advanced',
+          issuer: 'Notion',
+          date: '2026.06',
+          description: ['배지 인증: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', '유효기간 2028.06']
         },
         {
           title: 'SQLD (SQL Developer)',
@@ -394,18 +402,18 @@ export const content = {
           title: 'Deploy Land: Gamified CI/CD Platform',
           category: 'DevOps & Infra',
           image: null,
-          description: 'GitHub Push→Build→Deploy→검증 전 과정 자동화. 게이미피케이션 실시간 모니터링 서버리스 CI/CD 플랫폼',
+          description: '배포라는 행위 자체를 즐겁게 만든 서버리스 CI/CD 플랫폼. 로그만 흐르던 화면을 캐릭터가 파이프라인을 뛰어가는 게임 화면으로 바꿔 배포 상태를 실시간 공유',
           details: {
-            problem: '표준 배포 로그의 가독성 부족, 배포 실패 시 즉각 인지 어려움, Phantom 배포 위험',
-            solution: 'GitHub Push부터 Build, Deploy, Health Check까지 전 과정을 자동화하는 서버리스 CI/CD 플랫폼을 설계했습니다. AWS Amplify 기반 게이미피케이션 모니터링으로 배포 상태를 실시간 시각화하고, 성공/실패 시 Discord·Slack 즉시 알림을 구현했습니다. 배포 후 자동 Health Check와 설정 검증으로 Phantom 배포를 방지합니다.',
-            role: 'AWS Architect & Developer',
-            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Terraform'],
+            problem: '배포 상태가 로그로만 흘러 개발자 외에는 지금 어디까지 왔는지 알 수 없었고, 실패해도 즉각 인지가 어려웠습니다. 파이프라인은 성공했는데 실제로는 아무것도 바뀌지 않는 Phantom 배포 위험도 있었습니다.',
+            solution: '배포를 지켜보는 일을 게임으로 만들었습니다. GitHub Push부터 Build, Deploy, Health Check까지의 상태를 캐릭터가 파이프라인 단계를 뛰어가는 화면으로 실시간 공유합니다. CodePipeline과 CodeBuild, Elastic Beanstalk의 상태 변화를 EventBridge가 잡아 Lambda로 DynamoDB에 기록하고, Amplify 모니터링 앱이 이를 읽어 그립니다. 배포 후 자동 Health Check와 설정 검증으로 Phantom 배포를 차단하고, 실패 로그는 Bedrock으로 분석하며, Discord·Slack으로 즉시 알립니다. 3인 팀에서 Infra와 Backend를 맡아 Terraform 인프라와 Lambda API를 구현했습니다.',
+            role: 'Infra & Backend (3인 팀)',
+            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
             features: [
+              '캐릭터가 파이프라인 단계를 뛰어가는 게임형 실시간 배포 모니터링',
               'GitHub Push → Build → Deploy → Health Check 전 과정 자동화',
-              'AWS Amplify 기반 게이미피케이션 실시간 모니터링',
-              'Discord·Slack Webhook 즉시 알림',
-              'Phantom 배포 방지 (설정 검증 + 자동 Health Check)',
-              'Terraform IaC로 전체 인프라 관리'
+              'EventBridge → Lambda → DynamoDB 상태 추적 파이프라인',
+              'Phantom 배포 차단 (설정 검증 + 배포 후 Health Check), Bedrock 실패 로그 분석',
+              'Discord·Slack Webhook 즉시 알림, Terraform IaC 인프라 관리'
             ]
           },
           links: {
@@ -630,6 +638,8 @@ export const content = {
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
             'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'As Group Leader, built a core-member team to run SNS channels and the on-campus community; runs hands-on cloud sessions for students of all majors',
+            'Earned the AWS SBG Ignite Badge, awarded to SBG Leaders after hosting their second event (issued by AWS Community)',
             'Run the [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) LinkedIn page',
           ],
           tags: ['AWS', 'Cloud']
@@ -674,15 +684,21 @@ export const content = {
       ],
       certs: [
         {
-          title: 'Notion Badge: Essentials · Workflows · Advanced',
-          issuer: 'Notion',
-          date: '2026.06',
-          description: ['Verify: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', 'Valid through 2028.06']
+          title: 'AWS SBG Ignite Badge',
+          issuer: 'AWS Community',
+          date: '2026',
+          description: ['Awarded to AWS Student Builder Group Leaders after hosting their second event']
         },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
           issuer: 'Google Cloud Skills Boost',
           date: '2025.10'
+        },
+        {
+          title: 'Notion Badge: Essentials · Workflows · Advanced',
+          issuer: 'Notion',
+          date: '2026.06',
+          description: ['Verify: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', 'Valid through 2028.06']
         },
         {
           title: 'SQLD (SQL Developer)',
@@ -934,18 +950,18 @@ export const content = {
           title: 'Deploy Land: Gamified CI/CD Platform',
           category: 'DevOps & Infra',
           image: null,
-          description: 'GitHub Push→Build→Deploy→Validation fully automated. Gamified real-time monitoring serverless CI/CD platform',
+          description: 'A serverless CI/CD platform that makes deploying fun: a log-only screen became a game view where a character runs through the pipeline stages, sharing deploy status in real time',
           details: {
-            problem: 'Poor deployment log readability, delayed failure detection, and phantom deployment risks.',
-            solution: 'Designed a serverless CI/CD platform automating the full cycle from GitHub Push to Build, Deploy, and Health Check. Built gamified real-time monitoring via AWS Amplify, instant Discord/Slack notifications on success/failure, and automatic Health Check + config validation to prevent phantom deployments.',
-            role: 'AWS Architect & Developer',
-            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Terraform'],
+            problem: 'Deploy status only existed as logs, so nobody but the developer knew how far a deploy had gone, failures were noticed late, and phantom deploys (pipeline succeeds, production unchanged) were a real risk.',
+            solution: 'Made watching a deploy feel like a game. Status from GitHub push through build, deploy and health check is shared in real time as a character running through pipeline stages. EventBridge catches state changes from CodePipeline, CodeBuild and Elastic Beanstalk, Lambda writes them to DynamoDB, and an Amplify monitoring app renders it. Post-deploy health checks and config validation block phantom deploys, Bedrock analyzes failure logs, and Discord/Slack get instant alerts. In a team of three I owned Infra and Backend: Terraform infrastructure and the Lambda APIs.',
+            role: 'Infra & Backend (team of 3)',
+            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
             features: [
+              'Game-style live deploy monitoring: a character runs through the pipeline stages',
               'GitHub Push → Build → Deploy → Health Check full automation',
-              'AWS Amplify gamified real-time monitoring',
-              'Discord/Slack Webhook instant notifications',
-              'Phantom deploy prevention (config validation + auto Health Check)',
-              'Terraform IaC for full infrastructure'
+              'EventBridge → Lambda → DynamoDB state-tracking pipeline',
+              'Phantom deploy prevention (config validation + post-deploy health check), Bedrock failure-log analysis',
+              'Discord/Slack instant alerts, Terraform-managed infrastructure'
             ]
           },
           links: {
@@ -1169,6 +1185,8 @@ export const content = {
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
             'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'Group Leader としてコアメンバーを組成し、SNS 運営と学内コミュニティ環境を構築。専攻を問わず学生向けクラウド実習セッションを運営',
+            '2 回目のイベント主催後に授与される AWS SBG Ignite Badge を取得 (AWS Community 発給)',
             'LinkedIn [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) ページ運営',
           ],
           tags: ['AWS', 'Leadership']
@@ -1219,15 +1237,21 @@ export const content = {
       ],
       certs: [
         {
-          title: 'Notion Badge: Essentials · Workflows · Advanced',
-          issuer: 'Notion',
-          date: '2026.06',
-          description: ['バッジ認証: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', '有効期限 2028.06']
+          title: 'AWS SBG Ignite Badge',
+          issuer: 'AWS Community',
+          date: '2026',
+          description: ['AWS Student Builder Group Leader が 2 回目のイベントを主催すると授与されるバッジ']
         },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
           issuer: 'Google Cloud Skills Boost',
           date: '2025.10'
+        },
+        {
+          title: 'Notion Badge: Essentials · Workflows · Advanced',
+          issuer: 'Notion',
+          date: '2026.06',
+          description: ['バッジ認証: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', '有効期限 2028.06']
         },
         {
           title: 'SQLD (SQL Developer)',
@@ -1467,18 +1491,18 @@ export const content = {
           title: 'Deploy Land: Gamified CI/CD Platform',
           category: 'DevOps & Infra',
           image: null,
-          description: 'GitHub Push→Build→Deploy→検証 全過程自動化。ゲーミフィケーションリアルタイムモニタリング サーバーレスCI/CDプラットフォーム',
+          description: 'デプロイという行為自体を楽しくしたサーバーレス CI/CD プラットフォーム。ログだけが流れる画面を、キャラクターがパイプラインを走り抜けるゲーム画面に変えてデプロイ状態をリアルタイム共有',
           details: {
-            problem: '標準デプロイログの可読性不足、デプロイ失敗時の即時認知困難、Phantomデプロイリスク',
-            solution: 'GitHub PushからBuild、Deploy、Health Checkまで全過程を自動化するサーバーレスCI/CDプラットフォームを設計しました。AWS Amplify基盤ゲーミフィケーションモニタリングでデプロイ状態をリアルタイム可視化し、成功/失敗時Discord・Slack即時通知を実装しました。',
-            role: 'AWS Architect & Developer',
-            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Terraform'],
+            problem: 'デプロイ状態がログとしてしか存在せず、開発者以外は進行状況が分からず、失敗の認知も遅れていた。パイプラインは成功したのに本番は何も変わらない Phantom デプロイのリスクもあった。',
+            solution: 'デプロイを見守る行為をゲームにしました。GitHub Push から Build、Deploy、Health Check までの状態を、キャラクターがパイプラインの各ステージを走り抜ける画面としてリアルタイム共有します。CodePipeline・CodeBuild・Elastic Beanstalk の状態変化を EventBridge が捕捉し、Lambda が DynamoDB に記録、Amplify のモニタリングアプリが描画します。デプロイ後の Health Check と設定検証で Phantom デプロイを遮断し、失敗ログは Bedrock で分析、Discord・Slack に即時通知します。3 人チームで Infra と Backend を担当し、Terraform インフラと Lambda API を実装しました。',
+            role: 'Infra & Backend（3 人チーム）',
+            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
             features: [
+              'キャラクターがパイプラインを走り抜けるゲーム型リアルタイムデプロイモニタリング',
               'GitHub Push → Build → Deploy → Health Check 全過程自動化',
-              'AWS Amplify基盤ゲーミフィケーションリアルタイムモニタリング',
-              'Discord・Slack Webhook即時通知',
-              'Phantomデプロイ防止（設定検証 + 自動Health Check）',
-              'Terraform IaCで全インフラ管理'
+              'EventBridge → Lambda → DynamoDB の状態追跡パイプライン',
+              'Phantom デプロイ遮断（設定検証 + デプロイ後 Health Check）、Bedrock 失敗ログ分析',
+              'Discord・Slack 即時通知、Terraform IaC インフラ管理'
             ]
           },
           links: { demo: null, github: 'https://github.com/Deploy-Land' }
