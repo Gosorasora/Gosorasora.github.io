@@ -71,7 +71,7 @@ export const content = {
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
             'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
             'Group Leader로 코어 멤버를 구성해 SNS 활동과 교내 커뮤니티 환경 구성, 전공 무관 학생 대상 클라우드 실습 세션 운영',
-            '두 번째 세션 주최 후 수여되는 AWS SBG Ignite Badge 획득 (AWS Community 발급)',
+            'AWS SBG Ignite Badge 획득 (AWS Community 발급)',
             'LinkedIn [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) 페이지 운영',
           ],
           tags: ['AWS', 'Leadership']
@@ -128,7 +128,6 @@ export const content = {
           title: 'AWS SBG Ignite Badge',
           issuer: 'AWS Community',
           date: '2026.08',
-          description: ['AWS Student Builder Group Leader가 두 번째 이벤트를 주최하면 수여되는 배지']
         },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
@@ -639,7 +638,7 @@ export const content = {
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
             'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
             'As Group Leader, built a core-member team to run SNS channels and the on-campus community; runs hands-on cloud sessions for students of all majors',
-            'Earned the AWS SBG Ignite Badge, awarded to SBG Leaders after hosting their second event (issued by AWS Community)',
+            'Earned the AWS SBG Ignite Badge (issued by AWS Community)',
             'Run the [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) LinkedIn page',
           ],
           tags: ['AWS', 'Cloud']
@@ -687,7 +686,6 @@ export const content = {
           title: 'AWS SBG Ignite Badge',
           issuer: 'AWS Community',
           date: '2026.08',
-          description: ['Awarded to AWS Student Builder Group Leaders after hosting their second event']
         },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
@@ -1186,7 +1184,7 @@ export const content = {
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
             'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
             'Group Leader としてコアメンバーを組成し、SNS 運営と学内コミュニティ環境を構築。専攻を問わず学生向けクラウド実習セッションを運営',
-            '2 回目のイベント主催後に授与される AWS SBG Ignite Badge を取得 (AWS Community 発給)',
+            'AWS SBG Ignite Badge を取得 (AWS Community 発給)',
             'LinkedIn [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) ページ運営',
           ],
           tags: ['AWS', 'Leadership']
@@ -1240,7 +1238,6 @@ export const content = {
           title: 'AWS SBG Ignite Badge',
           issuer: 'AWS Community',
           date: '2026.08',
-          description: ['AWS Student Builder Group Leader が 2 回目のイベントを主催すると授与されるバッジ']
         },
         {
           title: 'Google Cloud Fundamentals: Core Infrastructure',
