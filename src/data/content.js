@@ -40,7 +40,7 @@ export const content = {
             ],
             '인바운드 리드 SLA 체계 구축',
             [
-              '접수 → 담당자 배정 평균 33.6시간을 0.4시간으로 단축 (98.7% 단축), 1시간 내 배정 9% → 86%',
+              '리드 접수에서 담당자 배정까지 평균 33.6시간을 0.4시간으로 단축 (98.7% 단축), 1시간 내 담당자 배정 비율 9% → 86%',
               '영업시간 기준 SLA 자동 측정, 방치 리드 알림·에스컬레이션 체계 구축'
             ],
             'Notion 사내 에이전트 구축·운영',
@@ -500,7 +500,7 @@ export const content = {
             role: 'DevOps / Forward Deployed Engineer',
             tech: ['Notion', '사내 백오피스', 'SLA 지표 설계', '알림·에스컬레이션', '과거 데이터 백필'],
             features: [
-              '배정 지표: 접수 → 담당자 배정 평균 33.6시간 → 0.4시간(약 26분), 1시간 내 배정 9% → 86%',
+              '배정 지표: 리드 접수에서 담당자 배정까지 평균 33.6시간 → 0.4시간(약 26분), 1시간 내 담당자 배정 비율 9% → 86%',
               '응답 지표(첫 고객 컨택)는 아직 목표 미달. 유리한 기준으로 갈아타지 않기 위해 불리한 쪽을 함께 유지 중',
               '영업시간 기준 SLA 자동 측정 (주말·공휴일·업무시간 외 제외), 개선 전후 동일 기준으로 계산',
               '대응 가능 시간대 알림 + 방치 리드 에스컬레이션 + 실시간 모니터링 화면',
@@ -607,7 +607,7 @@ export const content = {
             ],
             'Built an SLA system for inbound leads',
             [
-              'Cut intake-to-owner assignment from 33.6h to 0.4h on average (98.7% faster); assignment within 1h rose from 9% to 86%',
+              'Cut lead intake-to-owner assignment from 33.6h to 0.4h on average (98.7% faster); leads assigned to an owner within 1h rose from 9% to 86%',
               'Measures SLA on business hours only, with alerts and escalation for leads left untouched'
             ],
             'Built and ran internal Notion agents',
@@ -1153,7 +1153,7 @@ export const content = {
             ],
             'インバウンドリードの SLA 体系を構築',
             [
-              '受付 → 担当者アサインの平均を 33.6 時間から 0.4 時間へ短縮（98.7% 短縮）、1 時間以内アサイン率 9% → 86%',
+              'リード受付から担当者アサインまでの平均を 33.6 時間から 0.4 時間へ短縮（98.7% 短縮）、1 時間以内の担当者アサイン率 9% → 86%',
               '営業時間基準で SLA を自動計測し、放置リードの通知・エスカレーション体系を構築'
             ],
             'Notionの社内エージェントを構築・運用',
