@@ -79,9 +79,9 @@ export const content = {
         {
           title: 'Notion Campus Leader at Dongguk University',
           company: 'Notion',
-          period: '2026.09 ~',
+          period: '2026.08 ~ 현재',
           description: [
-            '교내 Notion 공식 캠퍼스 리더로 학생 대상 Notion 활용 확산 활동'
+            '교내 Notion 공식 캠퍼스 리더로 학생 대상 Notion 활용 확산 활동 운영'
           ],
           tags: ['Notion', 'Community']
         }
@@ -646,9 +646,9 @@ export const content = {
         {
           title: 'Notion Campus Leader at Dongguk University',
           company: 'Notion',
-          period: '2026.09 ~',
+          period: '2026.08 ~ Present',
           description: [
-            'Official Notion Campus Leader on campus, spreading Notion adoption among students'
+            'Official Notion Campus Leader on campus, running Notion adoption sessions for students'
           ],
           tags: ['Notion', 'Community']
         }
@@ -1192,9 +1192,9 @@ export const content = {
         {
           title: 'Notion Campus Leader at Dongguk University',
           company: 'Notion',
-          period: '2026.09 ~',
+          period: '2026.08 ~ 現在',
           description: [
-            '学内の Notion 公式キャンパスリーダーとして、学生への Notion 活用普及活動'
+            '学内の Notion 公式キャンパスリーダーとして、学生への Notion 活用普及活動を運営'
           ],
           tags: ['Notion', 'Community']
         }
