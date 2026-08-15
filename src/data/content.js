@@ -58,7 +58,7 @@ export const content = {
           description: [
             '네트워크 보안 및 부하 분산 관련 연구 수행',
             'NLP 기반 IaC 보안 분석 도구 개별연구. BERT 모델로 Terraform 시맨틱 이상 탐지 및 IAM 권한 상승 경로 시각화',
-            'WebAssembly와 컨테이너의 실환경 비교 개별연구. AKS에서 IoT 로그 파이프라인을 계층별로 실측해 런타임 할당 기준 도출 (논문 2편)'
+            'WebAssembly와 컨테이너의 실환경 비교 개별연구. AKS에서 IoT 로그 파이프라인을 계층별로 실측해 런타임 할당 기준 도출 (논문 [PDF](https://gosorasora.github.io/assets/wasm-spinkube-iot-layer-allocation.pdf))'
           ],
           tags: ['Network Security', 'Load Balancing', 'AWS', 'NLP', 'WebAssembly']
         },
@@ -324,10 +324,10 @@ export const content = {
           title: 'IoT 로그 파이프라인 계층별 런타임 할당 (WebAssembly vs 컨테이너)',
           category: 'DevOps & Infra',
           image: null,
-          description: 'AKS 1.34 실환경에서 동일 Go 워크로드를 SpinKube Wasm과 컨테이너로 구현해 계층별 실측. Wasm 벤더가 주장한 콜드스타트 이점이 운영 스택을 지나며 어디까지 희석되는지 검증',
+          description: 'AKS 1.34 실환경에서 동일 Go 워크로드를 SpinKube Wasm과 컨테이너로 구현해 계층별 실측한 학술 논문. Wasm 벤더가 주장한 콜드스타트 이점이 운영 스택을 지나며 어디까지 희석되는지 검증',
           details: {
             problem: 'Wasm 런타임 벤더는 컨테이너 대비 콜드스타트 약 400배, Pod 밀도 43배 우위를 주장하지만 이 수치는 격리된 마이크로벤치마크에서 나온 값이다. 쿠버네티스 운영 스택(shim·SDK·HTTP 계층)을 통과한 종단 경로에서도 같은 이점이 남는지는 검증되지 않았다.',
-            solution: 'IoT 로그 파이프라인을 Edge·Transform·Ingestion·Storage 네 계층으로 모델링하고, 그중 세 계층을 동일한 Go 워크로드의 SpinKube Wasm 모듈과 scratch 컨테이너로 각각 구현해 Azure Kubernetes Service(AKS 1.34) 위에서 실측 비교했습니다. 언어와 비즈니스 로직, 부하 조건을 통제해 런타임 차이만 격리 측정했고, Shapiro-Wilk 정규성 검정 후 Welch t 검정 또는 Mann-Whitney U 검정을 자동 선택해 확정적 10개 지표군에 Bonferroni 보정을 적용했습니다. 그 결과 벤더가 제시한 런타임 수준의 정량 이점은 실제 운영 스택을 지나며 크게 희석되고, 계층마다 유리한 런타임이 상반된다는 점을 확인해 단일 런타임 선택이 아닌 계층별 할당을 제안했습니다. 선행 1차 연구에서는 Python Wasm의 연산 한계를 Rust 네이티브 Wasm 마이그레이션으로 해결해 바이너리 91배 감소(35.86MB→0.39MB)와 처리량 7.8배 향상을 확보했습니다.',
+            solution: 'IoT 로그 파이프라인을 Edge·Transform·Ingestion·Storage 네 계층으로 모델링하고, 그중 세 계층을 동일한 Go 워크로드의 SpinKube Wasm 모듈과 scratch 컨테이너로 각각 구현해 Azure Kubernetes Service(AKS 1.34) 위에서 실측 비교했습니다. 언어와 비즈니스 로직, 부하 조건을 통제해 런타임 차이만 격리 측정했고, Shapiro-Wilk 정규성 검정 후 Welch t 검정 또는 Mann-Whitney U 검정을 자동 선택해 확정적 10개 지표군에 Bonferroni 보정을 적용했습니다. 그 결과 벤더가 제시한 런타임 수준의 정량 이점은 실제 운영 스택을 지나며 크게 희석되고, 계층마다 유리한 런타임이 상반된다는 점을 확인해 단일 런타임 선택이 아닌 계층별 할당을 제안했습니다. 이에 앞선 선행 실험에서는 Python Wasm의 연산 한계를 Rust 네이티브 Wasm 마이그레이션으로 해결해 바이너리 91배 감소(35.86MB→0.39MB)와 처리량 7.8배 향상을 확보했습니다.',
             role: '학부연구생 (CSDC Lab 개별연구, 단독 수행)',
             tech: ['SpinKube', 'WebAssembly', 'WASI', 'Rust', 'Go', 'Azure AKS', 'KEDA', 'Kubernetes', 'containerd-shim-spin', '통계 검정'],
             features: [
@@ -335,7 +335,7 @@ export const content = {
               'Ingestion 계층은 컨테이너 우세: 24~28K rps 유지 vs Wasm 약 1,264 rps 한계 (19~22배)',
               'Transform 계층은 Wasm 우세: 컨테이너는 테넌트당 격리 강제 시 약 41 Pod에서 한계, Wasm 공유 풀은 8,000 테넌트 무손실. 테넌트당 비용 최대 64배 저렴 ($4.69 → $0.07)',
               'Edge 계층은 Wasm 우세: scale-from-zero 콜드스타트 11배 빠름, arm64 빌드 컨테이너가 amd64 노드에서 실패한 반면 동일 Wasm 모듈은 cross-arch 이식 성공',
-              '1차 연구: Python Wasm → Rust 네이티브 Wasm 마이그레이션으로 바이너리 35.86MB → 0.39MB(91배), 처리량 1,713 → 13,389 req/s(7.8배)',
+              '선행 실험: Python Wasm → Rust 네이티브 Wasm 마이그레이션으로 바이너리 35.86MB → 0.39MB(91배), 처리량 1,713 → 13,389 req/s(7.8배)',
               'Threats to Validity 6건 명시 (6 vCPU free-tier 클러스터 한계, 단일 Go 워크로드, 측정 도구 기준 차이 등)'
             ]
           },
@@ -343,8 +343,8 @@ export const content = {
             demo: null,
             github: null,
             papers: [
-              { label: '논문 2 · 계층별 런타임 할당 (AKS 실측)', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' },
-              { label: '논문 1 · 런타임 비교와 Rust 최적화', url: '/assets/wasm-spinkube-runtime-comparison.pdf' }
+              { label: '논문 · 계층별 런타임 할당 (AKS 실측)', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' },
+              { label: '선행 실험 자료 · 런타임 비교와 Rust 최적화', url: '/assets/wasm-spinkube-runtime-comparison.pdf' }
             ]
           }
         },
@@ -625,7 +625,7 @@ export const content = {
           description: [
             'Conducting research on Network Security and Load Balancing',
             'NLP-based IaC Security Analyzer. BERT model for Terraform semantic anomaly detection & IAM privilege escalation path visualization',
-            'Empirical WebAssembly vs container study: measured an IoT log pipeline layer by layer on AKS to derive runtime allocation criteria (2 papers)'
+            'Empirical WebAssembly vs container study: measured an IoT log pipeline layer by layer on AKS to derive runtime allocation criteria ([paper](https://gosorasora.github.io/assets/wasm-spinkube-iot-layer-allocation.pdf))'
           ],
           tags: ['Network Security', 'Load Balancing', 'AWS', 'NLP', 'WebAssembly']
         },
@@ -874,7 +874,7 @@ export const content = {
           description: 'Empirical comparison on AKS 1.34: the same Go workload built as SpinKube Wasm modules and as containers, measured layer by layer, to see how much of the vendor-claimed cold-start advantage survives a real operational stack.',
           details: {
             problem: 'Wasm runtime vendors claim roughly 400x faster cold starts and 43x Pod density over containers, but those figures come from isolated microbenchmarks. Whether the advantage survives the Kubernetes operational stack (shim, SDK, HTTP layers) on an end-to-end path was untested.',
-            solution: 'Modeled an IoT log pipeline as four layers (Edge, Transform, Ingestion, Storage) and implemented three of them twice, as SpinKube Wasm modules and as scratch containers running the identical Go workload, then measured both on Azure Kubernetes Service (AKS 1.34). Language, business logic and load conditions were held constant so that only the runtime varied. After Shapiro-Wilk normality testing, Welch t-tests or Mann-Whitney U tests were selected automatically, with Bonferroni correction across ten confirmatory metric families. The result: the vendor-level runtime advantage is heavily diluted once the operational stack is included, and the favorable runtime flips per layer, which motivates layer-specific allocation rather than a single runtime choice. An earlier first-phase study resolved the compute ceiling of Python Wasm by migrating to native Rust Wasm, cutting binary size 91x (35.86MB to 0.39MB) and raising throughput 7.8x.',
+            solution: 'Modeled an IoT log pipeline as four layers (Edge, Transform, Ingestion, Storage) and implemented three of them twice, as SpinKube Wasm modules and as scratch containers running the identical Go workload, then measured both on Azure Kubernetes Service (AKS 1.34). Language, business logic and load conditions were held constant so that only the runtime varied. After Shapiro-Wilk normality testing, Welch t-tests or Mann-Whitney U tests were selected automatically, with Bonferroni correction across ten confirmatory metric families. The result: the vendor-level runtime advantage is heavily diluted once the operational stack is included, and the favorable runtime flips per layer, which motivates layer-specific allocation rather than a single runtime choice. A preceding experiment resolved the compute ceiling of Python Wasm by migrating to native Rust Wasm, cutting binary size 91x (35.86MB to 0.39MB) and raising throughput 7.8x.',
             role: 'Undergraduate Researcher (CSDC Lab, sole author)',
             tech: ['SpinKube', 'WebAssembly', 'WASI', 'Rust', 'Go', 'Azure AKS', 'KEDA', 'Kubernetes', 'containerd-shim-spin', 'Statistical testing'],
             features: [
@@ -882,7 +882,7 @@ export const content = {
               'Ingestion layer favors containers: 24-28K rps sustained vs a Wasm ceiling around 1,264 rps (19-22x)',
               'Transform layer favors Wasm: containers hit a wall near 41 Pods under per-tenant isolation, while a shared Wasm pool absorbed 8,000 tenants loss-free at up to 64x lower cost per tenant ($4.69 to $0.07)',
               'Edge layer favors Wasm: 11x faster scale-from-zero cold start, and an arm64-built container failed on amd64 nodes while the same Wasm module ran cross-arch',
-              'First-phase study: migrating Python Wasm to native Rust Wasm cut binary size 35.86MB to 0.39MB (91x) and raised throughput 1,713 to 13,389 req/s (7.8x)',
+              'Preceding experiment: migrating Python Wasm to native Rust Wasm cut binary size 35.86MB to 0.39MB (91x) and raised throughput 1,713 to 13,389 req/s (7.8x)',
               'Six threats to validity stated (6 vCPU free-tier cluster, single Go workload, measurement-tooling differences, and more)'
             ]
           },
@@ -890,8 +890,8 @@ export const content = {
             demo: null,
             github: null,
             papers: [
-              { label: 'Paper 2 - Layer-specific allocation (AKS)', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' },
-              { label: 'Paper 1 - Runtime comparison and Rust optimization', url: '/assets/wasm-spinkube-runtime-comparison.pdf' }
+              { label: 'Paper - Layer-specific runtime allocation (AKS)', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' },
+              { label: 'Preceding experiment - Runtime comparison and Rust optimization', url: '/assets/wasm-spinkube-runtime-comparison.pdf' }
             ]
           }
         },
@@ -1171,7 +1171,7 @@ export const content = {
           description: [
             'ネットワークセキュリティおよび負荷分散関連研究遂行',
             'NLP基盤IaCセキュリティ分析ツール個別研究。BERTモデルでTerraformセマンティック異常検知およびIAM権限昇格経路可視化',
-            'WebAssembly とコンテナの実環境比較の個別研究。AKS で IoT ログパイプラインを階層別に実測しランタイム割当基準を導出（論文2編）'
+            'WebAssembly とコンテナの実環境比較の個別研究。AKS で IoT ログパイプラインを階層別に実測しランタイム割当基準を導出（論文 [PDF](https://gosorasora.github.io/assets/wasm-spinkube-iot-layer-allocation.pdf)）'
           ],
           tags: ['Network Security', 'Load Balancing', 'AWS', 'NLP', 'WebAssembly']
         },
@@ -1420,7 +1420,7 @@ export const content = {
           description: 'AKS 1.34 の実環境で同一の Go ワークロードを SpinKube Wasm モジュールとコンテナで実装し、階層ごとに実測比較。ベンダーが主張するコールドスタートの優位が運用スタックを通過した後にどこまで残るかを検証',
           details: {
             problem: 'Wasm ランタイムのベンダーはコンテナ比でコールドスタート約400倍、Pod 密度43倍の優位を主張するが、これらは隔離されたマイクロベンチマークの数値である。Kubernetes の運用スタック（shim・SDK・HTTP 階層）を通過した end-to-end 経路でも同じ優位が残るかは検証されていなかった。',
-            solution: 'IoT ログパイプラインを Edge・Transform・Ingestion・Storage の四階層としてモデル化し、そのうち三階層を同一の Go ワークロードによる SpinKube Wasm モジュールと scratch コンテナの二通りで実装し、Azure Kubernetes Service（AKS 1.34）上で実測比較しました。言語・ビジネスロジック・負荷条件を統制してランタイム差のみを隔離測定し、Shapiro-Wilk の正規性検定の後に Welch の t 検定または Mann-Whitney U 検定を自動選択、確証的10指標群に Bonferroni 補正を適用しました。その結果、ベンダーが示したランタイム水準の定量的優位は実際の運用スタックを通過する過程で大きく希釈され、階層ごとに有利なランタイムが逆転することを確認し、単一ランタイムの選択ではなく階層別割当を提案しました。先行する第一次研究では Python Wasm の演算限界を Rust ネイティブ Wasm への移行で解決し、バイナリ91倍削減（35.86MB→0.39MB）とスループット7.8倍向上を得ました。',
+            solution: 'IoT ログパイプラインを Edge・Transform・Ingestion・Storage の四階層としてモデル化し、そのうち三階層を同一の Go ワークロードによる SpinKube Wasm モジュールと scratch コンテナの二通りで実装し、Azure Kubernetes Service（AKS 1.34）上で実測比較しました。言語・ビジネスロジック・負荷条件を統制してランタイム差のみを隔離測定し、Shapiro-Wilk の正規性検定の後に Welch の t 検定または Mann-Whitney U 検定を自動選択、確証的10指標群に Bonferroni 補正を適用しました。その結果、ベンダーが示したランタイム水準の定量的優位は実際の運用スタックを通過する過程で大きく希釈され、階層ごとに有利なランタイムが逆転することを確認し、単一ランタイムの選択ではなく階層別割当を提案しました。これに先立つ先行実験では Python Wasm の演算限界を Rust ネイティブ Wasm への移行で解決し、バイナリ91倍削減（35.86MB→0.39MB）とスループット7.8倍向上を得ました。',
             role: '学部研究生（CSDC Lab 個別研究・単独）',
             tech: ['SpinKube', 'WebAssembly', 'WASI', 'Rust', 'Go', 'Azure AKS', 'KEDA', 'Kubernetes', 'containerd-shim-spin', '統計検定'],
             features: [
@@ -1428,7 +1428,7 @@ export const content = {
               'Ingestion 階層はコンテナ優位: 24〜28K rps を維持 vs Wasm 約1,264 rps の限界（19〜22倍）',
               'Transform 階層は Wasm 優位: テナント別隔離を強制するとコンテナは約41 Pod で限界、Wasm 共有プールは8,000テナントを無損失で収容。テナント当たり費用は最大64倍安価（$4.69→$0.07）',
               'Edge 階層は Wasm 優位: scale-from-zero のコールドスタートが11倍高速、arm64 ビルドのコンテナが amd64 ノードで失敗した一方、同一 Wasm モジュールは cross-arch で動作',
-              '第一次研究: Python Wasm から Rust ネイティブ Wasm への移行でバイナリ35.86MB→0.39MB（91倍）、スループット1,713→13,389 req/s（7.8倍）',
+              '先行実験: Python Wasm から Rust ネイティブ Wasm への移行でバイナリ35.86MB→0.39MB（91倍）、スループット1,713→13,389 req/s（7.8倍）',
               'Threats to Validity を6件明示（6 vCPU の free-tier クラスタ、単一 Go ワークロード、測定ツールの基準差など）'
             ]
           },
@@ -1436,8 +1436,8 @@ export const content = {
             demo: null,
             github: null,
             papers: [
-              { label: '論文2・階層別ランタイム割当（AKS 実測）', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' },
-              { label: '論文1・ランタイム比較と Rust 最適化', url: '/assets/wasm-spinkube-runtime-comparison.pdf' }
+              { label: '論文・階層別ランタイム割当（AKS 実測）', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' },
+              { label: '先行実験資料・ランタイム比較と Rust 最適化', url: '/assets/wasm-spinkube-runtime-comparison.pdf' }
             ]
           }
         },
