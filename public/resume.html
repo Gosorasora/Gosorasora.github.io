@@ -100,10 +100,9 @@
 <div class="section">
   <div class="section-title">Summary</div>
   <div class="summary">
-    I am Ko Donghyeon, a DevOps Engineer and Forward Deployed Engineer. I build and run Terraform and Kubernetes infrastructure with GitOps deployment.
-    I dislike watching repetitive work eat people's time, so my focus now is AX, internal automation with AI. Rather than staying inside the infrastructure,
-    I sit next to the team that has the problem and fix it there. Nothing beats what people build when they think together, which is why I like communities
-    and serve as an AWS Student Builder Group Leader.
+    I am Ko Donghyeon, a DevOps Engineer and Forward Deployed Engineer.
+    I moved Terraform and Kubernetes infrastructure onto a GitOps workflow where nothing changes without PR approval, and turned scattered internal work data into a productivity metric the whole organization sees, now used in C-level R&amp;R decisions and 1on1s.
+    I also take on problems outside the engineering team, like the sales team's lead response, from on-site interviews through measurement, alerting and adoption; and I do not route around blockers, so when an Atlantis bug blocked our GitOps rollout I dug into a Go codebase for the first time and got the fix merged upstream.
   </div>
 </div>
 
@@ -137,7 +136,7 @@
     <ul>
       <li>Built the company GitOps environment with Terraform and Atlantis
         <ul>
-          <li>Deployed Atlantis on Kubernetes via Helm chart; PR-level approval gives every Terraform operation an audit trail</li>
+          <li>Deployed Atlantis on Kubernetes via Helm chart; PR-level approval gives every Terraform operation an audit trail, and since Jan 2026 every infrastructure change has gone through this path only</li>
           <li>Cut AWS access over to least-privilege AssumeRole and revoked every local developer key</li>
         </ul>
       </li>
@@ -149,14 +148,14 @@
       </li>
       <li>Built the internal AX productivity metric system (DORA adopted as the measure)
         <ul>
-          <li>Auto-classifies 200+ tasks per day (91.7% classification accuracy on internal review) to collect deploy and incident data</li>
+          <li>Auto-classifies 200+ tasks per day (91.7% classification accuracy on internal review) to collect deploy and incident data; running daily since Feb 2026</li>
           <li>Agreed and documented per-team deploy criteria as the fixed basis; used by C-level for R&amp;R and 1on1s</li>
         </ul>
       </li>
       <li>Built and ran internal Notion agents
         <ul>
           <li>Agent reviews deployment quality automatically and links release-related tasks, keeping the data consistent</li>
-          <li>Notion Workers turn calendar events into meeting notes, rolled out company-wide</li>
+          <li>Notion Workers turn calendar events into meeting notes, rolled out company-wide and in use since</li>
           <li>Per-vendor (Vertex AI, AI Studio, OpenAI) LLM cost labeling; built the usage monitoring and alerting system</li>
         </ul>
       </li>
@@ -204,6 +203,37 @@
     </div>
     <ul>
       <li>Official Notion Campus Leader on campus, running Notion adoption sessions for students</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Open Source Contributions -->
+<div class="section">
+  <div class="section-title">Open Source Contributions</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Atlantis: PR #6186 Merged (v0.41.0)</span>
+      <span class="entry-date">Mar 2026</span>
+    </div>
+    <div class="entry-sub">
+      <span><a href="https://github.com/runatlantis/atlantis/pull/6186">github.com/runatlantis/atlantis/pull/6186 ↗</a></span>
+    </div>
+    <ul>
+      <li>Fixed autoplan bug where FetchPullStatus() was never called, causing IsMergeable to always be false (Go zero value) and blocking all clean PRs when plan_requirements: [mergeable] was set</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Spin Framework Python SDK: PR #124, #126, #128</span>
+      <span class="entry-date">Dec 2025</span>
+    </div>
+    <div class="entry-sub">
+      <span><a href="https://github.com/spinframework/spin-python-sdk/pull/128">github.com/spinframework/spin-python-sdk ↗</a></span>
+    </div>
+    <ul>
+      <li>Contributed 3 merged PRs and 3 issues to the Spin Python SDK, the toolchain for running serverless WebAssembly workloads</li>
     </ul>
   </div>
 </div>
@@ -257,37 +287,6 @@
   </div>
 </div>
 
-<!-- Open Source Contributions -->
-<div class="section">
-  <div class="section-title">Open Source Contributions</div>
-
-  <div class="entry">
-    <div class="entry-header">
-      <span class="entry-title">Atlantis: PR #6186 Merged (v0.41.0)</span>
-      <span class="entry-date">Mar 2026</span>
-    </div>
-    <div class="entry-sub">
-      <span><a href="https://github.com/runatlantis/atlantis/pull/6186">github.com/runatlantis/atlantis/pull/6186 ↗</a></span>
-    </div>
-    <ul>
-      <li>Fixed autoplan bug where FetchPullStatus() was never called, causing IsMergeable to always be false (Go zero value) and blocking all clean PRs when plan_requirements: [mergeable] was set</li>
-    </ul>
-  </div>
-
-  <div class="entry">
-    <div class="entry-header">
-      <span class="entry-title">Spin Framework Python SDK: PR #124, #126, #128</span>
-      <span class="entry-date">Dec 2025</span>
-    </div>
-    <div class="entry-sub">
-      <span><a href="https://github.com/spinframework/spin-python-sdk/pull/128">github.com/spinframework/spin-python-sdk ↗</a></span>
-    </div>
-    <ul>
-      <li>Contributed 3 merged PRs and 3 issues to the Spin Python SDK, the toolchain for running serverless WebAssembly workloads</li>
-    </ul>
-  </div>
-</div>
-
 <!-- Education -->
 <div class="section">
   <div class="section-title">Education</div>
@@ -310,11 +309,11 @@
 <div class="section">
   <div class="section-title">Certifications</div>
   <div class="skills-grid">
-    <div class="row"><span class="label">(AWS)</span> AWS SBG Ignite Badge | Aug 2026, Issued by AWS Community</div>
-    <div class="row"><span class="label">(Cloud)</span> Google Cloud Fundamentals: Core Infrastructure | Oct 2025</div>
-    <div class="row"><span class="label">(Notion)</span> Notion Badge | Jun 2026 (valid to Jun 2028), <a href="https://verify.skilljar.com/c/u3fmkfvpnv26">Essentials ↗</a>, <a href="https://verify.skilljar.com/c/uqe3e88dh56v">Workflows ↗</a>, <a href="https://verify.skilljar.com/c/nvh6hj8dxfrx">Advanced ↗</a></div>
     <div class="row"><span class="label">(SQL)</span> SQL Developer (SQLD) | Sep 2024</div>
     <div class="row"><span class="label">(ICT)</span> Craftsman Information Processing (정보처리기능사) | Dec 2022</div>
+    <div class="row"><span class="label">(Cloud)</span> Google Cloud Fundamentals: Core Infrastructure | Oct 2025</div>
+    <div class="row"><span class="label">(AWS)</span> AWS SBG Ignite Badge | Aug 2026, Issued by AWS Community</div>
+    <div class="row"><span class="label">(Notion)</span> Notion Badge | Jun 2026 (valid to Jun 2028), <a href="https://verify.skilljar.com/c/u3fmkfvpnv26">Essentials ↗</a>, <a href="https://verify.skilljar.com/c/uqe3e88dh56v">Workflows ↗</a>, <a href="https://verify.skilljar.com/c/nvh6hj8dxfrx">Advanced ↗</a></div>
   </div>
 </div>
 

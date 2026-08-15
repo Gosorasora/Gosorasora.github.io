@@ -94,10 +94,9 @@
 <div class="section">
   <div class="section-title">要約</div>
   <div class="summary">
-    DevOps Engineer かつ Forward Deployed Engineer の高東見です。Terraform・Kubernetes ベースのインフラと GitOps デプロイ環境を自ら構築・運用しています。
-    反復業務が人の時間を奪うことが好きではなく、最近は AI を活用した AX (業務自動化) で社内の反復業務と開発生産性指標の自動化に注力しています。
-    AI を使うバックエンドほど、モデル呼び出しのコストとパイプラインの安定性が結局インフラの問題として返ってくると考えており、インフラで身につけた自動化と最適化を AI システムを支える側で使いたいと考えています。インフラの中に留まるより、問題を抱えたチームのそばに行って直接聞き、その場で直すやり方を好みます。人が集まって一緒に考えて生まれたものは何よりも強いと思っています。
-    だからコミュニティが好きで、同じ経験を他の人にも届けたく AWS Student Builder Group Leader として活動しています。
+    DevOps Engineer かつ Forward Deployed Engineer の高東見です。
+    Terraform と Kubernetes ベースのインフラを、PR 承認なしには変更できない GitOps 構造へ移行し、散在していた社内の業務データを組織全体で見る生産性指標にまとめ、C レベルの R&amp;R 調整と 1on1 で使われる状態にしました。
+    営業部門のリード対応のように開発チームの外にある問題も、現場ヒアリングから計測・通知・定着まで自分で担当します。詰まった問題を迂回しない姿勢で、社内 GitOps 移行中に遭遇した Atlantis の不具合を初めて触れる Go で追い、上流にマージさせました。
   </div>
 </div>
 
@@ -131,7 +130,7 @@
     <ul>
       <li>Terraform・Atlantis で社内 GitOps 環境を構築
         <ul>
-          <li>Helm Chart で Atlantis を Kubernetes にデプロイ、PR 単位の承認を強制し Terraform 作業の監査証跡を全件確保</li>
+          <li>Helm Chart で Atlantis を Kubernetes にデプロイ、PR 単位の承認を強制し Terraform 作業の監査証跡を全件確保。2026.01 以降、社内のインフラ変更は全件この経路のみで運用中</li>
           <li>AWS AssumeRole の最小権限に移行、開発者ローカルの Access Key を全量回収</li>
         </ul>
       </li>
@@ -143,14 +142,14 @@
       </li>
       <li>社内 AX 生産性指標の体系を構築 (測定指標として DORA を採用)
         <ul>
-          <li>1 日 200 件以上の業務を自動分類 (社内検証基準の分類精度 91.7%) しデプロイ・障害データを収集</li>
+          <li>1 日 200 件以上の業務を自動分類 (社内検証基準の分類精度 91.7%) しデプロイ・障害データを収集、2026.02 から毎日自動算出を運用中</li>
           <li>チーム別のデプロイ基準を合意・文書化し算出基準として固定、C レベルの R&amp;R 調整・1on1 の根拠として使用</li>
         </ul>
       </li>
       <li>Notion の社内エージェントを構築・運用
         <ul>
           <li>エージェントでデプロイ品質を自動検収、リリース関連タスクの追跡・紐付けでデータ整合性を確保</li>
-          <li>Notion Workers でカレンダー予定から議事録を自動生成し全社展開</li>
+          <li>Notion Workers でカレンダー予定から議事録を自動生成し全社展開、以降運用中</li>
           <li>ベンダー別 (Vertex AI・AI Studio・OpenAI) LLM コストラベリング、使用量モニタリング環境と Alert システムを構築</li>
         </ul>
       </li>
@@ -199,6 +198,37 @@
     </div>
     <ul>
       <li>学内の Notion 公式キャンパスリーダーとして、学生への Notion 活用普及活動を運営</li>
+    </ul>
+  </div>
+</div>
+
+<!-- OSS への貢献 -->
+<div class="section">
+  <div class="section-title">OSS への貢献</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Atlantis: PR #6186 マージ (v0.41.0)</span>
+      <span class="entry-date">2026.03</span>
+    </div>
+    <div class="entry-sub">
+      <span><a href="https://github.com/runatlantis/atlantis/pull/6186">github.com/runatlantis/atlantis/pull/6186 ↗</a></span>
+    </div>
+    <ul>
+      <li>autoplan のバグ修正: FetchPullStatus() が呼ばれず IsMergeable が常に false (Go ゼロ値) となり、plan_requirements: [mergeable] 設定時にクリーンな PR がすべてブロックされる問題を解決</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Spin Framework Python SDK: PR #124, #126, #128</span>
+      <span class="entry-date">2025.12</span>
+    </div>
+    <div class="entry-sub">
+      <span><a href="https://github.com/spinframework/spin-python-sdk/pull/128">github.com/spinframework/spin-python-sdk ↗</a></span>
+    </div>
+    <ul>
+      <li>Spin Framework によるサーバーレス WebAssembly アプリケーション開発のための Python SDK を改善するため、PR 3 件・Issue 3 件を貢献</li>
     </ul>
   </div>
 </div>
@@ -252,37 +282,6 @@
   </div>
 </div>
 
-<!-- OSS への貢献 -->
-<div class="section">
-  <div class="section-title">OSS への貢献</div>
-
-  <div class="entry">
-    <div class="entry-header">
-      <span class="entry-title">Atlantis: PR #6186 マージ (v0.41.0)</span>
-      <span class="entry-date">2026.03</span>
-    </div>
-    <div class="entry-sub">
-      <span><a href="https://github.com/runatlantis/atlantis/pull/6186">github.com/runatlantis/atlantis/pull/6186 ↗</a></span>
-    </div>
-    <ul>
-      <li>autoplan のバグ修正: FetchPullStatus() が呼ばれず IsMergeable が常に false (Go ゼロ値) となり、plan_requirements: [mergeable] 設定時にクリーンな PR がすべてブロックされる問題を解決</li>
-    </ul>
-  </div>
-
-  <div class="entry">
-    <div class="entry-header">
-      <span class="entry-title">Spin Framework Python SDK: PR #124, #126, #128</span>
-      <span class="entry-date">2025.12</span>
-    </div>
-    <div class="entry-sub">
-      <span><a href="https://github.com/spinframework/spin-python-sdk/pull/128">github.com/spinframework/spin-python-sdk ↗</a></span>
-    </div>
-    <ul>
-      <li>Spin Framework によるサーバーレス WebAssembly アプリケーション開発のための Python SDK を改善するため、PR 3 件・Issue 3 件を貢献</li>
-    </ul>
-  </div>
-</div>
-
 <!-- 学歴 -->
 <div class="section">
   <div class="section-title">学歴</div>
@@ -305,11 +304,11 @@
 <div class="section">
   <div class="section-title">資格</div>
   <div class="skills-grid">
-    <div class="row"><span class="label">(AWS)</span> AWS SBG Ignite Badge | 2026.08 · AWS Community 発給</div>
-    <div class="row"><span class="label">(クラウド)</span> Google Cloud Fundamentals: Core Infrastructure | 2025.10</div>
-    <div class="row"><span class="label">(Notion)</span> Notion Badge | 2026.06 (~2028.06), <a href="https://verify.skilljar.com/c/u3fmkfvpnv26">Essentials ↗</a> · <a href="https://verify.skilljar.com/c/uqe3e88dh56v">Workflows ↗</a> · <a href="https://verify.skilljar.com/c/nvh6hj8dxfrx">Advanced ↗</a></div>
     <div class="row"><span class="label">(SQL)</span> SQL Developer (SQLD) | 2024.09</div>
     <div class="row"><span class="label">(ICT)</span> 情報処理技能士 (정보처리기능사) | 2022.12</div>
+    <div class="row"><span class="label">(クラウド)</span> Google Cloud Fundamentals: Core Infrastructure | 2025.10</div>
+    <div class="row"><span class="label">(AWS)</span> AWS SBG Ignite Badge | 2026.08 · AWS Community 発給</div>
+    <div class="row"><span class="label">(Notion)</span> Notion Badge | 2026.06 (~2028.06), <a href="https://verify.skilljar.com/c/u3fmkfvpnv26">Essentials ↗</a> · <a href="https://verify.skilljar.com/c/uqe3e88dh56v">Workflows ↗</a> · <a href="https://verify.skilljar.com/c/nvh6hj8dxfrx">Advanced ↗</a></div>
   </div>
 </div>
 
