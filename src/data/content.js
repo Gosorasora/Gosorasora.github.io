@@ -64,12 +64,12 @@ export const content = {
         },
 
         {
-          title: 'AWS Student Builder Group Leader at Dongguk University',
+          title: 'AWS Student Builder Group at Dongguk University',
           company: 'Amazon Web Services (AWS)',
           period: '2025.07 ~ 재직중',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'Group Leader 시작 2026.05 ~ 현재',
             'Group Leader로 코어 멤버를 구성해 SNS 활동과 교내 커뮤니티 환경 구성, 전공 무관 학생 대상 클라우드 실습 세션 운영',
             'AWS SBG Ignite Badge 획득 (AWS Community 발급)',
             'LinkedIn [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) 페이지 운영',
@@ -631,12 +631,12 @@ export const content = {
         },
 
         {
-          title: 'AWS Student Builder Group Leader at Dongguk University',
+          title: 'AWS Student Builder Group at Dongguk University',
           company: 'Amazon Web Services (AWS)',
           period: '2025.07 ~ Present',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'Group Leader since 2026.05',
             'As Group Leader, built a core-member team to run SNS channels and the on-campus community; runs hands-on cloud sessions for students of all majors',
             'Earned the AWS SBG Ignite Badge (issued by AWS Community)',
             'Run the [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) LinkedIn page',
@@ -1177,12 +1177,12 @@ export const content = {
         },
 
         {
-          title: 'AWS Student Builder Group Leader at Dongguk University',
+          title: 'AWS Student Builder Group at Dongguk University',
           company: 'Amazon Web Services (AWS)',
           period: '2025.07 ~ 現在',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
-            'AWS Student Builder Group Leader at Dongguk University (2026.05 ~ )',
+            'Group Leader 2026.05 〜',
             'Group Leader としてコアメンバーを組成し、SNS 運営と学内コミュニティ環境を構築。専攻を問わず学生向けクラウド実習セッションを運営',
             'AWS SBG Ignite Badge を取得 (AWS Community 発給)',
             'LinkedIn [AWS Student Builder Group at Dongguk University](https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/) ページ運営',
