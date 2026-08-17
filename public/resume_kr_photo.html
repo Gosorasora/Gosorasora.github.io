@@ -22,25 +22,26 @@
   a { color: #415A77; text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  .header {
+  .top {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 4px;
+    align-items: stretch;
+    gap: 14px;
+    margin-bottom: 7px;
   }
-  .header .head-text { flex: 1; text-align: left; }
-  .header h1 { font-size: 19pt; font-weight: 700; margin-bottom: 4px; }
-  .header .contact { font-size: 10pt; color: #415A77; line-height: 1.5; }
-  .header .contact a { margin: 0 4px 0 0; }
-  .header .photo {
-    width: 24mm; height: 30mm;
+  .top .photo {
+    width: 30mm;
     object-fit: cover;
     border: 1px solid #C9D1D9;
     border-radius: 2px;
     flex: none;
+    align-self: stretch;
   }
-  .summary { font-size: 9.2pt; line-height: 1.35; color: #1B263B; }
+  .top-right { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .header { text-align: left; margin-bottom: 6px; }
+  .header h1 { font-size: 19pt; font-weight: 700; margin-bottom: 4px; }
+  .header .contact { font-size: 9.5pt; color: #415A77; line-height: 1.5; }
+  .header .contact a { margin: 0 3px 0 0; }
+  .summary { font-size: 9.2pt; line-height: 1.42; color: #1B263B; }
   .header .contact a { margin: 0 4px; }
 
   .section { margin-bottom: 5px; }
@@ -94,28 +95,29 @@
 </head>
 <body>
 
-<div class="header">
+<div class="top">
   <img class="photo" src="assets/albums/profile.png" alt="증명사진">
-  <div class="head-text">
-    <h1>고동현 (Ko Donghyeon)</h1>
-    <div class="contact">
-      (+82) 10-3590-5395 &nbsp;|&nbsp; <a href="mailto:kodh0204@gmail.com">kodh0204@gmail.com</a><br>
-      <a href="https://github.com/Gosorasora">Github ↗</a> |
-      <a href="https://www.linkedin.com/in/kosora">LinkedIn ↗</a> |
-      <a href="https://gosorasora.github.io">포트폴리오 ↗</a>
+  <div class="top-right">
+    <div class="header">
+      <h1>고동현 (Ko Donghyeon)</h1>
+      <div class="contact">
+        (+82) 10-3590-5395 &nbsp;|&nbsp; <a href="mailto:kodh0204@gmail.com">kodh0204@gmail.com</a><br>
+        <a href="https://github.com/Gosorasora">Github ↗</a> |
+        <a href="https://www.linkedin.com/in/kosora">LinkedIn ↗</a> |
+        <a href="https://gosorasora.github.io">포트폴리오 ↗</a>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">요약</div>
+      <div class="summary">
+        DevOps Engineer이자 Forward Deployed Engineer인 고동현입니다.
+        Terraform과 Kubernetes 기반 인프라를 PR 승인 없이는 바뀌지 않는 GitOps 구조로 옮겼고, 전환 중 만난 Atlantis 버그는 우회하는 대신 원인을 찾아 업스트림에 머지시켰습니다(v0.41.0).
+        흩어져 있던 사내 업무 데이터는 조직이 함께 보는 생산성 지표로 만들어 C레벨의 R&amp;R 조정과 1on1에 쓰이게 했고, 영업팀 리드 대응처럼 개발팀 밖에 있는 문제도 현장 인터뷰부터 계측과 정착까지 직접 맡았습니다.
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 요약 -->
-<div class="section">
-  <div class="section-title">요약</div>
-  <div class="summary">
-    DevOps Engineer이자 Forward Deployed Engineer인 고동현입니다.
-    Terraform과 Kubernetes 기반 인프라를 PR 승인 없이는 바뀌지 않는 GitOps 구조로 옮겼고, 전환 중 만난 Atlantis 버그는 우회하는 대신 원인을 찾아 업스트림에 머지시켰습니다(v0.41.0).
-    흩어져 있던 사내 업무 데이터는 조직이 함께 보는 생산성 지표로 만들어 C레벨의 R&amp;R 조정과 1on1에 쓰이게 했고, 영업팀 리드 대응처럼 개발팀 밖에 있는 문제도 현장 인터뷰부터 계측과 정착까지 직접 맡았습니다.
-  </div>
-</div>
 
 <!-- 기술 스택 -->
 <div class="section">
