@@ -253,11 +253,11 @@ export const content = {
           title: 'NanoGrid: Lambda 없이 EC2 위에 세운 FaaS 플랫폼',
           category: 'DevOps & Infra',
           image: null,
-          description: '관리형 FaaS 없이 EC2 위에 함수 실행 플랫폼을 구축. 콜드 스타트를 세 층으로 분해해 실행 단위는 3초에서 0.2초로, 워커 인스턴스는 ASG Warm Pool로 상시 2대 비용에 5대분 확장 준비. 6인 팀에서 인프라와 보안 담당 (SoftBank Hackathon 본선)',
+          description: '관리형 FaaS 없이 EC2 위에 함수 실행 플랫폼을 구축. 콜드 스타트를 세 층으로 분해해 실행 단위는 3초에서 0.2초로, 워커 인스턴스는 ASG Warm Pool로 상시 2대 비용에 5대분 확장 준비. 인프라와 보안 담당 (SoftBank Hackathon 본선)',
           details: {
             problem: 'HTTP 요청 처리를 EC2 위에서 해야 한다는 제약 아래 Lambda가 대신 해주던 일을 직접 만들어야 했습니다. 함수 업로드, HTTP 호출, 즉시 실행을 관리형 FaaS 없이 구현하면서 확장성을 스스로 책임져야 했습니다.',
             solution: '먼저 기존 FaaS의 한계가 EC2 위에서 풀리는지 따졌습니다. API Gateway 29초 타임아웃, 런타임 제약, 벤더 락인, 추론 데이터 외부 유출은 풀리고 확장성만 나빠지는 구조였습니다. 익숙한 API Gateway와 Dispatcher Lambda로 6시간 만에 프로토타입을 띄웠지만 요청 경로에 API Gateway가 남는 구성이라 걷어내고 ALB와 EC2 Controller로 전환해 실행 시간 상한을 없애고 컴퓨트가 앉을 서브넷을 직접 정할 수 있게 만들었습니다. 남은 확장성 문제를 파고들며 콜드 스타트가 실행 단위, 워커 인스턴스, 스케일링 판단이라는 서로 다른 시간 규모의 세 층이라는 것을 확인하고 각각에 다른 도구를 적용했습니다. 임의의 사용자 코드를 실행하는 플랫폼이라 Zip Slip 차단, 컨테이너 리소스 쿼터, 작업별 타임아웃, IAM 최소 권한, WAF 룰 5종을 함께 붙였습니다.',
-            role: '인프라, 보안 담당 (6인 팀, 본선 48시간)',
+            role: '인프라, 보안 담당',
             tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
             features: [
               '① 실행 단위: 런타임별(Python, Node.js, C++, Go) 컨테이너 풀을 미리 띄워 요청마다 만들지 않고 빌려 쓰고 반납. 3초 → 0.2초. Prometheus worker_job_duration_seconds 히스토그램으로 전후 분포 이동을 측정',
@@ -808,11 +808,11 @@ export const content = {
           title: 'NanoGrid: A FaaS Platform Built on EC2 Without Lambda',
           category: 'DevOps & Infra',
           image: null,
-          description: 'Built a function execution platform on EC2 with no managed FaaS underneath. Decomposed cold start into three layers: execution unit from 3s to 0.2s, and worker instances held in an ASG Warm Pool so two instances of cost keep five ready. Owned infrastructure and security in a team of six (SoftBank Hackathon Finalist)',
+          description: 'Built a function execution platform on EC2 with no managed FaaS underneath. Decomposed cold start into three layers: execution unit from 3s to 0.2s, and worker instances held in an ASG Warm Pool so two instances of cost keep five ready. Owned infrastructure and security (SoftBank Hackathon Finalist)',
           details: {
             problem: 'Under a constraint that HTTP request handling had to run on EC2, we had to build what Lambda normally does for you. Function upload, HTTP invocation, and immediate execution had to work without a managed FaaS, which meant owning scalability ourselves.',
             solution: 'We first checked whether the limits we hit with managed FaaS actually dissolve on EC2. The API Gateway 29-second timeout, runtime constraints, vendor lock-in, and inference data leaving our network all dissolve; only scalability gets worse. A familiar API Gateway plus Dispatcher Lambda prototype ran within six hours, but it left API Gateway sitting on the request path, so we removed it and moved to ALB with an EC2 Controller. That eliminated the execution time ceiling and gave us control over which subnet compute sits in. Digging into the remaining scalability problem revealed that cold start is really three layers on different time scales, and each needed a different tool. Because the platform executes arbitrary user code, we also added Zip Slip blocking, container resource quotas, per-job timeouts, least-privilege IAM, and five WAF rule groups.',
-            role: 'Infrastructure and security (team of six, 48-hour final)',
+            role: 'Infrastructure and Security',
             tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
             features: [
               'Layer 1, execution unit: pre-started container pools per runtime (Python, Node.js, C++, Go), borrowed and returned instead of created per request. 3s to 0.2s, measured as a distribution shift in the Prometheus worker_job_duration_seconds histogram',
@@ -1361,11 +1361,11 @@ export const content = {
           title: 'NanoGrid: Lambdaを使わずEC2上に構築したFaaSプラットフォーム',
           category: 'DevOps & Infra',
           image: null,
-          description: 'マネージドFaaSなしでEC2上に関数実行プラットフォームを構築。Cold Startを三つの層に分解し、実行単位は3秒から0.2秒へ、ワーカーインスタンスはASG Warm Poolで常時2台分の費用のまま5台分の拡張を準備。6人チームでインフラとセキュリティを担当（SoftBank Hackathon本選）',
+          description: 'マネージドFaaSなしでEC2上に関数実行プラットフォームを構築。Cold Startを三つの層に分解し、実行単位は3秒から0.2秒へ、ワーカーインスタンスはASG Warm Poolで常時2台分の費用のまま5台分の拡張を準備。インフラとセキュリティを担当（SoftBank Hackathon本選）',
           details: {
             problem: 'HTTPリクエスト処理をEC2上で行うという制約のもと、Lambdaが代わりにやってくれていたことを自分で作る必要がありました。関数のアップロード、HTTP呼び出し、即時実行をマネージドFaaSなしで実装し、スケーラビリティを自分で担保しなければなりませんでした。',
             solution: 'まず既存FaaSの限界がEC2上で解けるかを検討しました。API Gatewayの29秒タイムアウト、ランタイム制約、ベンダーロックイン、推論データの外部流出は解けますが、スケーラビリティだけが悪化する構造でした。慣れているAPI GatewayとDispatcher Lambdaで6時間でプロトタイプを動かしましたが、リクエスト経路にAPI Gatewayが残る構成だったため取り外し、ALBとEC2 Controllerへ移行して実行時間の上限をなくし、コンピュートを置くサブネットを自分で決められるようにしました。残ったスケーラビリティの問題を掘り下げる中で、Cold Startが実行単位、ワーカーインスタンス、スケーリング判断という時間規模の異なる三層であることを確認し、それぞれに別の道具を当てました。任意のユーザーコードを実行するプラットフォームのため、Zip Slip遮断、コンテナリソースクォータ、ジョブ単位のタイムアウト、IAM最小権限、WAFルール5種も併せて適用しました。',
-            role: 'インフラ・セキュリティ担当（6人チーム、本選48時間）',
+            role: 'インフラ・セキュリティ担当',
             tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
             features: [
               '① 実行単位: ランタイム別（Python、Node.js、C++、Go）にコンテナプールを事前起動し、リクエストごとに作らず借りて返す方式へ。3秒から0.2秒。Prometheusのworker_job_duration_secondsヒストグラムで前後の分布シフトを測定',
