@@ -266,7 +266,7 @@
     </div>
     <ul>
       <li>AWS EC2 위에 self-hosted FaaS 플랫폼 설계, Docker Warm Pool(Pause/Unpause) 적용으로 Cold Start 30배 개선 (3초 → 0.2초), 실시간 메모리 분석 Auto-Tuner로 함수별 적정 메모리 산정 (분석 기준 최대 96% 과다 할당)</li>
-      <li>Data Plane 풀스택 구현: SQS Long Polling 작업 큐, S3 코드 저장소, Redis Pub/Sub 결과 전달, CloudWatch Custom Metrics 자동 보고, MDC 기반 requestId 로깅으로 요청 단위 전 구간 추적</li>
+      <li>요청량에 따른 오토스케일링을 직접 설계: CPU 사용률 대신 SQS 대기 요청 수를 기준으로 확장해 부하가 서버에 반영되기 전에 대응, EC2 웜 풀로 인스턴스를 정지 상태로 대기시켜 상시 2대 요금으로 5대분 확장 준비 (1만 건 요청 약 11초 처리)</li>
     </ul>
   </div>
 

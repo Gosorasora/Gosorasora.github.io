@@ -248,7 +248,7 @@
     </div>
     <ul>
       <li>AWS EC2 上にセルフホスト型 FaaS プラットフォームを設計。Docker Warm Pool (Pause/Unpause) により Cold Start を 30 倍改善 (3 秒 → 0.2 秒)、リアルタイムメモリ分析 Auto-Tuner で関数別の適正メモリを算定 (分析基準で最大 96% の過剰割当)</li>
-      <li>Data Plane をフルスタックで実装：SQS Long Polling タスクキュー、S3 コードストレージ、Redis Pub/Sub による結果通知、CloudWatch Custom Metrics 自動レポート、MDC ベースの requestId ロギングでリクエスト単位の全区間トレース</li>
+      <li>リクエスト量に応じたオートスケーリングを自ら設計：CPU使用率ではなくSQSの待機リクエスト数を基準に拡張し、負荷がサーバーに反映される前に対応。EC2ウォームプールでインスタンスを停止状態で待機させ、常時2台分の費用で5台分の拡張を準備（1万件のリクエストを約11秒で処理）</li>
     </ul>
   </div>
 
