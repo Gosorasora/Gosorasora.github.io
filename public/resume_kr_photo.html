@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>고동현 - 이력서 (사진)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 10pt;
+    line-height: 1.3;
+    color: #1B263B;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 26px 40px;
+  }
+
+  a { color: #415A77; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 4px;
+  }
+  .header .head-text { flex: 1; text-align: left; }
+  .header h1 { font-size: 19pt; font-weight: 700; margin-bottom: 4px; }
+  .header .contact { font-size: 10pt; color: #415A77; line-height: 1.5; }
+  .header .contact a { margin: 0 4px 0 0; }
+  .header .photo {
+    width: 24mm; height: 30mm;
+    object-fit: cover;
+    border: 1px solid #C9D1D9;
+    border-radius: 2px;
+    flex: none;
+  }
+  .summary { font-size: 9.2pt; line-height: 1.35; color: #1B263B; }
+  .header .contact a { margin: 0 4px; }
+
+  .section { margin-bottom: 5px; }
+  .section-title {
+    font-size: 11pt;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-bottom: 1.5px solid #1B263B;
+    padding-bottom: 2px;
+    margin-bottom: 6px;
+  }
+
+  .entry { margin-bottom: 4px; }
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1px;
+  }
+  .entry-title { font-weight: 700; font-size: 10.5pt; }
+  .entry-date { font-size: 9.5pt; color: #415A77; white-space: nowrap; }
+  .entry-sub {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5pt;
+    color: #415A77;
+    font-style: italic;
+    margin-bottom: 3px;
+  }
+
+  ul { padding-left: 18px; margin-top: 2px; }
+  ul li { margin-bottom: 0.5px; font-size: 9.2pt; }
+
+  .skills-grid { font-size: 9.5pt; }
+  .skills-grid .row { margin-bottom: 2px; }
+  .skills-grid .label { font-weight: 600; }
+
+  .achievement { margin-bottom: 6px; }
+  .achievement .entry-header { margin-bottom: 0; }
+  .achievement ul { margin-top: 1px; }
+  .achievement li { font-size: 9.5pt; }
+
+  @media print {
+  .entry { break-inside: avoid; page-break-inside: avoid; }
+  .entry-header { break-after: avoid; page-break-after: avoid; }
+  .section-title { break-after: avoid; page-break-after: avoid; }
+    body { padding: 14px 26px; }
+    a { color: #1B263B; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="head-text">
+    <h1>고동현 (Ko Donghyeon)</h1>
+    <div class="contact">
+      (+82) 10-3590-5395 &nbsp;|&nbsp; <a href="mailto:kodh0204@gmail.com">kodh0204@gmail.com</a><br>
+      <a href="https://github.com/Gosorasora">Github ↗</a> |
+      <a href="https://www.linkedin.com/in/kosora">LinkedIn ↗</a> |
+      <a href="https://gosorasora.github.io">포트폴리오 ↗</a>
+    </div>
+  </div>
+  <img class="photo" src="assets/albums/profile.png" alt="증명사진">
+</div>
+
+<!-- 요약 -->
+<div class="section">
+  <div class="section-title">요약</div>
+  <div class="summary">
+    DevOps Engineer이자 Forward Deployed Engineer인 고동현입니다.
+    Terraform과 Kubernetes 기반 인프라를 PR 승인 없이는 바뀌지 않는 GitOps 구조로 옮겼고, 전환 중 만난 Atlantis 버그는 우회하는 대신 원인을 찾아 업스트림에 머지시켰습니다(v0.41.0).
+    흩어져 있던 사내 업무 데이터는 조직이 함께 보는 생산성 지표로 만들어 C레벨의 R&amp;R 조정과 1on1에 쓰이게 했고, 영업팀 리드 대응처럼 개발팀 밖에 있는 문제도 현장 인터뷰부터 계측과 정착까지 직접 맡았습니다.
+  </div>
+</div>
+
+<!-- 기술 스택 -->
+<div class="section">
+  <div class="section-title">기술 스택</div>
+  <div class="skills-grid">
+    <div class="row"><span class="label">(클라우드 &amp; 인프라)</span> AWS (EC2, SQS, S3, RDS, Lambda, Step Functions, IAM, WAF, ElastiCache, EventBridge, CodePipeline), GCP, Azure(AKS), Terraform, Kubernetes, Docker, Helm</div>
+    <div class="row"><span class="label">(DevOps &amp; 자동화)</span> Atlantis, Argo Workflows, Datadog, Grafana, GitOps, CI/CD, Notion</div>
+    <div class="row"><span class="label">(프로그래밍)</span> Golang, Python, Java, SQL</div>
+    <div class="row"><span class="label">(AI 개발 도구)</span> Claude Code, Codex, Gemini, Notion Custom Agent, Obsidian, MCP</div>
+    <div class="row"><span class="label">(AI/ML &amp; 보안)</span> BERT, Hugging Face, NetworkX, NLP, Gemini, WebAssembly, SpinKube</div>
+    <div class="row"><span class="label">(프레임워크)</span> Spring Boot, Apollo Federation, GraphQL, Django, FastAPI, Node.js</div>
+    <div class="row"><span class="label">(언어)</span> 한국어 (Native), 영어 (일상 회화), 일본어 (회화 가능)</div>
+  </div>
+</div>
+
+<!-- 경력 -->
+<div class="section">
+  <div class="section-title">경력</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">BUZZ &amp; BEYOND (버즈앤비)</span>
+      <span class="entry-date">2026.01 - 재직중 (인턴 2026.01~06, 정규직 2026.07~)</span>
+    </div>
+    <div class="entry-sub">
+      <span>DevOps Engineer / Infra, Platform, AX</span>
+      <span>서울, 대한민국</span>
+    </div>
+    <ul>
+      <li>Terraform과 Atlantis로 사내 GitOps 환경 구축
+        <ul>
+          <li>Atlantis를 Helm Chart로 Kubernetes에 배포, PR 단위 승인 강제로 Terraform 작업 전건 감사 추적 확보. 2026.01부터 사내 인프라 변경 전건이 이 경로로만 운영 중</li>
+          <li>AWS AssumeRole 최소 권한 전환, 개발자 로컬 Access Key 전량 회수</li>
+        </ul>
+      </li>
+      <li>인바운드 리드 SLA 체계 구축
+        <ul>
+          <li>리드 접수에서 담당자 배정까지 평균 33.6시간을 0.4시간으로 단축 (98.7% 단축), 1시간 내 담당자 배정 비율 9% → 86%</li>
+          <li>영업시간(주말, 공휴일, 시간외 제외) 기준 SLA 자동 측정, 방치 리드 알림과 에스컬레이션 구축</li>
+        </ul>
+      </li>
+      <li>사내 AX 생산성 지표 체계 구축 (측정 지표로 DORA 채택)
+        <ul>
+          <li>일 200건 이상 업무 자동 분류 (사내 검수 기준 분류 정확도 91.7%)로 배포 및 장애 데이터 수집, 2026.02부터 매일 자동 산출 운영 중</li>
+          <li>팀별 배포 기준을 합의하고 문서화해 산출 기준으로 고정, C레벨 R&amp;R 조정, 1on1 근거로 사용</li>
+        </ul>
+      </li>
+      <li>Notion 사내 에이전트 구축 및 운영
+        <ul>
+          <li>에이전트로 배포 품질 자동 검수, 릴리스 연관 태스크를 추적하고 연결해 데이터 정합성 확보</li>
+          <li>Notion Workers로 캘린더 일정에서 회의록 자동 생성, 전사 배포 후 운영 중</li>
+          <li>벤더별(Vertex AI, AI Studio, OpenAI) LLM 비용 라벨링, 사용량 모니터링 환경과 Alert 시스템 구축</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">CSDC Lab, 동국대학교</span>
+      <span class="entry-date">2025.04 - 현재</span>
+    </div>
+    <div class="entry-sub">
+      <span>학부연구생 / Computer Security &amp; Distributed Computing Lab</span>
+      <span>서울, 대한민국</span>
+    </div>
+    <ul>
+      <li>NLP 기반 IaC 보안 분석 도구 개발 (<a href="https://github.com/Gosorasora/NLP-Enhanced-IaC-Security-Analyzer">GitHub ↗</a>): BERT 모델로 Terraform 시맨틱 이상 탐지 및 NetworkX 그래프 알고리즘으로 IAM 권한 상승 경로 시각화</li>
+      <li>WebAssembly vs 컨테이너 실환경 비교 (<a href="https://gosorasora.github.io/assets/wasm-spinkube-iot-layer-allocation.pdf">논문 ↗</a>): AKS에서 IoT 로그 파이프라인을 Edge, Transform, Ingestion 계층별로 실측, 통계 검정으로 계층별 런타임 할당 기준 도출. 선행 실험에서 Python Wasm → Rust 마이그레이션으로 바이너리 91배 감소, 처리량 7.8배</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">AWS Student Builder Group at Dongguk University</span>
+      <span class="entry-date">2025.07 - 현재</span>
+    </div>
+    <div class="entry-sub">
+      <span>Member (2025.07~2026.04) → Group Leader (2026.05~)</span>
+      <span>Amazon Web Services (AWS)</span>
+    </div>
+    <ul>
+      <li>Group Leader로 코어 멤버를 구성해 SNS 활동과 교내 커뮤니티 환경을 만들고, 전공 무관 학생 대상 클라우드 실습 세션 운영 (자료 제작, 실습 환경 전체 사전 검증)</li>
+      <li>AWS SBG Ignite Badge 획득, <a href="https://www.linkedin.com/company/aws-student-builder-group-at-dongguk-university/">LinkedIn 그룹 페이지 ↗</a> 운영</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Notion Campus Leader at Dongguk University</span>
+      <span class="entry-date">2026.08 - 현재</span>
+    </div>
+    <div class="entry-sub">
+      <span>Campus Leader</span>
+      <span>Notion</span>
+    </div>
+    <ul>
+      <li>교내 Notion 공식 캠퍼스 리더로 학생 대상 Notion 활용 확산 활동 운영</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 오픈소스 기여 -->
+<div class="section">
+  <div class="section-title">오픈소스 기여</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Atlantis: PR #6186 머지 (v0.41.0)</span>
+      <span class="entry-date">2026.03</span>
+    </div>
+    <div class="entry-sub">
+      <span><a href="https://github.com/runatlantis/atlantis/pull/6186">github.com/runatlantis/atlantis/pull/6186 ↗</a></span>
+    </div>
+    <ul>
+      <li>autoplan 버그 수정: FetchPullStatus()가 호출되지 않아 IsMergeable이 항상 false (Go zero value)였고, plan_requirements: [mergeable] 설정 시 정상 PR이 모두 차단되던 문제 해결</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Spin Framework Python SDK: PR #124, #126, #128</span>
+      <span class="entry-date">2025.12</span>
+    </div>
+    <div class="entry-sub">
+      <span><a href="https://github.com/spinframework/spin-python-sdk/pull/128">github.com/spinframework/spin-python-sdk ↗</a></span>
+    </div>
+    <ul>
+      <li>Spin Framework로 서버리스 WebAssembly 애플리케이션을 구축하는 Python SDK 개선을 위해 PR 3건 및 Issue 3건 기여</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 프로젝트 -->
+<div class="section">
+  <div class="section-title">프로젝트</div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">NanoGrid Plus: 하이브리드 FaaS 플랫폼 (SoftBank Hackathon 본선)</span>
+      <span class="entry-date">2024.11 - 2024.12</span>
+    </div>
+    <div class="entry-sub">
+      <span>Infrastructure Lead</span>
+      <span><a href="https://github.com/Softbank-Final">GitHub ↗</a></span>
+    </div>
+    <ul>
+      <li>AWS EC2 위에 self-hosted FaaS 플랫폼 설계, Docker Warm Pool(Pause/Unpause) 적용으로 Cold Start 30배 개선 (3초 → 0.2초), 실시간 메모리 분석 Auto-Tuner로 함수별 적정 메모리 산정 (분석 기준 최대 96% 과다 할당)</li>
+      <li>Data Plane 풀스택 구현: SQS Long Polling 작업 큐, S3 코드 저장소, Redis Pub/Sub 결과 전달, CloudWatch Custom Metrics 자동 보고, MDC 기반 requestId 로깅으로 요청 단위 전 구간 추적</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Roomeya: 서버리스 기숙사 매칭 플랫폼</span>
+      <span class="entry-date">2025.09 - 2025.12</span>
+    </div>
+    <div class="entry-sub">
+      <span>Cloud Architect</span>
+      <span><a href="https://github.com/Roomeya">GitHub ↗</a></span>
+    </div>
+    <ul>
+      <li>Terraform IaC로 AWS 풀 서버리스 아키텍처 설계, Lambda 9개, Step Functions 매칭 워크플로우, DynamoDB 4개 테이블, API Gateway HTTP API v2, Cognito OAuth 2.0, SES 이메일 통합으로 비수기 idle 비용 0원 scale-to-zero 달성</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">Deploy Land: 배포를 게임으로 만든 서버리스 CI/CD 플랫폼</span>
+      <span class="entry-date">2025.09</span>
+    </div>
+    <div class="entry-sub">
+      <span>Infra &amp; Backend (3인 팀)</span>
+      <span><a href="https://github.com/Deploy-Land">GitHub ↗</a></span>
+    </div>
+    <ul>
+      <li>로그만 흐르던 배포 화면을 캐릭터가 파이프라인 단계를 뛰어가는 게임 화면으로 바꿔 배포 상태를 실시간 공유. CodePipeline, CodeBuild, Elastic Beanstalk 상태를 EventBridge → Lambda → DynamoDB로 추적해 Amplify 모니터링 앱에 반영</li>
+      <li>Terraform 인프라 관리, 배포 후 Health Check로 파이프라인은 성공했는데 실제로는 아무것도 바뀌지 않는 배포 차단, Bedrock으로 실패 로그 분석, Discord와 Slack 즉시 알림</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 학력 -->
+<div class="section">
+  <div class="section-title">학력</div>
+  <div class="entry">
+    <div class="entry-header">
+      <span class="entry-title">동국대학교</span>
+      <span class="entry-date">2021.03 - 2027.02 (예정)</span>
+    </div>
+    <div class="entry-sub">
+      <span>공과대학 컴퓨터공학과 학사</span>
+      <span>서울, 대한민국 | GPA 4.09 / 4.5</span>
+    </div>
+    <ul>
+      <li>공과대학 학기 우등생 4회 선정, 2021-1, 2021-2, 2022-1, 2025-1학기</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 자격증 -->
+<div class="section">
+  <div class="section-title">자격증</div>
+  <div class="skills-grid">
+    <div class="row"><span class="label">(SQL)</span> SQL 개발자 (SQLD) | 2024.09</div>
+    <div class="row"><span class="label">(ICT)</span> 정보처리기능사 | 2022.12</div>
+    <div class="row"><span class="label">(GCP)</span> Google Cloud Fundamentals: Core Infrastructure | 2025.10</div>
+    <div class="row"><span class="label">(AWS)</span> AWS SBG Ignite Badge | 2026.08, AWS Community 발급</div>
+    <div class="row"><span class="label">(Notion)</span> Notion Badge | 2026.06 (~2028.06), <a href="https://verify.skilljar.com/c/u3fmkfvpnv26">Essentials ↗</a>, <a href="https://verify.skilljar.com/c/uqe3e88dh56v">Workflows ↗</a>, <a href="https://verify.skilljar.com/c/nvh6hj8dxfrx">Advanced ↗</a></div>
+  </div>
+</div>
+
+<!-- 수상 경력 -->
+<div class="section">
+  <div class="section-title">수상 경력</div>
+  <div class="skills-grid">
+    <div class="row"><span class="label">U-LINC 어드벤처디자인 경진대회 장려상</span>, 2022.12, 동국대학교 LINC3.0 사업단장</div>
+    <div class="row"><span class="label">교내 학습시설 혼잡도 분석 시스템 장려상</span>, 2022.12, 동국대학교 LINC3.0 사업단장</div>
+    <div class="row"><span class="label">횃불상</span>, 2023.08, 육군정보통신학교장</div>
+    <div class="row"><span class="label">SoftBank Hackathon 본선 진출</span>, 2024.11 - 2024.12, NanoGrid Plus</div>
+  </div>
+</div>
+
+<!-- 활동 -->
+<div class="section">
+  <div class="section-title">활동</div>
+  <div class="skills-grid">
+    <div class="row"><span class="label">CAPS (동국대)</span>, 부회장 &amp; 홈페이지관리부 부장 (2022.03 - 2022.12)</div>
+    <div class="row"><span class="label">Cloud Club 1기</span>, 1st Member (2022.03 - 2023.09), 벤더에 종속되지 않는(vendor-neutral) IT 연합 동아리</div>
+  </div>
+</div>
+
+<!-- 병역 -->
+<div class="section">
+  <div class="section-title">병역</div>
+  <div class="skills-grid">
+    <div class="row">대한민국 육군 | 2023.06 - 2024.12 만기 전역</div>
+  </div>
+</div>
+
+</body>
+</html>
