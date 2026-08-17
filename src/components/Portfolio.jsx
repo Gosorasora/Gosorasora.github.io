@@ -131,6 +131,11 @@ const Portfolio = () => {
                           <FaExternalLinkAlt /> {t.modal.links.demo}
                         </a>
                       )}
+                      {selectedProject.links.article && (
+                        <a href={selectedProject.links.article} target="_blank" rel="noopener noreferrer" className="icon-link">
+                          <FaFileAlt /> {t.modal.links.article}
+                        </a>
+                      )}
                       {selectedProject.links.paper && (
                         <a href={selectedProject.links.paper} target="_blank" rel="noopener noreferrer" className="icon-link">
                           <FaFileAlt /> {t.modal.links.paper}

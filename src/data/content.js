@@ -196,7 +196,8 @@ export const content = {
         links: {
           github: "GitHub",
           demo: "Live",
-          paper: "Paper"
+          paper: "Paper",
+          article: "Article"
         }
       },
       projects: [
@@ -274,7 +275,8 @@ export const content = {
           },
           links: {
             demo: null,
-            github: 'https://github.com/Softbank-Final'
+            github: 'https://github.com/Softbank-Final',
+            article: 'https://builder.aws.com/content/3I2Mw8lAM0x9sODvAwmHN8RylXM/building-a-faas-on-ec2-without-lambda-and-splitting-cold-start-into-three-layers'
           }
         },
         {
@@ -759,7 +761,8 @@ export const content = {
         links: {
           github: "GitHub",
           demo: "Live",
-          paper: "Paper"
+          paper: "Paper",
+          article: "Article"
         }
       },
       projects: [
@@ -830,7 +833,8 @@ export const content = {
           },
           links: {
             demo: null,
-            github: 'https://github.com/Softbank-Final'
+            github: 'https://github.com/Softbank-Final',
+            article: 'https://builder.aws.com/content/3I2Mw8lAM0x9sODvAwmHN8RylXM/building-a-faas-on-ec2-without-lambda-and-splitting-cold-start-into-three-layers'
           }
         },
         {
@@ -1316,7 +1320,8 @@ export const content = {
         links: {
           github: "GitHub",
           demo: "Live",
-          paper: "Paper"
+          paper: "Paper",
+          article: "Article"
         }
       },
       projects: [
@@ -1384,7 +1389,7 @@ export const content = {
               '2日間のAWS費用は約3万ウォン'
             ]
           },
-          links: { demo: null, github: 'https://github.com/Softbank-Final' }
+          links: { demo: null, github: 'https://github.com/Softbank-Final', article: 'https://builder.aws.com/content/3I2Mw8lAM0x9sODvAwmHN8RylXM/building-a-faas-on-ec2-without-lambda-and-splitting-cold-start-into-three-layers' }
         },
         {
           id: 9,
