@@ -249,6 +249,57 @@ export const content = {
           }
         },
         {
+          id: 7,
+          title: 'NanoGrid: Lambda 없이 EC2 위에 세운 FaaS 플랫폼',
+          category: 'DevOps & Infra',
+          image: null,
+          description: '관리형 FaaS 없이 EC2 위에 함수 실행 플랫폼을 구축. 콜드 스타트를 세 층으로 분해해 실행 단위는 3초에서 0.2초로, 워커 인스턴스는 ASG Warm Pool로 상시 2대 비용에 5대분 확장 준비. 6인 팀에서 인프라와 보안 담당 (SoftBank Hackathon 본선)',
+          details: {
+            problem: 'HTTP 요청 처리를 EC2 위에서 해야 한다는 제약 아래 Lambda가 대신 해주던 일을 직접 만들어야 했습니다. 함수 업로드, HTTP 호출, 즉시 실행을 관리형 FaaS 없이 구현하면서 확장성을 스스로 책임져야 했습니다.',
+            solution: '먼저 기존 FaaS의 한계가 EC2 위에서 풀리는지 따졌습니다. API Gateway 29초 타임아웃, 런타임 제약, 벤더 락인, 추론 데이터 외부 유출은 풀리고 확장성만 나빠지는 구조였습니다. 익숙한 API Gateway와 Dispatcher Lambda로 6시간 만에 프로토타입을 띄웠지만 요청 경로에 API Gateway가 남는 구성이라 걷어내고 ALB와 EC2 Controller로 전환해 실행 시간 상한을 없애고 컴퓨트가 앉을 서브넷을 직접 정할 수 있게 만들었습니다. 남은 확장성 문제를 파고들며 콜드 스타트가 실행 단위, 워커 인스턴스, 스케일링 판단이라는 서로 다른 시간 규모의 세 층이라는 것을 확인하고 각각에 다른 도구를 적용했습니다. 임의의 사용자 코드를 실행하는 플랫폼이라 Zip Slip 차단, 컨테이너 리소스 쿼터, 작업별 타임아웃, IAM 최소 권한, WAF 룰 5종을 함께 붙였습니다.',
+            role: '인프라, 보안 담당 (6인 팀, 본선 48시간)',
+            tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
+            features: [
+              '① 실행 단위: 런타임별(Python, Node.js, C++, Go) 컨테이너 풀을 미리 띄워 요청마다 만들지 않고 빌려 쓰고 반납. 3초 → 0.2초. Prometheus worker_job_duration_seconds 히스토그램으로 전후 분포 이동을 측정',
+              '② 워커 인스턴스: EC2 Auto Scaling Warm Pool로 인스턴스를 정지 상태로 대기. InService 2대 + Warm Pool 3대로 상시 2대 비용에 ASG 최대 5대분 확장 준비. 정지 상태는 컴퓨트 미과금, EBS만 청구',
+              '③ 스케일링 판단: CPU 대신 SQS 큐 깊이 기준. CPU는 사후 지표라 임계값에 닿을 땐 이미 사용자가 지연을 겪은 뒤. Backlog per Instance와 Step Scaling으로 과잉 프로비저닝 방지',
+              '부하 테스트: 피보나치 1만 건 약 11초 (동일 워크로드 Lambda 30~40초). 개별 실행이 밀리초인 워크로드에서 실행 환경 할당 오버헤드가 전체 시간을 지배',
+              '보안: 워커 IAM을 관리형 SQS FullAccess에서 큐 하나의 3개 액션으로 축소해 폭발 반경을 계정 전체에서 단일 큐로 제한. WAF 룰 5종(SQLi, XSS, Log4j, 레이트 리밋, 바디 상한)',
+              '네트워크: Multi-AZ 구성, Controller는 퍼블릭 서브넷 2 AZ, Worker는 프라이빗 서브넷. 둘을 잇는 건 SQS 하나뿐. S3와 DynamoDB에 Gateway VPC Endpoint를 붙여 NAT 우회',
+              'Private AI Node: 프라이빗 서브넷에 Ollama 배치, 인터넷 경로와 퍼블릭 주소 없이 워커 SG에서만 접근 허용해 추론 데이터가 VPC 밖으로 나가지 않도록 구성',
+              '이틀간 AWS 비용 약 3만 원'
+            ]
+          },
+          links: {
+            demo: null,
+            github: 'https://github.com/Softbank-Final'
+          }
+        },
+        {
+          id: 9,
+          title: 'Deploy Land: Gamified CI/CD Platform',
+          category: 'DevOps & Infra',
+          image: null,
+          description: '배포라는 행위 자체를 즐겁게 만든 서버리스 CI/CD 플랫폼. 로그만 흐르던 화면을 캐릭터가 파이프라인을 뛰어가는 게임 화면으로 바꿔 배포 상태를 실시간 공유',
+          details: {
+            problem: '배포 상태가 로그로만 흘러 개발자 외에는 지금 어디까지 왔는지 알 수 없었고, 실패해도 즉각 인지가 어려웠습니다. 파이프라인은 성공했는데 실제로는 아무것도 바뀌지 않는 Phantom 배포 위험도 있었습니다.',
+            solution: '배포를 지켜보는 일을 게임으로 만들었습니다. GitHub Push부터 Build, Deploy, Health Check까지의 상태를 캐릭터가 파이프라인 단계를 뛰어가는 화면으로 실시간 공유합니다. CodePipeline과 CodeBuild, Elastic Beanstalk의 상태 변화를 EventBridge가 잡아 Lambda로 DynamoDB에 기록하고, Amplify 모니터링 앱이 이를 읽어 그립니다. 배포 후 자동 Health Check와 설정 검증으로 Phantom 배포를 차단하고, 실패 로그는 Bedrock으로 분석하며, Discord·Slack으로 즉시 알립니다. 3인 팀에서 Infra와 Backend를 맡아 Terraform 인프라와 Lambda API를 구현했습니다.',
+            role: 'Infra & Backend (3인 팀)',
+            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
+            features: [
+              '캐릭터가 파이프라인 단계를 뛰어가는 게임형 실시간 배포 모니터링',
+              'GitHub Push → Build → Deploy → Health Check 전 과정 자동화',
+              'EventBridge → Lambda → DynamoDB 상태 추적 파이프라인',
+              'Phantom 배포 차단 (설정 검증 + 배포 후 Health Check), Bedrock 실패 로그 분석',
+              'Discord·Slack Webhook 즉시 알림, Terraform IaC 인프라 관리'
+            ]
+          },
+          links: {
+            demo: null,
+            github: 'https://github.com/Deploy-Land'
+          }
+        },
+        {
           id: 3,
           title: 'LLM 기반 업무 분류 자동화: Workload 추적 체계 구축',
           category: 'AX 업무자동화',
@@ -349,30 +400,6 @@ export const content = {
           }
         },
         {
-          id: 7,
-          title: 'NanoGrid Plus: Hybrid FaaS Platform',
-          category: 'DevOps & Infra',
-          image: null,
-          description: 'Cold Start 30배 개선(3초→0.2초), 분석 기준 메모리 최대 96% 과다 할당 확인. EC2 기반 자체 호스팅 FaaS 플랫폼 (SoftBank Hackathon 본선)',
-          details: {
-            problem: 'Lambda 실행 제한(시간/메모리)으로 인한 FaaS 확장성 한계와 Cold Start 지연',
-            solution: 'AWS EC2 기반의 자체 호스팅 FaaS 플랫폼을 설계했습니다. Docker Warm Pool(Pause/Unpause) 기술로 Cold Start를 30배 개선(3초→0.2초)하고, Auto-Tuner가 실시간 메모리 사용량을 분석하여 최대 96% 비용 절감을 제안합니다. SQS 기반 작업 큐, S3 코드 저장소, CloudWatch 메트릭 자동 전송, Redis Pub/Sub 결과 반환까지 전체 Data Plane을 구현했습니다.',
-            role: 'Infrastructure Lead',
-            tech: ['AWS EC2', 'AWS SQS', 'AWS S3', 'Docker', 'Redis', 'Terraform', 'Java', 'Spring Boot'],
-            features: [
-              'Docker Warm Pool로 Cold Start 30배 개선 (3초→0.2초)',
-              'Auto-Tuner 실시간 메모리 분석으로 함수별 적정 메모리 산정 (분석 기준 최대 96% 과다 할당)',
-              'SQS Long Polling + Redis Pub/Sub 결과 반환',
-              'CloudWatch Custom Metrics 자동 전송',
-              'MDC 기반 requestId 로깅으로 완벽한 추적성'
-            ]
-          },
-          links: {
-            demo: null,
-            github: 'https://github.com/Softbank-Final'
-          }
-        },
-        {
           id: 8,
           title: 'Roomeya: Serverless Dormitory Matching',
           category: 'DevOps & Infra',
@@ -394,30 +421,6 @@ export const content = {
           links: {
             demo: null,
             github: 'https://github.com/Roomeya'
-          }
-        },
-        {
-          id: 9,
-          title: 'Deploy Land: Gamified CI/CD Platform',
-          category: 'DevOps & Infra',
-          image: null,
-          description: '배포라는 행위 자체를 즐겁게 만든 서버리스 CI/CD 플랫폼. 로그만 흐르던 화면을 캐릭터가 파이프라인을 뛰어가는 게임 화면으로 바꿔 배포 상태를 실시간 공유',
-          details: {
-            problem: '배포 상태가 로그로만 흘러 개발자 외에는 지금 어디까지 왔는지 알 수 없었고, 실패해도 즉각 인지가 어려웠습니다. 파이프라인은 성공했는데 실제로는 아무것도 바뀌지 않는 Phantom 배포 위험도 있었습니다.',
-            solution: '배포를 지켜보는 일을 게임으로 만들었습니다. GitHub Push부터 Build, Deploy, Health Check까지의 상태를 캐릭터가 파이프라인 단계를 뛰어가는 화면으로 실시간 공유합니다. CodePipeline과 CodeBuild, Elastic Beanstalk의 상태 변화를 EventBridge가 잡아 Lambda로 DynamoDB에 기록하고, Amplify 모니터링 앱이 이를 읽어 그립니다. 배포 후 자동 Health Check와 설정 검증으로 Phantom 배포를 차단하고, 실패 로그는 Bedrock으로 분석하며, Discord·Slack으로 즉시 알립니다. 3인 팀에서 Infra와 Backend를 맡아 Terraform 인프라와 Lambda API를 구현했습니다.',
-            role: 'Infra & Backend (3인 팀)',
-            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
-            features: [
-              '캐릭터가 파이프라인 단계를 뛰어가는 게임형 실시간 배포 모니터링',
-              'GitHub Push → Build → Deploy → Health Check 전 과정 자동화',
-              'EventBridge → Lambda → DynamoDB 상태 추적 파이프라인',
-              'Phantom 배포 차단 (설정 검증 + 배포 후 Health Check), Bedrock 실패 로그 분석',
-              'Discord·Slack Webhook 즉시 알림, Terraform IaC 인프라 관리'
-            ]
-          },
-          links: {
-            demo: null,
-            github: 'https://github.com/Deploy-Land'
           }
         },
         {
@@ -801,6 +804,57 @@ export const content = {
           links: { demo: null, github: null }
         },
         {
+          id: 7,
+          title: 'NanoGrid: A FaaS Platform Built on EC2 Without Lambda',
+          category: 'DevOps & Infra',
+          image: null,
+          description: 'Built a function execution platform on EC2 with no managed FaaS underneath. Decomposed cold start into three layers: execution unit from 3s to 0.2s, and worker instances held in an ASG Warm Pool so two instances of cost keep five ready. Owned infrastructure and security in a team of six (SoftBank Hackathon Finalist)',
+          details: {
+            problem: 'Under a constraint that HTTP request handling had to run on EC2, we had to build what Lambda normally does for you. Function upload, HTTP invocation, and immediate execution had to work without a managed FaaS, which meant owning scalability ourselves.',
+            solution: 'We first checked whether the limits we hit with managed FaaS actually dissolve on EC2. The API Gateway 29-second timeout, runtime constraints, vendor lock-in, and inference data leaving our network all dissolve; only scalability gets worse. A familiar API Gateway plus Dispatcher Lambda prototype ran within six hours, but it left API Gateway sitting on the request path, so we removed it and moved to ALB with an EC2 Controller. That eliminated the execution time ceiling and gave us control over which subnet compute sits in. Digging into the remaining scalability problem revealed that cold start is really three layers on different time scales, and each needed a different tool. Because the platform executes arbitrary user code, we also added Zip Slip blocking, container resource quotas, per-job timeouts, least-privilege IAM, and five WAF rule groups.',
+            role: 'Infrastructure and security (team of six, 48-hour final)',
+            tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
+            features: [
+              'Layer 1, execution unit: pre-started container pools per runtime (Python, Node.js, C++, Go), borrowed and returned instead of created per request. 3s to 0.2s, measured as a distribution shift in the Prometheus worker_job_duration_seconds histogram',
+              'Layer 2, worker instance: EC2 Auto Scaling Warm Pool holding instances stopped. 2 InService plus 3 warm keeps ASG max of 5 ready at the cost of 2, since stopped instances bill EBS only with no compute charge',
+              'Layer 3, scaling decision: SQS queue depth instead of CPU. CPU is a lagging indicator, so by the time it crosses the threshold users have already absorbed the delay. Backlog per Instance and Step Scaling prevent over-provisioning',
+              'Load test: 10,000 Fibonacci requests in roughly 11 seconds versus 30 to 40 seconds on Lambda for the same workload, where execution environment allocation overhead dominates millisecond-scale invocations',
+              'Security: narrowed the worker IAM role from managed SQS FullAccess to three actions on a single queue, shrinking the blast radius from every queue in the account to one. Five WAF rule groups (SQLi, XSS, Log4j, rate limit, body size cap)',
+              'Network: Multi-AZ with Controllers in public subnets across two AZs and Workers in private subnets, joined only by SQS. Gateway VPC Endpoints for S3 and DynamoDB keep worker traffic off the NAT',
+              'Private AI Node: Ollama placed in a private subnet with no internet route and no public address, reachable only from the worker security group, so inference data never leaves the VPC',
+              'Total AWS spend for two days: about 30,000 KRW'
+            ]
+          },
+          links: {
+            demo: null,
+            github: 'https://github.com/Softbank-Final'
+          }
+        },
+        {
+          id: 9,
+          title: 'Deploy Land: Gamified CI/CD Platform',
+          category: 'DevOps & Infra',
+          image: null,
+          description: 'A serverless CI/CD platform that makes deploying fun: a log-only screen became a game view where a character runs through the pipeline stages, sharing deploy status in real time',
+          details: {
+            problem: 'Deploy status only existed as logs, so nobody but the developer knew how far a deploy had gone, failures were noticed late, and phantom deploys (pipeline succeeds, production unchanged) were a real risk.',
+            solution: 'Made watching a deploy feel like a game. Status from GitHub push through build, deploy and health check is shared in real time as a character running through pipeline stages. EventBridge catches state changes from CodePipeline, CodeBuild and Elastic Beanstalk, Lambda writes them to DynamoDB, and an Amplify monitoring app renders it. Post-deploy health checks and config validation block phantom deploys, Bedrock analyzes failure logs, and Discord/Slack get instant alerts. In a team of three I owned Infra and Backend: Terraform infrastructure and the Lambda APIs.',
+            role: 'Infra & Backend (team of 3)',
+            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
+            features: [
+              'Game-style live deploy monitoring: a character runs through the pipeline stages',
+              'GitHub Push → Build → Deploy → Health Check full automation',
+              'EventBridge → Lambda → DynamoDB state-tracking pipeline',
+              'Phantom deploy prevention (config validation + post-deploy health check), Bedrock failure-log analysis',
+              'Discord/Slack instant alerts, Terraform-managed infrastructure'
+            ]
+          },
+          links: {
+            demo: null,
+            github: 'https://github.com/Deploy-Land'
+          }
+        },
+        {
           id: 3,
           title: 'Atlantis GitOps Transformation',
           category: 'DevOps & Infra',
@@ -896,30 +950,6 @@ export const content = {
           }
         },
         {
-          id: 7,
-          title: 'NanoGrid Plus: Hybrid FaaS Platform',
-          category: 'DevOps & Infra',
-          image: null,
-          description: '30x Cold Start improvement (3s→0.2s); analysis found up to 96% memory over-allocation. Self-hosted FaaS on EC2 (SoftBank Hackathon Finalist)',
-          details: {
-            problem: 'Lambda execution limits (time/memory) hindering FaaS scalability and Cold Start latency.',
-            solution: 'Architected a self-hosted FaaS platform on AWS EC2. Achieved 30x Cold Start improvement (3s→0.2s) via Docker Warm Pool (Pause/Unpause), with Auto-Tuner analyzing real-time memory usage for up to 96% cost reduction. Implemented full Data Plane: SQS task queue, S3 code storage, CloudWatch custom metrics, and Redis Pub/Sub result delivery.',
-            role: 'Infrastructure Lead',
-            tech: ['AWS EC2', 'AWS SQS', 'AWS S3', 'Docker', 'Redis', 'Terraform', 'Java', 'Spring Boot'],
-            features: [
-              'Docker Warm Pool: 30x Cold Start improvement (3s→0.2s)',
-              'Auto-Tuner: real-time memory analysis sizing per-function memory (up to 96% over-allocation found)',
-              'SQS Long Polling + Redis Pub/Sub result delivery',
-              'CloudWatch Custom Metrics auto-reporting',
-              'MDC-based requestId logging for full traceability'
-            ]
-          },
-          links: {
-            demo: null,
-            github: 'https://github.com/Softbank-Final'
-          }
-        },
-        {
           id: 8,
           title: 'Roomeya: Serverless Dormitory Matching',
           category: 'DevOps & Infra',
@@ -941,30 +971,6 @@ export const content = {
           links: {
             demo: null,
             github: 'https://github.com/Roomeya'
-          }
-        },
-        {
-          id: 9,
-          title: 'Deploy Land: Gamified CI/CD Platform',
-          category: 'DevOps & Infra',
-          image: null,
-          description: 'A serverless CI/CD platform that makes deploying fun: a log-only screen became a game view where a character runs through the pipeline stages, sharing deploy status in real time',
-          details: {
-            problem: 'Deploy status only existed as logs, so nobody but the developer knew how far a deploy had gone, failures were noticed late, and phantom deploys (pipeline succeeds, production unchanged) were a real risk.',
-            solution: 'Made watching a deploy feel like a game. Status from GitHub push through build, deploy and health check is shared in real time as a character running through pipeline stages. EventBridge catches state changes from CodePipeline, CodeBuild and Elastic Beanstalk, Lambda writes them to DynamoDB, and an Amplify monitoring app renders it. Post-deploy health checks and config validation block phantom deploys, Bedrock analyzes failure logs, and Discord/Slack get instant alerts. In a team of three I owned Infra and Backend: Terraform infrastructure and the Lambda APIs.',
-            role: 'Infra & Backend (team of 3)',
-            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
-            features: [
-              'Game-style live deploy monitoring: a character runs through the pipeline stages',
-              'GitHub Push → Build → Deploy → Health Check full automation',
-              'EventBridge → Lambda → DynamoDB state-tracking pipeline',
-              'Phantom deploy prevention (config validation + post-deploy health check), Bedrock failure-log analysis',
-              'Discord/Slack instant alerts, Terraform-managed infrastructure'
-            ]
-          },
-          links: {
-            demo: null,
-            github: 'https://github.com/Deploy-Land'
           }
         },
         {
@@ -1351,6 +1357,51 @@ export const content = {
           links: { demo: null, github: 'https://github.com/runatlantis/atlantis/pull/6186' }
         },
         {
+          id: 7,
+          title: 'NanoGrid: Lambdaを使わずEC2上に構築したFaaSプラットフォーム',
+          category: 'DevOps & Infra',
+          image: null,
+          description: 'マネージドFaaSなしでEC2上に関数実行プラットフォームを構築。Cold Startを三つの層に分解し、実行単位は3秒から0.2秒へ、ワーカーインスタンスはASG Warm Poolで常時2台分の費用のまま5台分の拡張を準備。6人チームでインフラとセキュリティを担当（SoftBank Hackathon本選）',
+          details: {
+            problem: 'HTTPリクエスト処理をEC2上で行うという制約のもと、Lambdaが代わりにやってくれていたことを自分で作る必要がありました。関数のアップロード、HTTP呼び出し、即時実行をマネージドFaaSなしで実装し、スケーラビリティを自分で担保しなければなりませんでした。',
+            solution: 'まず既存FaaSの限界がEC2上で解けるかを検討しました。API Gatewayの29秒タイムアウト、ランタイム制約、ベンダーロックイン、推論データの外部流出は解けますが、スケーラビリティだけが悪化する構造でした。慣れているAPI GatewayとDispatcher Lambdaで6時間でプロトタイプを動かしましたが、リクエスト経路にAPI Gatewayが残る構成だったため取り外し、ALBとEC2 Controllerへ移行して実行時間の上限をなくし、コンピュートを置くサブネットを自分で決められるようにしました。残ったスケーラビリティの問題を掘り下げる中で、Cold Startが実行単位、ワーカーインスタンス、スケーリング判断という時間規模の異なる三層であることを確認し、それぞれに別の道具を当てました。任意のユーザーコードを実行するプラットフォームのため、Zip Slip遮断、コンテナリソースクォータ、ジョブ単位のタイムアウト、IAM最小権限、WAFルール5種も併せて適用しました。',
+            role: 'インフラ・セキュリティ担当（6人チーム、本選48時間）',
+            tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
+            features: [
+              '① 実行単位: ランタイム別（Python、Node.js、C++、Go）にコンテナプールを事前起動し、リクエストごとに作らず借りて返す方式へ。3秒から0.2秒。Prometheusのworker_job_duration_secondsヒストグラムで前後の分布シフトを測定',
+              '② ワーカーインスタンス: EC2 Auto Scaling Warm Poolでインスタンスを停止状態で待機。InService 2台 + Warm Pool 3台で、常時2台分の費用のままASG最大5台分の拡張を準備。停止状態はコンピュート課金なし、EBSのみ',
+              '③ スケーリング判断: CPUではなくSQSキュー長を基準に。CPUは事後指標のため閾値に達した時点でユーザーは既に遅延を体験済み。Backlog per InstanceとStep Scalingで過剰プロビジョニングを防止',
+              '負荷テスト: フィボナッチ1万件で約11秒（同一ワークロードのLambdaは30〜40秒）。個別実行がミリ秒単位のワークロードでは実行環境の割当オーバーヘッドが全体時間を支配',
+              'セキュリティ: ワーカーのIAMをマネージドSQS FullAccessから単一キューの3アクションへ縮小し、影響範囲をアカウント全体から一つのキューに限定。WAFルール5種（SQLi、XSS、Log4j、レート制限、ボディサイズ上限）',
+              'ネットワーク: Multi-AZ構成。Controllerはパブリックサブネット2 AZ、Workerはプライベートサブネット。両者を繋ぐのはSQS一つのみ。S3とDynamoDBにGateway VPC Endpointを付けてNATを迂回',
+              'Private AI Node: プライベートサブネットにOllamaを配置し、インターネット経路とパブリックアドレスなしでワーカーのSGからのみアクセス許可。推論データがVPC外へ出ない構成',
+              '2日間のAWS費用は約3万ウォン'
+            ]
+          },
+          links: { demo: null, github: 'https://github.com/Softbank-Final' }
+        },
+        {
+          id: 9,
+          title: 'Deploy Land: Gamified CI/CD Platform',
+          category: 'DevOps & Infra',
+          image: null,
+          description: 'デプロイという行為自体を楽しくしたサーバーレス CI/CD プラットフォーム。ログだけが流れる画面を、キャラクターがパイプラインを走り抜けるゲーム画面に変えてデプロイ状態をリアルタイム共有',
+          details: {
+            problem: 'デプロイ状態がログとしてしか存在せず、開発者以外は進行状況が分からず、失敗の認知も遅れていた。パイプラインは成功したのに本番は何も変わらない Phantom デプロイのリスクもあった。',
+            solution: 'デプロイを見守る行為をゲームにしました。GitHub Push から Build、Deploy、Health Check までの状態を、キャラクターがパイプラインの各ステージを走り抜ける画面としてリアルタイム共有します。CodePipeline・CodeBuild・Elastic Beanstalk の状態変化を EventBridge が捕捉し、Lambda が DynamoDB に記録、Amplify のモニタリングアプリが描画します。デプロイ後の Health Check と設定検証で Phantom デプロイを遮断し、失敗ログは Bedrock で分析、Discord・Slack に即時通知します。3 人チームで Infra と Backend を担当し、Terraform インフラと Lambda API を実装しました。',
+            role: 'Infra & Backend（3 人チーム）',
+            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
+            features: [
+              'キャラクターがパイプラインを走り抜けるゲーム型リアルタイムデプロイモニタリング',
+              'GitHub Push → Build → Deploy → Health Check 全過程自動化',
+              'EventBridge → Lambda → DynamoDB の状態追跡パイプライン',
+              'Phantom デプロイ遮断（設定検証 + デプロイ後 Health Check）、Bedrock 失敗ログ分析',
+              'Discord・Slack 即時通知、Terraform IaC インフラ管理'
+            ]
+          },
+          links: { demo: null, github: 'https://github.com/Deploy-Land' }
+        },
+        {
           id: 3,
           title: 'LLM基盤業務分類自動化: Workload追跡体系構築',
           category: 'AX 業務自動化',
@@ -1442,27 +1493,6 @@ export const content = {
           }
         },
         {
-          id: 7,
-          title: 'NanoGrid Plus: Hybrid FaaS Platform',
-          category: 'DevOps & Infra',
-          image: null,
-          description: 'Cold Start 30倍改善（3秒→0.2秒）、分析基準でメモリ最大96%の過剰割当を確認。EC2基盤セルフホスティングFaaSプラットフォーム（SoftBank Hackathon本選）',
-          details: {
-            problem: 'Lambda実行制限（時間/メモリ）によるFaaSスケーラビリティ限界とCold Start遅延',
-            solution: 'AWS EC2基盤のセルフホスティングFaaSプラットフォームを設計しました。Docker Warm Pool（Pause/Unpause）技術でCold Startを30倍改善（3秒→0.2秒）し、Auto-Tunerがリアルタイムメモリ使用量を分析して最大96%コスト削減を提案します。',
-            role: 'Infrastructure Lead',
-            tech: ['AWS EC2', 'AWS SQS', 'AWS S3', 'Docker', 'Redis', 'Terraform', 'Java', 'Spring Boot'],
-            features: [
-              'Docker Warm PoolでCold Start 30倍改善（3秒→0.2秒）',
-              'Auto-Tunerのリアルタイムメモリ分析で関数別の適正メモリを算定（分析基準で最大96%の過剰割当）',
-              'SQS Long Polling + Redis Pub/Sub結果返却',
-              'CloudWatch Custom Metrics自動送信',
-              'MDC基盤requestIdロギングで完全なトレーサビリティ'
-            ]
-          },
-          links: { demo: null, github: 'https://github.com/Softbank-Final' }
-        },
-        {
           id: 8,
           title: 'Roomeya: Serverless Dormitory Matching',
           category: 'DevOps & Infra',
@@ -1482,27 +1512,6 @@ export const content = {
             ]
           },
           links: { demo: null, github: 'https://github.com/Roomeya' }
-        },
-        {
-          id: 9,
-          title: 'Deploy Land: Gamified CI/CD Platform',
-          category: 'DevOps & Infra',
-          image: null,
-          description: 'デプロイという行為自体を楽しくしたサーバーレス CI/CD プラットフォーム。ログだけが流れる画面を、キャラクターがパイプラインを走り抜けるゲーム画面に変えてデプロイ状態をリアルタイム共有',
-          details: {
-            problem: 'デプロイ状態がログとしてしか存在せず、開発者以外は進行状況が分からず、失敗の認知も遅れていた。パイプラインは成功したのに本番は何も変わらない Phantom デプロイのリスクもあった。',
-            solution: 'デプロイを見守る行為をゲームにしました。GitHub Push から Build、Deploy、Health Check までの状態を、キャラクターがパイプラインの各ステージを走り抜ける画面としてリアルタイム共有します。CodePipeline・CodeBuild・Elastic Beanstalk の状態変化を EventBridge が捕捉し、Lambda が DynamoDB に記録、Amplify のモニタリングアプリが描画します。デプロイ後の Health Check と設定検証で Phantom デプロイを遮断し、失敗ログは Bedrock で分析、Discord・Slack に即時通知します。3 人チームで Infra と Backend を担当し、Terraform インフラと Lambda API を実装しました。',
-            role: 'Infra & Backend（3 人チーム）',
-            tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
-            features: [
-              'キャラクターがパイプラインを走り抜けるゲーム型リアルタイムデプロイモニタリング',
-              'GitHub Push → Build → Deploy → Health Check 全過程自動化',
-              'EventBridge → Lambda → DynamoDB の状態追跡パイプライン',
-              'Phantom デプロイ遮断（設定検証 + デプロイ後 Health Check）、Bedrock 失敗ログ分析',
-              'Discord・Slack 即時通知、Terraform IaC インフラ管理'
-            ]
-          },
-          links: { demo: null, github: 'https://github.com/Deploy-Land' }
         },
         {
           id: 10,
