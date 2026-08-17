@@ -250,10 +250,10 @@ export const content = {
         },
         {
           id: 7,
-          title: 'NanoGrid: Lambda 없이 EC2 위에 세운 FaaS 플랫폼',
+          title: 'NanoGrid: 관리형 FaaS의 제약을 걷어낸 함수 실행 플랫폼',
           category: 'DevOps & Infra',
           image: null,
-          description: '관리형 FaaS 없이 EC2 위에 함수 실행 플랫폼을 구축. 콜드 스타트를 세 층으로 분해해 실행 단위는 3초에서 0.2초로, 워커 인스턴스는 ASG Warm Pool로 상시 2대 비용에 5대분 확장 준비. 인프라와 보안 담당 (SoftBank Hackathon 본선)',
+          description: '관리형 FaaS가 정해둔 실행 시간 상한과 런타임 제약, 추론 데이터의 외부 반출을 EC2 위에서 걷어낸 함수 실행 플랫폼. 대가로 직접 떠안은 확장성은 콜드 스타트를 세 층으로 나눠 해결했습니다. 실행 단위 3초에서 0.2초, 워커는 ASG Warm Pool로 상시 2대 비용에 5대분 확장 준비 (SoftBank Hackathon 본선)',
           details: {
             problem: 'HTTP 요청 처리를 EC2 위에서 해야 한다는 제약 아래 Lambda가 대신 해주던 일을 직접 만들어야 했습니다. 함수 업로드, HTTP 호출, 즉시 실행을 관리형 FaaS 없이 구현하면서 확장성을 스스로 책임져야 했습니다.',
             solution: '먼저 기존 FaaS의 한계가 EC2 위에서 풀리는지 따졌습니다. API Gateway 29초 타임아웃, 런타임 제약, 벤더 락인, 추론 데이터 외부 유출은 풀리고 확장성만 나빠지는 구조였습니다. 익숙한 API Gateway와 Dispatcher Lambda로 6시간 만에 프로토타입을 띄웠지만 요청 경로에 API Gateway가 남는 구성이라 걷어내고 ALB와 EC2 Controller로 전환해 실행 시간 상한을 없애고 컴퓨트가 앉을 서브넷을 직접 정할 수 있게 만들었습니다. 남은 확장성 문제를 파고들며 콜드 스타트가 실행 단위, 워커 인스턴스, 스케일링 판단이라는 서로 다른 시간 규모의 세 층이라는 것을 확인하고 각각에 다른 도구를 적용했습니다. 임의의 사용자 코드를 실행하는 플랫폼이라 Zip Slip 차단, 컨테이너 리소스 쿼터, 작업별 타임아웃, IAM 최소 권한, WAF 룰 5종을 함께 붙였습니다.',
@@ -283,8 +283,8 @@ export const content = {
           description: '배포라는 행위 자체를 즐겁게 만든 서버리스 CI/CD 플랫폼. 로그만 흐르던 화면을 캐릭터가 파이프라인을 뛰어가는 게임 화면으로 바꿔 배포 상태를 실시간 공유',
           details: {
             problem: '배포 상태가 로그로만 흘러 개발자 외에는 지금 어디까지 왔는지 알 수 없었고, 실패해도 즉각 인지가 어려웠습니다. 파이프라인은 성공했는데 실제로는 아무것도 바뀌지 않는 Phantom 배포 위험도 있었습니다.',
-            solution: '배포를 지켜보는 일을 게임으로 만들었습니다. GitHub Push부터 Build, Deploy, Health Check까지의 상태를 캐릭터가 파이프라인 단계를 뛰어가는 화면으로 실시간 공유합니다. CodePipeline과 CodeBuild, Elastic Beanstalk의 상태 변화를 EventBridge가 잡아 Lambda로 DynamoDB에 기록하고, Amplify 모니터링 앱이 이를 읽어 그립니다. 배포 후 자동 Health Check와 설정 검증으로 Phantom 배포를 차단하고, 실패 로그는 Bedrock으로 분석하며, Discord·Slack으로 즉시 알립니다. 3인 팀에서 Infra와 Backend를 맡아 Terraform 인프라와 Lambda API를 구현했습니다.',
-            role: 'Infra & Backend (3인 팀)',
+            solution: '배포를 지켜보는 일을 게임으로 만들었습니다. GitHub Push부터 Build, Deploy, Health Check까지의 상태를 캐릭터가 파이프라인 단계를 뛰어가는 화면으로 실시간 공유합니다. CodePipeline과 CodeBuild, Elastic Beanstalk의 상태 변화를 EventBridge가 잡아 Lambda로 DynamoDB에 기록하고, Amplify 모니터링 앱이 이를 읽어 그립니다. 배포 후 자동 Health Check와 설정 검증으로 Phantom 배포를 차단하고, 실패 로그는 Bedrock으로 분석하며, Discord·Slack으로 즉시 알립니다. Infra와 Backend를 맡아 Terraform 인프라와 Lambda API를 구현했습니다.',
+            role: 'Infra & Backend',
             tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
             features: [
               '캐릭터가 파이프라인 단계를 뛰어가는 게임형 실시간 배포 모니터링',
@@ -805,10 +805,10 @@ export const content = {
         },
         {
           id: 7,
-          title: 'NanoGrid: A FaaS Platform Built on EC2 Without Lambda',
+          title: 'NanoGrid: Function Execution Platform Free of Managed FaaS Limits',
           category: 'DevOps & Infra',
           image: null,
-          description: 'Built a function execution platform on EC2 with no managed FaaS underneath. Decomposed cold start into three layers: execution unit from 3s to 0.2s, and worker instances held in an ASG Warm Pool so two instances of cost keep five ready. Owned infrastructure and security (SoftBank Hackathon Finalist)',
+          description: 'A function execution platform that sheds what managed FaaS fixes for you: the execution time ceiling, runtime constraints, and inference data leaving your network. The scalability you inherit in exchange was solved by splitting cold start into three layers. Execution unit from 3s to 0.2s, and workers held in an ASG Warm Pool so the cost of two keeps five ready (SoftBank Hackathon Finalist)',
           details: {
             problem: 'Under a constraint that HTTP request handling had to run on EC2, we had to build what Lambda normally does for you. Function upload, HTTP invocation, and immediate execution had to work without a managed FaaS, which meant owning scalability ourselves.',
             solution: 'We first checked whether the limits we hit with managed FaaS actually dissolve on EC2. The API Gateway 29-second timeout, runtime constraints, vendor lock-in, and inference data leaving our network all dissolve; only scalability gets worse. A familiar API Gateway plus Dispatcher Lambda prototype ran within six hours, but it left API Gateway sitting on the request path, so we removed it and moved to ALB with an EC2 Controller. That eliminated the execution time ceiling and gave us control over which subnet compute sits in. Digging into the remaining scalability problem revealed that cold start is really three layers on different time scales, and each needed a different tool. Because the platform executes arbitrary user code, we also added Zip Slip blocking, container resource quotas, per-job timeouts, least-privilege IAM, and five WAF rule groups.',
@@ -839,7 +839,7 @@ export const content = {
           details: {
             problem: 'Deploy status only existed as logs, so nobody but the developer knew how far a deploy had gone, failures were noticed late, and phantom deploys (pipeline succeeds, production unchanged) were a real risk.',
             solution: 'Made watching a deploy feel like a game. Status from GitHub push through build, deploy and health check is shared in real time as a character running through pipeline stages. EventBridge catches state changes from CodePipeline, CodeBuild and Elastic Beanstalk, Lambda writes them to DynamoDB, and an Amplify monitoring app renders it. Post-deploy health checks and config validation block phantom deploys, Bedrock analyzes failure logs, and Discord/Slack get instant alerts. In a team of three I owned Infra and Backend: Terraform infrastructure and the Lambda APIs.',
-            role: 'Infra & Backend (team of 3)',
+            role: 'Infra & Backend',
             tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
             features: [
               'Game-style live deploy monitoring: a character runs through the pipeline stages',
@@ -1358,10 +1358,10 @@ export const content = {
         },
         {
           id: 7,
-          title: 'NanoGrid: Lambdaを使わずEC2上に構築したFaaSプラットフォーム',
+          title: 'NanoGrid: マネージドFaaSの制約を取り払った関数実行プラットフォーム',
           category: 'DevOps & Infra',
           image: null,
-          description: 'マネージドFaaSなしでEC2上に関数実行プラットフォームを構築。Cold Startを三つの層に分解し、実行単位は3秒から0.2秒へ、ワーカーインスタンスはASG Warm Poolで常時2台分の費用のまま5台分の拡張を準備。インフラとセキュリティを担当（SoftBank Hackathon本選）',
+          description: 'マネージドFaaSが定めていた実行時間の上限、ランタイム制約、推論データの外部流出をEC2上で取り払った関数実行プラットフォーム。代わりに自ら背負うことになった拡張性は、Cold Startを三つの層に分けて解決しました。実行単位は3秒から0.2秒へ、ワーカーはASG Warm Poolで常時2台分の費用のまま5台分の拡張を準備（SoftBank Hackathon本選）',
           details: {
             problem: 'HTTPリクエスト処理をEC2上で行うという制約のもと、Lambdaが代わりにやってくれていたことを自分で作る必要がありました。関数のアップロード、HTTP呼び出し、即時実行をマネージドFaaSなしで実装し、スケーラビリティを自分で担保しなければなりませんでした。',
             solution: 'まず既存FaaSの限界がEC2上で解けるかを検討しました。API Gatewayの29秒タイムアウト、ランタイム制約、ベンダーロックイン、推論データの外部流出は解けますが、スケーラビリティだけが悪化する構造でした。慣れているAPI GatewayとDispatcher Lambdaで6時間でプロトタイプを動かしましたが、リクエスト経路にAPI Gatewayが残る構成だったため取り外し、ALBとEC2 Controllerへ移行して実行時間の上限をなくし、コンピュートを置くサブネットを自分で決められるようにしました。残ったスケーラビリティの問題を掘り下げる中で、Cold Startが実行単位、ワーカーインスタンス、スケーリング判断という時間規模の異なる三層であることを確認し、それぞれに別の道具を当てました。任意のユーザーコードを実行するプラットフォームのため、Zip Slip遮断、コンテナリソースクォータ、ジョブ単位のタイムアウト、IAM最小権限、WAFルール5種も併せて適用しました。',
@@ -1388,8 +1388,8 @@ export const content = {
           description: 'デプロイという行為自体を楽しくしたサーバーレス CI/CD プラットフォーム。ログだけが流れる画面を、キャラクターがパイプラインを走り抜けるゲーム画面に変えてデプロイ状態をリアルタイム共有',
           details: {
             problem: 'デプロイ状態がログとしてしか存在せず、開発者以外は進行状況が分からず、失敗の認知も遅れていた。パイプラインは成功したのに本番は何も変わらない Phantom デプロイのリスクもあった。',
-            solution: 'デプロイを見守る行為をゲームにしました。GitHub Push から Build、Deploy、Health Check までの状態を、キャラクターがパイプラインの各ステージを走り抜ける画面としてリアルタイム共有します。CodePipeline・CodeBuild・Elastic Beanstalk の状態変化を EventBridge が捕捉し、Lambda が DynamoDB に記録、Amplify のモニタリングアプリが描画します。デプロイ後の Health Check と設定検証で Phantom デプロイを遮断し、失敗ログは Bedrock で分析、Discord・Slack に即時通知します。3 人チームで Infra と Backend を担当し、Terraform インフラと Lambda API を実装しました。',
-            role: 'Infra & Backend（3 人チーム）',
+            solution: 'デプロイを見守る行為をゲームにしました。GitHub Push から Build、Deploy、Health Check までの状態を、キャラクターがパイプラインの各ステージを走り抜ける画面としてリアルタイム共有します。CodePipeline・CodeBuild・Elastic Beanstalk の状態変化を EventBridge が捕捉し、Lambda が DynamoDB に記録、Amplify のモニタリングアプリが描画します。デプロイ後の Health Check と設定検証で Phantom デプロイを遮断し、失敗ログは Bedrock で分析、Discord・Slack に即時通知します。Infra と Backend を担当し、Terraform インフラと Lambda API を実装しました。',
+            role: 'Infra & Backend',
             tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
             features: [
               'キャラクターがパイプラインを走り抜けるゲーム型リアルタイムデプロイモニタリング',

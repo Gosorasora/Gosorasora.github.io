@@ -29,7 +29,7 @@ I design and operate cloud infrastructure for production microservices, with a f
 
 ## Featured projects
 
-- **NanoGrid Plus** — Hybrid FaaS platform on AWS EC2. 30× cold-start improvement (3s → 0.2s) via Docker Warm Pool, up to 96% cost reduction via real-time auto-tuning. *SoftBank Hackathon 2025 Finalist.* &nbsp;[`github.com/Softbank-Final`](https://github.com/Softbank-Final)
+- **NanoGrid** — Function execution platform on EC2, built to shed managed-FaaS limits. 30× cold-start improvement (3s → 0.2s) via Docker Warm Pool, up to 96% cost reduction via real-time auto-tuning. *SoftBank Hackathon 2025 Finalist.* &nbsp;[`github.com/Softbank-Final`](https://github.com/Softbank-Final)
 - **Roomeya** — Fully serverless dormitory matching platform. 9 Lambdas, Step Functions, 4× DynamoDB, API Gateway HTTP v2, Cognito OAuth, SES — scale-to-zero off-season. &nbsp;[`github.com/Roomeya`](https://github.com/Roomeya)
 - **Deploy Land** — Gamified serverless CI/CD platform automating Push → Build → Deploy → Health Check, with real-time monitoring and Discord/Slack notifications. &nbsp;[`github.com/Deploy-Land`](https://github.com/Deploy-Land)
 - **Atlantis** — Fixed an autoplan bug where `FetchPullStatus()` was never called, blocking all clean PRs when `plan_requirements: [mergeable]` was set. PR [#6186](https://github.com/runatlantis/atlantis/pull/6186) merged into v0.41.0.
