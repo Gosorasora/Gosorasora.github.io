@@ -215,6 +215,7 @@ export const content = {
               'Atlantis를 Helm Chart로 Kubernetes에 배포, 인프라 변경을 전부 PR 기반 GitOps로 전환',
               'plan_requirements: [mergeable]로 병합 불가 PR이 인프라에 적용되는 경로 차단',
               'AWS AssumeRole 전환, 개발자 로컬 장기 Access Key 전량 회수 (잔여 0개)',
+              '로컬 우회 실행 차단: 삭제 권한 제거는 잘못 만든 리소스도 못 지우고 태그 기반 제어는 태그 변경으로 우회 가능해 기각. 상태 파일 버킷 정책에 허용 목록 외 전부 거부를 걸어 명시적 거부가 명시적 허용보다 우선한다는 평가 순서를 이용했습니다. 허용 목록에 없으면 관리자 권한으로도 상태 파일을 읽을 수 없어 로컬 실행이 성립하지 않으며, 정책 오류로 파이프라인이 마비될 경우를 대비해 비상용 관리자 계정은 허용 목록에 남겼습니다',
               'Terraform 작업 전건에 대한 PR 단위 감사 추적 확보',
               '트레이드오프: 긴급 배포 속도를 포기하는 대신 승인자를 복수로 두어 대기 시간 완화'
             ]
@@ -257,7 +258,7 @@ export const content = {
           details: {
             problem: 'HTTP 요청 처리를 EC2 위에서 해야 한다는 제약 아래 Lambda가 대신 해주던 일을 직접 만들어야 했습니다. 함수 업로드, HTTP 호출, 즉시 실행을 관리형 FaaS 없이 구현하면서 확장성을 스스로 책임져야 했습니다.',
             solution: '먼저 기존 FaaS의 한계가 EC2 위에서 풀리는지 따졌습니다. API Gateway 29초 타임아웃, 런타임 제약, 벤더 락인, 추론 데이터 외부 유출은 풀리고 확장성만 나빠지는 구조였습니다. 익숙한 API Gateway와 Dispatcher Lambda로 6시간 만에 프로토타입을 띄웠지만 요청 경로에 API Gateway가 남는 구성이라 걷어내고 ALB와 EC2 Controller로 전환해 실행 시간 상한을 없애고 컴퓨트가 앉을 서브넷을 직접 정할 수 있게 만들었습니다. 남은 확장성 문제를 파고들며 콜드 스타트가 실행 단위, 워커 인스턴스, 스케일링 판단이라는 서로 다른 시간 규모의 세 층이라는 것을 확인하고 각각에 다른 도구를 적용했습니다. 임의의 사용자 코드를 실행하는 플랫폼이라 Zip Slip 차단, 컨테이너 리소스 쿼터, 작업별 타임아웃, IAM 최소 권한, WAF 룰 5종을 함께 붙였습니다.',
-            role: '인프라, 보안 담당',
+            role: 'Infrastructure & Security',
             tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
             features: [
               '① 실행 단위: 런타임별(Python, Node.js, C++, Go) 컨테이너 풀을 미리 띄워 요청마다 만들지 않고 빌려 쓰고 반납. 3초 → 0.2초. Prometheus worker_job_duration_seconds 히스토그램으로 전후 분포 이동을 측정',
@@ -267,6 +268,7 @@ export const content = {
               '보안: 워커 IAM을 관리형 SQS FullAccess에서 큐 하나의 3개 액션으로 축소해 폭발 반경을 계정 전체에서 단일 큐로 제한. WAF 룰 5종(SQLi, XSS, Log4j, 레이트 리밋, 바디 상한)',
               '네트워크: Multi-AZ 구성, Controller는 퍼블릭 서브넷 2 AZ, Worker는 프라이빗 서브넷. 둘을 잇는 건 SQS 하나뿐. S3와 DynamoDB에 Gateway VPC Endpoint를 붙여 NAT 우회',
               'Private AI Node: 프라이빗 서브넷에 Ollama 배치, 인터넷 경로와 퍼블릭 주소 없이 워커 SG에서만 접근 허용해 추론 데이터가 VPC 밖으로 나가지 않도록 구성',
+              '멀티 클라우드 이중화: 진행 기간 중 AWS 한 리전의 화재로 실제 장애를 겪고, 한 벤더에 묶이면 대응 수단이 없다는 것을 확인해 GCP Cloud Storage로 데이터를 복제했습니다',
               '이틀간 AWS 비용 약 3만 원'
             ]
           },
@@ -812,7 +814,7 @@ export const content = {
           details: {
             problem: 'Under a constraint that HTTP request handling had to run on EC2, we had to build what Lambda normally does for you. Function upload, HTTP invocation, and immediate execution had to work without a managed FaaS, which meant owning scalability ourselves.',
             solution: 'We first checked whether the limits we hit with managed FaaS actually dissolve on EC2. The API Gateway 29-second timeout, runtime constraints, vendor lock-in, and inference data leaving our network all dissolve; only scalability gets worse. A familiar API Gateway plus Dispatcher Lambda prototype ran within six hours, but it left API Gateway sitting on the request path, so we removed it and moved to ALB with an EC2 Controller. That eliminated the execution time ceiling and gave us control over which subnet compute sits in. Digging into the remaining scalability problem revealed that cold start is really three layers on different time scales, and each needed a different tool. Because the platform executes arbitrary user code, we also added Zip Slip blocking, container resource quotas, per-job timeouts, least-privilege IAM, and five WAF rule groups.',
-            role: 'Infrastructure and Security',
+            role: 'Infrastructure & Security',
             tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
             features: [
               'Layer 1, execution unit: pre-started container pools per runtime (Python, Node.js, C++, Go), borrowed and returned instead of created per request. 3s to 0.2s, measured as a distribution shift in the Prometheus worker_job_duration_seconds histogram',
@@ -822,6 +824,7 @@ export const content = {
               'Security: narrowed the worker IAM role from managed SQS FullAccess to three actions on a single queue, shrinking the blast radius from every queue in the account to one. Five WAF rule groups (SQLi, XSS, Log4j, rate limit, body size cap)',
               'Network: Multi-AZ with Controllers in public subnets across two AZs and Workers in private subnets, joined only by SQS. Gateway VPC Endpoints for S3 and DynamoDB keep worker traffic off the NAT',
               'Private AI Node: Ollama placed in a private subnet with no internet route and no public address, reachable only from the worker security group, so inference data never leaves the VPC',
+              'Multi-cloud redundancy: a fire in one AWS region caused a real outage during the event, which made it clear that being tied to a single vendor leaves no options, so data was replicated to GCP Cloud Storage.',
               'Total AWS spend for two days: about 30,000 KRW'
             ]
           },
@@ -868,6 +871,7 @@ export const content = {
             features: [
               'PR-based GitOps workflow transformation',
               'AWS AssumeRole least privilege security',
+              'Blocked local bypass: stripping delete permissions would also block cleanup of mistaken resources, and tag-based control could be evaded by editing tags, so the state bucket policy denies everything outside an allowlist. Explicit deny outranks explicit allow, so anyone off the list cannot read state even with admin rights, while an emergency admin account stays listed in case a misconfigured policy stalls the pipeline.',
               'Full developer Access Key revocation',
               'Atlantis v0.41.0 open source contribution (PR Merged)'
             ]
@@ -1331,6 +1335,7 @@ export const content = {
               'Helm Chart基盤 Atlantis K8sデプロイ',
               'PR基盤コードレビュー後インフラ変更適用',
               'AWS AssumeRole最小権限セキュリティ体系構築',
+              'ローカル実行による迂回を遮断：削除権限の一括除去は誤作成リソースも消せなくなり、タグベース制御はタグ変更で回避されるため却下。ステートファイルのバケットポリシーで許可リスト外をすべて拒否しました。明示的拒否が明示的許可に優先するため、リストにない者は管理者権限でもステートを読めません。ポリシー誤設定でパイプラインが停止する場合に備え、緊急用の管理者アカウントは許可リストに残しています',
               'Atlantis v0.41.0 OSSバグ修正貢献 (PR Merged)'
             ]
           },
@@ -1365,7 +1370,7 @@ export const content = {
           details: {
             problem: 'HTTPリクエスト処理をEC2上で行うという制約のもと、Lambdaが代わりにやってくれていたことを自分で作る必要がありました。関数のアップロード、HTTP呼び出し、即時実行をマネージドFaaSなしで実装し、スケーラビリティを自分で担保しなければなりませんでした。',
             solution: 'まず既存FaaSの限界がEC2上で解けるかを検討しました。API Gatewayの29秒タイムアウト、ランタイム制約、ベンダーロックイン、推論データの外部流出は解けますが、スケーラビリティだけが悪化する構造でした。慣れているAPI GatewayとDispatcher Lambdaで6時間でプロトタイプを動かしましたが、リクエスト経路にAPI Gatewayが残る構成だったため取り外し、ALBとEC2 Controllerへ移行して実行時間の上限をなくし、コンピュートを置くサブネットを自分で決められるようにしました。残ったスケーラビリティの問題を掘り下げる中で、Cold Startが実行単位、ワーカーインスタンス、スケーリング判断という時間規模の異なる三層であることを確認し、それぞれに別の道具を当てました。任意のユーザーコードを実行するプラットフォームのため、Zip Slip遮断、コンテナリソースクォータ、ジョブ単位のタイムアウト、IAM最小権限、WAFルール5種も併せて適用しました。',
-            role: 'インフラ・セキュリティ担当',
+            role: 'Infrastructure & Security',
             tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
             features: [
               '① 実行単位: ランタイム別（Python、Node.js、C++、Go）にコンテナプールを事前起動し、リクエストごとに作らず借りて返す方式へ。3秒から0.2秒。Prometheusのworker_job_duration_secondsヒストグラムで前後の分布シフトを測定',
@@ -1375,6 +1380,7 @@ export const content = {
               'セキュリティ: ワーカーのIAMをマネージドSQS FullAccessから単一キューの3アクションへ縮小し、影響範囲をアカウント全体から一つのキューに限定。WAFルール5種（SQLi、XSS、Log4j、レート制限、ボディサイズ上限）',
               'ネットワーク: Multi-AZ構成。Controllerはパブリックサブネット2 AZ、Workerはプライベートサブネット。両者を繋ぐのはSQS一つのみ。S3とDynamoDBにGateway VPC Endpointを付けてNATを迂回',
               'Private AI Node: プライベートサブネットにOllamaを配置し、インターネット経路とパブリックアドレスなしでワーカーのSGからのみアクセス許可。推論データがVPC外へ出ない構成',
+              'マルチクラウド冗長化：期間中にAWSの一リージョンで火災による実際の障害を経験し、単一ベンダーに依存すると打つ手がないことを確認してGCP Cloud Storageへデータを複製しました',
               '2日間のAWS費用は約3万ウォン'
             ]
           },
