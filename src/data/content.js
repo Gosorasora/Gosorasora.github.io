@@ -23,9 +23,9 @@ export const content = {
       },
       experience: [
         {
-          title: 'DevOps Engineer / Infra·Platform·AX',
+          title: 'DevOps Engineer / Infra, Platform, AX',
           company: 'BUZZ & BEYOND (버즈앤비)',
-          period: '2026.01 ~ 재직중 (인턴 2026.01~06 · 정규직 2026.07~)',
+          period: '2026.01 ~ 재직중 (인턴 2026.01~06, 정규직 2026.07~)',
           description: [
             'Terraform·Atlantis로 사내 GitOps 환경 구축',
             [
@@ -54,7 +54,7 @@ export const content = {
         {
           title: '학부연구생 (CSDC Lab)',
           company: '동국대학교 Computer Security & Distributed Computing Lab',
-          period: '2025.04 ~ 재직중',
+          period: '2025.04 ~ 현재',
           description: [
             '네트워크 보안 및 부하 분산 관련 연구 수행',
             'NLP 기반 IaC 보안 분석 도구 개별연구. BERT 모델로 Terraform 시맨틱 이상 탐지 및 IAM 권한 상승 경로 시각화',
@@ -66,7 +66,7 @@ export const content = {
         {
           title: 'AWS Student Builder Group at Dongguk University',
           company: 'Amazon Web Services (AWS)',
-          period: '2025.07 ~ 재직중',
+          period: '2025.07 ~ 현재',
           description: [
             'AWS Cloud Club Member (2025.07 ~ 2026.04)',
             'Group Leader 시작 2026.05 ~ 현재',
@@ -135,7 +135,7 @@ export const content = {
           date: '2025.10'
         },
         {
-          title: 'Notion Badge: Essentials · Workflows · Advanced',
+          title: 'Notion Badge: Essentials, Workflows, Advanced',
           issuer: 'Notion',
           date: '2026.06',
           description: ['배지 인증: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', '유효기간 2028.06']
@@ -597,9 +597,9 @@ export const content = {
       },
       experience: [
         {
-          title: 'DevOps Engineer / Infra·Platform·AX',
+          title: 'DevOps Engineer / Infra, Platform, AX',
           company: 'BUZZ & BEYOND',
-          period: '2026.01 ~ Present (Intern 2026.01–06 · Full-time 2026.07~)',
+          period: '2026.01 ~ Present (Intern 2026.01–06, Full-time 2026.07~)',
           description: [
             'Built the company GitOps environment with Terraform and Atlantis',
             [
@@ -700,7 +700,7 @@ export const content = {
           date: '2025.10'
         },
         {
-          title: 'Notion Badge: Essentials · Workflows · Advanced',
+          title: 'Notion Badge: Essentials, Workflows, Advanced',
           issuer: 'Notion',
           date: '2026.06',
           description: ['Verify: [Essentials](https://verify.skilljar.com/c/u3fmkfvpnv26) · [Workflows](https://verify.skilljar.com/c/uqe3e88dh56v) · [Advanced](https://verify.skilljar.com/c/nvh6hj8dxfrx)', 'Valid through 2028.06']
@@ -1152,7 +1152,7 @@ export const content = {
         {
           title: 'DevOps Engineer / Infra・Platform・AX',
           company: 'BUZZ & BEYOND',
-          period: '2026.01 ~ 現在 (インターン 2026.01~06 · 正社員 2026.07~)',
+          period: '2026.01 ~ 在職中 (インターン 2026.01~06 · 正社員 2026.07~)',
           description: [
             'Terraform・Atlantisで社内GitOps環境を構築',
             [
