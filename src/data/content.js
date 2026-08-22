@@ -3,14 +3,14 @@ export const content = {
     hero: {
       greeting: "Hello, I'm",
       title: "Ko Donghyeon.",
-      subtitle: "DevOps Engineer & Forward Deployed Engineer.",
+      subtitle: "DevOps Engineer.",
       description: "인프라 자동화로 배포를 안정시키고, AI로 사내 업무를 자동화합니다.\n문제가 있는 현장에 직접 들어가서 푸는 엔지니어입니다.",
       cta: "프로젝트 보기"
     },
     about: {
       title: "About Me",
       intro: [
-        "안녕하세요! 저는 **DevOps Engineer**이자 **Forward Deployed Engineer**인 **고동현**입니다.",
+        "안녕하세요! 저는 **DevOps Engineer** **고동현**입니다.",
         "Terraform·Kubernetes 기반 인프라와 GitOps 배포 환경을 직접 구축하고 운영합니다. 반복 업무가 사람의 시간을 먹는 것을 싫어해서, 최근에는 **AI를 활용한 AX(업무 자동화)**로 사내 반복 업무와 개발 생산성 지표를 자동화하는 일에 집중하고 있습니다. AI를 쓰는 백엔드일수록 모델 호출 비용과 파이프라인 안정성이 결국 인프라 문제로 돌아온다고 보고, 인프라에서 익힌 자동화와 최적화를 AI 시스템을 떠받치는 쪽에 쓰려고 합니다. 인프라 안에만 머무르기보다 문제가 있는 팀 옆에 가서 직접 듣고 고치는 방식을 좋아합니다.",
         "저는 사람들이 모여서 함께 생각해 나온 결과물은 그 무엇보다 강력하다고 생각합니다. 그래서 커뮤니티를 좋아하고, 이러한 관심이 지금의 저를 만들었다고 생각합니다. 다른 사람들에게도 이런 경험을 주고 싶어 현재 **AWS Student Builders Group Leader**로 활동하고 있습니다."
       ],
@@ -504,7 +504,7 @@ export const content = {
           details: {
             problem: '상반기 사내 리드 응답은 1시간 내 응답 45.5%, 평균 응답 4.3시간, 9시간 초과 방치 4건이었습니다. 초기 대응이 늦을수록 상담 전환이 떨어져 그대로 영업 기회 손실로 이어지는 상태였습니다.',
             solution: '그전까지 제가 다룬 문제는 대부분 코드와 인프라 안에 있었는데 이번은 문제가 영업 조직의 업무 흐름 안에 있었고 저는 그 도메인을 전혀 몰랐습니다. 코드를 더 잘 짜서 풀 수 있는 문제가 아니라고 보고, 설계를 먼저 하지 않고 영업 담당자들의 실제 업무를 따라가며 물었습니다. 왜 이 리드는 연락이 늦었는지, 알림을 보고도 못 움직인 이유가 무엇인지, 주말에 온 문의는 어떻게 처리하는지를 하나씩 들었고 그 대화에서 지금의 설계가 나왔습니다.\n\n가장 어려웠던 것은 응답을 무엇으로 정의할 것인가였습니다. 시스템 관점에서는 담당자가 배정된 시각이 자연스럽고 영업 관점에서는 실제로 고객과 통화가 닿은 시각입니다. 이 정의 하나로 지표가 완전히 달라지고 팀이 무엇을 개선할지도 달라집니다. 담당자 배정만 세면 숫자는 훨씬 좋아 보이지만, 두 지표를 모두 남기고 더 불리한 첫 고객 컨택 기준을 버리지 않기로 했습니다. 고객 입장에서 응답은 전화를 받은 순간이기 때문입니다. 유리한 기준으로 갈아타는 순간 지표는 개선 도구가 아니라 보고용 숫자가 됩니다.\n\nSLA는 영업시간 기준으로만 재도록 했습니다. 금요일 저녁에 온 문의를 월요일 아침에 받은 것까지 지연으로 세면 지표가 현실과 어긋나고, 어긋난 지표는 결국 아무도 보지 않습니다. 알림도 담당자가 실제로 대응할 수 있는 시간대에만 가도록 바꿨습니다. 알림을 늘리면 대응이 빨라질 것 같지만 대응할 수 없는 시간에 오는 알림은 알림 자체를 무시하게 만듭니다. 대신 방치된 리드에는 에스컬레이션이 걸리게 했고, 실시간 모니터링 화면을 만들어 담당자들이 같은 화면을 보게 했습니다.\n\n측정을 왜곡시키는 경로도 함께 걷어냈습니다. 도입 문의 폼 이메일 리드가 백오피스로 이중 인입되던 것을 제거했고, 리드를 수정하면 접수 시간이 초기화되던 문제를 고쳤으며, 변경 이력을 상세화하고 과거 데이터를 백필했습니다. 이 작업을 하지 않으면 개선 전후를 같은 기준으로 비교할 수 없습니다.\n\n2주 동안 업무시간 기준 약 55시간을 썼고 필요성 검토와 기획, 영업팀 인터뷰, SLA 정의 문서 작성, 실시간 모니터링 화면과 알림·에스컬레이션 구현, QA까지 직접 끝냈습니다. 그중 순수 개발보다 무엇을 어떻게 셀 것인가를 합의하고 문서로 못 박는 데 더 많은 시간이 들어갔습니다.',
-            role: 'DevOps / Forward Deployed Engineer',
+            role: 'DevOps Engineer',
             tech: ['Notion', '사내 백오피스', 'SLA 지표 설계', '알림·에스컬레이션', '과거 데이터 백필'],
             features: [
               '배정 지표: 리드 접수에서 담당자 배정까지 평균 33.6시간 → 0.4시간(약 26분), 1시간 내 담당자 배정 비율 9% → 86%',
@@ -577,14 +577,14 @@ export const content = {
     hero: {
       greeting: "Hi, I am",
       title: "Ko Donghyeon.",
-      subtitle: "DevOps Engineer & Forward Deployed Engineer.",
+      subtitle: "DevOps Engineer.",
       description: "I keep deployments boring through infrastructure automation, and put AI to work on internal operations.\nI prefer to sit next to the problem and fix it there.",
       cta: "Check out my work"
     },
     about: {
       title: "About Me",
       intro: [
-        "Hello! I'm **Ko Donghyeon**, a **DevOps Engineer** and **Forward Deployed Engineer**.",
+        "Hello! I'm **Ko Donghyeon**, a **DevOps Engineer**.",
         "I build and run Terraform- and Kubernetes-based infrastructure with GitOps deployment. I dislike watching repetitive work eat people's time, so my focus now is **AX (internal automation) with AI** that takes over repeated work and reports engineering productivity metrics. The more a backend leans on AI, the more its model-call cost and pipeline stability come back as infrastructure problems, so I want to put what I learned in infrastructure to work underneath AI systems. Rather than staying inside the infrastructure, I would rather sit next to the team that has the problem, hear it firsthand, and fix it there.",
         "I believe nothing beats what people come up with when they think together. That is why I love communities, and that interest is what shaped me into the engineer I am today. I want to pass that experience on to others, so I currently serve as an **AWS Student Builders Group Leader**."
       ],
@@ -1130,14 +1130,14 @@ export const content = {
     hero: {
       greeting: "Hello, I'm",
       title: "Ko Donghyeon.",
-      subtitle: "DevOps Engineer & Forward Deployed Engineer.",
+      subtitle: "DevOps Engineer.",
       description: "インフラ自動化でデプロイを安定させ、AIで社内業務を自動化します。\n問題のある現場に入って直接解決するエンジニアです。",
       cta: "プロジェクトを見る"
     },
     about: {
       title: "About Me",
       intro: [
-        "こんにちは！**DevOps Engineer**かつ**Forward Deployed Engineer**の**高東見**（コ・ドンヒョン）です。",
+        "こんにちは！**DevOps Engineer**の**高東見**（コ・ドンヒョン）です。",
         "Terraform・Kubernetesベースのインフラと GitOps デプロイ環境を自ら構築・運用しています。反復業務が人の時間を奪うことが好きではなく、最近は**AIを活用したAX（業務自動化）**で社内の反復業務と開発生産性指標の自動化に注力しています。AI を使うバックエンドほど、モデル呼び出しのコストとパイプラインの安定性が結局インフラの問題として返ってくると考えており、インフラで身につけた自動化と最適化を AI システムを支える側で使いたいと考えています。インフラの中に留まるより、問題を抱えたチームのそばに行って直接聞き、その場で直すやり方を好みます。",
         "人が集まって一緒に考えて生まれたものは、何よりも強いと思っています。だからコミュニティが好きで、その関心が今の自分をつくったと考えています。同じ経験を他の人にも届けたく、現在**AWS Student Builders Group Leader**として活動しています。"
       ],
