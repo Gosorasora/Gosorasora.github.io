@@ -131,6 +131,7 @@ button {
   color: var(--text-primary);
   display: flex;
   align-items: center;
+  white-space: nowrap;
 }
 
 .section-title::after {
@@ -149,4 +150,8 @@ button {
   .section-title::after {
     width: 100%;
   }
+}
+/* Keep section titles clear of the fixed navbar on anchor jumps. */
+section[id] {
+  scroll-margin-top: 64px;
 }

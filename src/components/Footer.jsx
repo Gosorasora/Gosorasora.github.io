@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import './Footer.css';
 
@@ -42,6 +43,7 @@ const Footer = () => {
           {copied && <span className="copied-tooltip">Copied!</span>}
         </button>
       </div>
+      <Link to="/game" className="footer-game">Enjoy 🎮</Link>
       <p className="copyright">
         Designed &amp; Built by Ko Donghyeon
       </p>

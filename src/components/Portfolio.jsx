@@ -14,25 +14,21 @@ const Portfolio = () => {
 
   const selectedProject = t.projects.find(p => p.id === selectedId);
 
-  // Filter Logic
-  const filterMap = {
-    web: 'DevOps & Infra',
-    ai: 'AX',
-    research: '오픈소스',
-    security: 'Security'
-  };
-
   // 임팩트 순 노출 (현업 성과 · 수치 · 외부 검증 우선)
-  const impactOrder = [1, 15, 2, 3, 4, 7, 6, 13, 14, 12, 5, 9, 8, 10, 11];
+  const impactOrder = t.order;
   const byImpact = (a, b) => impactOrder.indexOf(a.id) - impactOrder.indexOf(b.id);
 
+  // Featured projects live in the Cases section; this list holds the rest.
+  const caseIds = content[language].cases.map(c => c.projectId);
+  const others = t.projects.filter(p => !caseIds.includes(p.id));
+
   const filteredProjects = (filter === 'all'
-    ? t.projects
-    : t.projects.filter(project => project.category.includes(filterMap[filter]))
+    ? others
+    : others.filter(project => project.category === t.filters[filter])
   ).slice().sort(byImpact);
 
   return (
-    <section id="projects" className="section portfolio-section">
+    <section id="other" className="section portfolio-section">
       <div className="container">
         <motion.h2 className="section-title" {...reveal}>{t.title}</motion.h2>
 
@@ -49,50 +45,24 @@ const Portfolio = () => {
           ))}
         </motion.div>
 
-        <div className="portfolio-grid">
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                layoutId={`card-${project.id}`}
-                className="portfolio-card"
-                onClick={() => setSelectedId(project.id)}
-                whileHover={{ y: -6 }}
-                whileTap={{ scale: 0.98 }}
-                initial={{ opacity: 0, scale: 0.9, y: 16 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <div className="card-content">
-                  <span className="card-category">{project.category}</span>
-                  <h3 className="card-title">{project.title}</h3>
-                  <p className="card-description">{project.description}</p>
-                  {project.details?.features && (
-                    <ul className="card-highlights">
-                      {project.details.features.slice(0, 3).map((feature, i) => (
-                        <li key={i}>{feature}</li>
-                      ))}
-                    </ul>
-                  )}
-                  <div className="card-footer">
-                    {project.details?.tech && (
-                      <div className="card-tech">
-                        {project.details.tech.slice(0, 5).map(tech => (
-                          <span key={tech} className="card-tech-chip">{tech}</span>
-                        ))}
-                        {project.details.tech.length > 5 && (
-                          <span className="card-tech-chip more">+{project.details.tech.length - 5}</span>
-                        )}
-                      </div>
-                    )}
-                    <span className="read-more">{t.modal.detail} &rarr;</span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
+        <motion.ul className="other-grid" {...revealDelay(0.15)}>
+          {filteredProjects.map((project) => (
+            <li key={project.id}>
+              <button type="button" className="other-card" onClick={() => setSelectedId(project.id)}>
+                <span className="other-cat">{project.category}</span>
+                <span className="other-title">{project.title}</span>
+                {t.metrics[project.id] && <span className="other-metric">{t.metrics[project.id]}</span>}
+                <span className="other-desc">{project.how}</span>
+                <span className="other-foot">
+                  <span className="other-tech">
+                    {project.details.tech.slice(0, 4).map((x) => <span key={x} className="tech-tag">{x}</span>)}
+                  </span>
+                  <span className="read-more">{t.modal.detail} &rarr;</span>
+                </span>
+              </button>
+            </li>
+          ))}
+        </motion.ul>
 
         <AnimatePresence>
           {selectedId && (
@@ -105,8 +75,9 @@ const Portfolio = () => {
               transition={{ duration: 0.2 }}
             >
               <motion.div
-                layoutId={`card-${selectedId}`}
                 className="modal-content"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
                 onClick={e => e.stopPropagation()}
               >
                 <button className="modal-close" onClick={() => setSelectedId(null)}>
@@ -153,6 +124,7 @@ const Portfolio = () => {
                 <div className="modal-body">
                   <div className="modal-section">
                     <h3>{t.modal.overview}</h3>
+                    <p>{selectedProject.description}</p>
                     <p>{selectedProject.details.problem}</p>
                     <p>{selectedProject.details.solution}</p>
                   </div>

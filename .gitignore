@@ -34,3 +34,8 @@ _workspace/
 # 지원서·자소서 (커밋 제외)
 applications/
 *-application*.md
+
+# local work files
+scratchpad/
+.playwright-mcp/
+*.bak-*

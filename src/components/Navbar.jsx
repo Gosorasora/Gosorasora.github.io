@@ -44,12 +44,6 @@ const Navbar = () => {
     }
   };
 
-  const handleGameClick = (e) => {
-    e.preventDefault();
-    setMenuOpen(false);
-    navigate('/game');
-  };
-
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container navbar-container">
@@ -64,11 +58,11 @@ const Navbar = () => {
         </div>
 
         <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
-          <li><a href="#home" onClick={(e) => handleNavClick(e, '#home')}>Home</a></li>
           <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>About</a></li>
-          <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Projects</a></li>
+          <li><a href="#cases" onClick={(e) => handleNavClick(e, '#cases')}>Cases</a></li>
+          <li><a href="#other" onClick={(e) => handleNavClick(e, '#other')}>Other</a></li>
+          <li><a href="#writing" onClick={(e) => handleNavClick(e, '#writing')}>Writing</a></li>
           <li><a href="#resume" onClick={(e) => handleNavClick(e, '#resume')}>Resume</a></li>
-          <li><a href="/game" onClick={handleGameClick} className="nav-highlight">Enjoy 🎮</a></li>
           <li className="lang-buttons">
             <button className={`lang-btn ${language === 'kr' ? 'active' : ''}`} onClick={() => setLang('kr')}>KR</button>
             <span className="lang-divider">/</span>

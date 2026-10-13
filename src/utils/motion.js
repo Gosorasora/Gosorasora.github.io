@@ -4,9 +4,10 @@
 const EASE = [0.22, 1, 0.36, 1];
 
 export const reveal = {
-  initial: { opacity: 0, y: 24 },
+  // Start partly visible so a fast scroll never lands on an empty section.
+  initial: { opacity: 0.35, y: 16 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-80px' },
+  viewport: { once: true, margin: '0px 0px -40px 0px' },
   transition: { duration: 0.5, ease: EASE },
 };
 

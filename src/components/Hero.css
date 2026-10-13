@@ -1,195 +1,117 @@
 .hero-section {
-    position: relative;
-    overflow: hidden;
     width: 100%;
-    min-height: 88vh;
+    min-height: 78vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 80px 0 40px 0;
-    margin: 0;
-    background-color: #1B263B;
-}
-
-/* Parallax layer. Inset past the edges so the scroll drift never exposes a gap. */
-.hero-bg {
-    position: absolute;
-    top: -80px;
-    right: -80px;
-    bottom: -80px;
-    left: -80px;
-    z-index: 0;
-    background-image: linear-gradient(rgba(27, 38, 59, 0.65), rgba(27, 38, 59, 0.75)),
-        url('../assets/background.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    will-change: transform;
-}
-
-/* Infra grid. The drift distance matches the cell size, so the loop is seamless. */
-.hero-grid-mask {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 45%, #000 20%, transparent 75%);
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 45%, #000 20%, transparent 75%);
-}
-
-.hero-grid {
-    position: absolute;
-    top: -60px;
-    left: 0;
-    width: 100%;
-    height: calc(100% + 120px);
-    background-image:
-        linear-gradient(rgba(119, 141, 169, 0.14) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(119, 141, 169, 0.14) 1px, transparent 1px);
-    background-size: 60px 60px;
-    will-change: transform;
-}
-
-/* Cursor spotlight. Sized 600px with a -300px origin so x/y land it dead centre. */
-.hero-spotlight {
-    position: absolute;
-    top: -300px;
-    left: -300px;
-    width: 600px;
-    height: 600px;
-    z-index: 0;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(119, 141, 169, 0.22) 0%, transparent 65%);
-    filter: blur(40px);
-    pointer-events: none;
-    will-change: transform;
+    padding: 110px 0 60px;
+    background: linear-gradient(180deg, #1B263B 0%, #22304a 100%);
+    color: #E0E1DD;
 }
 
 .hero-container {
-    position: relative;
-    z-index: 1;
+    word-break: keep-all;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
 }
 
-/* Each split unit transforms on its own, so it must be a block box.
-   `pre` keeps the trailing space in word mode from collapsing. */
-.split-unit {
-    display: inline-block;
-    white-space: pre;
-    will-change: transform, opacity, filter;
-}
-
-.hero-greeting {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #778DA9;
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 20px;
+.hero-label {
     font-family: monospace;
-}
-
-.greeting-rule {
-    display: inline-block;
-    width: 42px;
-    height: 1.5px;
-    background-color: #778DA9;
-    opacity: 0.6;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #778DA9;
+    margin-bottom: 14px;
 }
 
 .hero-title {
-    font-size: clamp(3rem, 8vw, 5rem);
     font-family: var(--font-heading);
+    font-size: clamp(2.6rem, 7vw, 4.5rem);
     font-weight: 800;
+    line-height: 1.1;
     color: #E0E1DD;
-    line-height: 1.1;
-    margin-bottom: 10px;
-}
-
-.hero-subtitle {
-    /* Force single line */
-    white-space: nowrap;
-    font-size: clamp(1rem, 4vw, 4rem);
-    /* Aggressively scale down if needed */
-    font-weight: 700;
-    color: #778DA9;
-    line-height: 1.1;
-    margin-bottom: 30px;
-    width: 100%;
+    margin-bottom: 20px;
 }
 
 .hero-description {
-    max-width: 600px;
+    max-width: 680px;
+    overflow-wrap: anywhere;
     font-size: 1.1rem;
+    line-height: 1.65;
     color: #d1d3cf;
-    margin-bottom: 25px;
-    line-height: 1.6;
+    margin-bottom: 22px;
+}
+
+.hero-highlights {
+    margin-bottom: 28px;
+}
+
+.hero-highlights li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 12px;
+    align-items: baseline;
+    margin-bottom: 8px;
+    color: #E0E1DD;
     font-weight: 500;
 }
 
-.mobile-break {
-    display: none;
-    /* Disable manual breaks */
+.hero-hl-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #778DA9;
 }
 
-.btn-primary {
-    display: inline-block;
-    padding: 0.65rem 1.2rem;
+@media (max-width: 480px) {
+    .hero-highlights li {
+        grid-template-columns: 1fr;
+        gap: 2px;
+        margin-bottom: 12px;
+    }
+}
+
+.hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 26px;
+}
+
+.hero-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
     border: 1.5px solid #778DA9;
     border-radius: 4px;
-    color: #778DA9;
+    color: #E0E1DD;
     font-size: 0.85rem;
     font-family: monospace;
     font-weight: 600;
-    transition: background-color 0.25s ease;
-    background-color: transparent;
 }
 
-.btn-primary:hover {
+.hero-link:hover {
     background-color: rgba(119, 141, 169, 0.25);
-    /* Mint tint on hover */
 }
 
-.hero-scroll-hint {
-    position: absolute;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-    width: 22px;
-    height: 36px;
-    border: 1.5px solid rgba(119, 141, 169, 0.5);
-    border-radius: 11px;
+.hero-stack {
     display: flex;
-    justify-content: center;
-    padding-top: 7px;
-    pointer-events: none;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: #778DA9;
 }
 
-.scroll-dot {
-    width: 3px;
-    height: 7px;
-    border-radius: 2px;
-    background-color: #778DA9;
-}
-
-@media (max-width: 768px) {
-
-    /* Ensure it still fits on very small screens */
-    .hero-subtitle {
-        font-size: clamp(1rem, 5vw, 2.5rem);
+@media (max-width: 600px) {
+    .hero-section {
+        min-height: auto;
+        padding: 96px 0 44px;
     }
 
-    .hero-spotlight {
-        display: none;
-    }
-
-    .hero-scroll-hint {
-        display: none;
+    .hero-description {
+        font-size: 1rem;
     }
 }
