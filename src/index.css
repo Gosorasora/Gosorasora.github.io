@@ -160,3 +160,11 @@ button {
 section[id] {
   scroll-margin-top: 64px;
 }
+
+/* keep-all keeps Korean words whole, but Japanese has no spaces to break on */
+:lang(ja) *,
+:lang(ja) *::before,
+:lang(ja) *::after {
+  word-break: normal !important;
+  line-break: strict;
+}

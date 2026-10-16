@@ -168,12 +168,44 @@
 }
 
 @media (max-width: 768px) {
+    /* no spare margin on phones: the dots would sit on the text */
     .intro-dots {
-        right: 10px;
+        display: none;
     }
 
     .intro-skip {
         right: 16px;
         bottom: 20px;
     }
+}
+
+/* Language switch on the opening, since the navbar is covered until it ends */
+.intro-lang {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 4px;
+}
+
+.intro-lang button {
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 999px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #a1a1a6;
+    background: transparent;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.intro-lang button:hover,
+.intro-lang button.active {
+    color: #f5f5f7;
+}
+
+.intro-lang button.active {
+    background: rgba(245, 245, 247, 0.12);
 }

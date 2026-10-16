@@ -185,7 +185,7 @@ const Chapter = ({ progress, i, chapter, last }) => {
 };
 
 const Intro = () => {
-  const { language } = useLanguage();
+  const { language, setLang } = useLanguage();
   const t = content[language].hero;
   const { chapters, value: valueLine, skip } = content[language].intro || content.kr.intro;
   const ref = useRef(null);
@@ -253,6 +253,12 @@ const Intro = () => {
         <div className="intro-dots" aria-hidden="true">
           {[[NAME_END, VALUE_END], ...chapters.map((_, i) => [CH_START + i * CH_LEN, CH_START + (i + 1) * CH_LEN])].map(([a, b]) => (
             <Dot key={a} progress={progress} a={a} b={b} />
+          ))}
+        </div>
+
+        <div className="intro-lang">
+          {[['kr', 'KR'], ['en', 'EN'], ['jp', 'JP']].map(([code, label]) => (
+            <button key={code} type="button" className={language === code ? 'active' : ''} aria-pressed={language === code} onClick={() => setLang(code)}>{label}</button>
           ))}
         </div>
 
