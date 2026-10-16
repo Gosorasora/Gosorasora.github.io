@@ -4,7 +4,7 @@ export const content = {
       greeting: "Hello, I'm",
       title: "Ko Donghyeon.",
       subtitle: "DevOps Engineer.",
-      description: "기술은 사람을 향해야 한다고 생각합니다. 그래서 인프라를 만들 때도, 사내 업무를 자동화할 때도 그것을 쓸 사람의 이야기를 먼저 듣습니다.\n사람과의 연결을 중시하는 DevOps 엔지니어입니다. 인프라와 AX로 팀의 일을 잇고, 전공과 동아리가 다른 개발자들이 섞이는 커뮤니티를 만들고 이끌어 왔습니다.\n영업팀 리드 배정처럼 개발 밖의 업무도 담당자를 직접 인터뷰해 측정 기준부터 세웁니다.",
+      description: "인프라를 만들 때도, 사내 업무를 자동화할 때도 그것을 쓸 사람의 이야기를 먼저 듣습니다.\n사람과의 연결을 중시하는 DevOps 엔지니어입니다. 인프라와 AX로 팀의 일을 잇고, 전공과 동아리가 다른 개발자들이 섞이는 커뮤니티를 만들고 이끌어 왔습니다.\n영업팀 리드 배정처럼 개발 밖의 업무도 담당자를 직접 인터뷰해 측정 기준부터 세웁니다.",
       cta: "프로젝트 보기",
       label: "DevOps Engineer · BUZZ & BEYOND 2026~",
       highlights: [
@@ -20,6 +20,14 @@ export const content = {
         { label: "이력서 PDF", url: "/assets/resume_kr.pdf" }
       ],
       stack: ["AWS", "Terraform", "Atlantis", "Kubernetes", "Argo Workflows", "Python", "Notion"]
+    },
+    intro: {
+      value: "기술은 사람을 향해야 한다고 생각합니다.",
+      chapters: [
+        { kicker: "사람을 모으는 기술", tag: "Community Leader", title: "받기만 하던 멤버에서, 주는 리더로", body: "2022년 Cloud Club 1기에서는 받기만 하는 멤버였습니다. 지금은 AWS Student Builder Group과 Notion Campus Leader 등 여러 커뮤니티에서 리더로 활동하며 배운 것을 나눕니다." },
+        { kicker: "사람을 돕는 기술", tag: "AX Engineer", title: "누군가 어려워하는 일을, 제가 아는 기술로", body: "영업 담당자가 어려워하던 리드 응대를 직접 인터뷰로 듣고, 자동 측정과 알림을 만들어 응대가 늦어지지 않게 했습니다." },
+        { kicker: "사람이 멈추지 않게 하는 기술", tag: "DevOps Engineer", title: "구축만큼 운영을 중요하게 생각합니다", body: "만들고 끝내지 않습니다. 운영 중 생긴 장애는 문제의 근본을 파악해서 해결합니다." }
+      ]
     },
     sections: {
       cases: "Cases",
@@ -111,9 +119,9 @@ export const content = {
       title: "About Me",
       intro: [
         "안녕하세요! 저는 **DevOps Engineer** **고동현**입니다.",
-        "기술은 사람을 향해야 한다고 생각합니다. 영업팀 리드 응대처럼 개발 밖의 문제도 담당자를 직접 인터뷰해 기준부터 세웠습니다.",
-        "Terraform과 Kubernetes로 인프라와 GitOps 배포 환경을 구축하고 운영하며, 최근에는 **LLM과 Notion 에이전트로 사내 반복 업무를 자동화하는 AX**에 집중하고 있습니다.",
-        "2022년 Cloud Club 1기에서는 받기만 하는 쪽이었지만, CAPS 부회장으로 소모임의 중앙동아리 승격에 참여해 인원이 30명에서 200명이 되는 것을 함께 겪었습니다. 지금은 **AWS Student Builder Group at Dongguk University의 Leader**와 Notion Campus Leader로 두 커뮤니티를 이끌며, Hands-on Seminar 10회 이상과 교내 개발동아리가 모인 약 100명 규모의 Dongguk Dev Conference 2026을 열었습니다.",
+        "2022년 Cloud Club 1기에서는 받기만 하는 쪽이었지만, CAPS 부회장으로 소모임의 중앙동아리 승격에 참여해 인원이 30명에서 200명으로 늘어나는 과정을 함께했습니다. 지금은 **AWS Student Builder Group at Dongguk University**의 Leader와 **Notion Campus Leader at Dongguk University**로 활동하며, [Hands-on Seminar 10회 이상](https://www.meetup.com/aws-sbg-at-dongguk-university-seoul-campus/events/?type=past)과 교내 개발동아리가 모인 약 100명 규모의 [Dongguk Dev Conference 2026](https://www.linkedin.com/feed/update/urn:li:activity:7512849701973471232/)을 열었습니다.",
+        "어려움을 겪는 사람을 직접 찾아가 이야기를 듣습니다. 영업팀 리드 응대처럼 개발 밖의 문제도 담당자를 직접 인터뷰해 기준부터 세웠고, 최근에는 **LLM과 Notion 에이전트로 사내 반복 업무를 자동화하는 AX**에 집중하고 있습니다.",
+        "Terraform과 Kubernetes로 인프라와 GitOps 배포 환경을 구축하고 운영합니다. 구축만큼 운영을 중요하게 생각해, 운영 중 생긴 장애는 근본 원인을 파악해 해결합니다.",
         "코딩의 문턱이 낮아진 만큼, 무엇을 만들지 정하고 다른 사람에게 설명하고 쓰게 만드는 일이 더 중요해졌다고 생각합니다. 그 일을 하는 엔지니어가 되겠습니다."
       ],
       tabs: {
@@ -639,7 +647,7 @@ export const content = {
       greeting: "Hi, I'm",
       title: "Ko Donghyeon.",
       subtitle: "DevOps Engineer.",
-      description: "I believe technology should serve people. That is why, whether I build infrastructure or automate internal work, I start by listening to the people who will use it.\nI'm a DevOps engineer who cares about connecting people. I tie teams' work together through infrastructure and AI transformation (AX), and I've built and led communities that bring together developers across majors and student clubs.\nEven outside engineering, such as sales lead assignment, I interview the people doing the work and set the measurement criteria first.",
+      description: "Whether I build infrastructure or automate internal work, I start by listening to the people who will use it.\nI'm a DevOps engineer who cares about connecting people. I tie teams' work together through infrastructure and AI transformation (AX), and I've built and led communities that bring together developers across majors and student clubs.\nEven outside engineering, such as sales lead assignment, I interview the people doing the work and set the measurement criteria first.",
       cta: "Check out my work",
       label: "DevOps Engineer · BUZZ & BEYOND 2026~",
       highlights: [
@@ -655,6 +663,14 @@ export const content = {
         { label: "Resume PDF", url: "/assets/resume_en.pdf" }
       ],
       stack: ["AWS", "Terraform", "Atlantis", "Kubernetes", "Argo Workflows", "Python", "Notion"]
+    },
+    intro: {
+      value: "I believe technology should serve people.",
+      chapters: [
+        { kicker: "Technology that brings people together", tag: "Community Leader", title: "From a member who only received, to a leader who gives back", body: "In 2022 I was a Cloud Club member who only took things in. Today I lead communities such as AWS Student Builder Group and Notion Campus Leader at Dongguk University and share what I have learned." },
+        { kicker: "Technology that helps people", tag: "AX Engineer", title: "Solving what someone struggles with, using what I know", body: "I sat down with the sales team to hear why lead responses were hard, then built automatic measurement and alerts so no response falls behind." },
+        { kicker: "Technology that keeps people moving", tag: "DevOps Engineer", title: "Operating matters as much as building", body: "I do not stop at shipping. When an incident hits in production, I find the root cause and fix it." }
+      ]
     },
     sections: {
       cases: "Cases",
@@ -1333,7 +1349,7 @@ export const content = {
       greeting: "Hello, I'm",
       title: "Ko Donghyeon.",
       subtitle: "DevOps Engineer.",
-      description: "技術は人に向かうべきだと考えています。だからこそ、インフラを作るときも社内業務を自動化するときも、まずそれを使う人の話を聞きます。\n人とのつながりを大切にする DevOps エンジニアです。インフラと AX でチームの仕事をつなぎ、専攻やサークルの異なる開発者が交わるコミュニティをつくり、率いてきました。\n営業チームのリード割り当てのような開発外の業務も、担当者に直接ヒアリングして測定基準から定めます。",
+      description: "インフラを作るときも社内業務を自動化するときも、まずそれを使う人の話を聞きます。\n人とのつながりを大切にする DevOps エンジニアです。インフラと AX でチームの仕事をつなぎ、専攻やサークルの異なる開発者が交わるコミュニティをつくり、率いてきました。\n営業チームのリード割り当てのような開発外の業務も、担当者に直接ヒアリングして測定基準から定めます。",
       cta: "プロジェクトを見る",
       label: "DevOps Engineer · BUZZ & BEYOND 2026~",
       highlights: [
@@ -1349,6 +1365,14 @@ export const content = {
         { label: "履歴書 PDF", url: "/assets/resume_jp.pdf" }
       ],
       stack: ["AWS", "Terraform", "Atlantis", "Kubernetes", "Argo Workflows", "Python", "Notion"]
+    },
+    intro: {
+      value: "技術は人に向かうべきだと考えています。",
+      chapters: [
+        { kicker: "人を集める技術", tag: "Community Leader", title: "受け取るだけのメンバーから、与えるリーダーへ", body: "2022年の Cloud Club 1期では受け取るだけのメンバーでした。今は AWS Student Builder Group と Notion Campus Leader など複数のコミュニティでリーダーとして活動し、学んだことを共有しています。" },
+        { kicker: "人を助ける技術", tag: "AX Engineer", title: "誰かが困っていることを、自分の知る技術で", body: "営業担当者が困っていたリード対応を直接インタビューで聞き、自動計測とアラートを作って対応が遅れないようにしました。" },
+        { kicker: "人を止めない技術", tag: "DevOps Engineer", title: "構築と同じくらい運用を大切にします", body: "作って終わりにはしません。運用中に起きた障害は根本原因を突き止めて解決します。" }
+      ]
     },
     sections: {
       cases: "Cases",
