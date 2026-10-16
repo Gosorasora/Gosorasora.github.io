@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "AX Productivity Metrics",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "viewBox": [1010, 540]
+  },
+  "components": [
+    { "id": "tasks", "type": "database", "label": "Notion tasks", "sublabel": "daily work items", "brand": "notion", "pos": [20, 90], "size": [150, 64] },
+    { "id": "classifier", "type": "backend", "label": "Classifier", "sublabel": "Gemini, 2-step", "brand": "google-gemini", "pos": [290, 90], "size": [150, 64] },
+    { "id": "subgraph", "type": "backend", "label": "Subgraph", "sublabel": "Apollo Federation", "pos": [560, 90], "size": [150, 64] },
+    { "id": "services", "type": "external", "label": "Internal services", "sublabel": "query, no recompute", "pos": [830, 90], "size": [150, 64] },
+    { "id": "agent", "type": "backend", "label": "Custom Agent", "sublabel": "deploy review", "brand": "notion", "pos": [20, 240], "size": [150, 64] },
+    { "id": "criteria", "type": "external", "label": "Team criteria", "sublabel": "agreed per team", "pos": [290, 240], "size": [150, 64] },
+    { "id": "release", "type": "database", "label": "Release docs", "sublabel": "metric source", "brand": "notion", "pos": [20, 390], "size": [150, 64] },
+    { "id": "dora", "type": "backend", "label": "DORA metrics", "sublabel": "4 metrics, daily", "pos": [290, 390], "size": [150, 64] },
+    { "id": "dashboard", "type": "frontend", "label": "Dashboard", "sublabel": "one shared view", "pos": [560, 390], "size": [150, 64] },
+    { "id": "viewers", "type": "external", "label": "Crew and leaders", "sublabel": "same numbers", "pos": [830, 390], "size": [150, 64] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Argo CronWorkflow, daily", "wraps": ["classifier"] }
+  ],
+  "connections": [
+    { "id": "read-tasks", "from": "tasks", "to": "classifier", "label": "tasks" },
+    { "id": "labels", "from": "classifier", "to": "subgraph", "label": "work types" },
+    { "id": "query", "from": "services", "to": "subgraph", "label": "GraphQL" },
+    { "id": "rules", "from": "criteria", "to": "agent", "label": "criteria", "variant": "dashed" },
+    { "id": "link", "from": "agent", "to": "tasks", "label": "link tasks", "variant": "security" },
+    { "id": "review", "from": "agent", "to": "release", "label": "review", "variant": "security", "labelDy": 24 },
+    { "id": "source", "from": "release", "to": "dora", "label": "releases", "variant": "emphasis" },
+    { "id": "publish", "from": "dora", "to": "dashboard", "label": "daily", "variant": "emphasis" },
+    { "id": "view", "from": "dashboard", "to": "viewers", "variant": "emphasis" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Measure where work already is",
+      "items": [
+        "Release docs in Notion are the source of the metrics",
+        "No commit counts, no separate measurement tool"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Consistent review",
+      "items": [
+        "A Notion Custom Agent checks each release against the team criteria",
+        "It also links tasks that were left out of a release"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Daily output",
+      "items": [
+        "Deploy frequency, lead time, change fail rate, MTTR",
+        "Tasks are classified daily and served through a Federation subgraph"
+      ]
+    }
+  ]
+}

@@ -85,10 +85,31 @@
     color: var(--text-secondary);
     font-size: 0.92rem;
     line-height: 1.55;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+}
+
+.other-more {
+    display: block;
+    margin: 28px auto 0;
+    padding: 10px 24px;
+    border: 2px solid #e5e7eb;
+    border-radius: 20px;
+    background: transparent;
+    color: var(--primary-color);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.other-more:hover {
+    border-color: var(--accent-color);
+    background-color: var(--bg-light);
+}
+
+.other-more:focus-visible,
+.other-card:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
 .other-metric {
@@ -186,9 +207,9 @@
 }
 
 .modal-image {
+    display: block;
     width: 100%;
-    height: 300px;
-    object-fit: cover;
+    height: auto;
 }
 
 .modal-title-row {
@@ -261,6 +282,22 @@
     white-space: pre-line; /* solution 본문의 문단 구분 유지 */
 }
 
+.modal-block {
+    margin-top: 18px;
+}
+
+.modal-block h4 {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--accent-color);
+    margin-bottom: 4px;
+}
+
+.modal-block p {
+    margin-bottom: 0;
+}
+
 .modal-row {
     display: flex;
     gap: 40px;
@@ -316,7 +353,4 @@
         flex-direction: column;
     }
 
-    .modal-image {
-        height: 200px;
-    }
 }.other-card .tech-tag{padding:3px 9px;font-size:0.75rem}

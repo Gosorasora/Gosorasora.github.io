@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "NanoGrid FaaS on EC2",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "viewBox": [1010, 540]
+  },
+  "components": [
+    { "id": "client", "type": "external", "label": "Client", "sublabel": "upload, run", "pos": [20, 90], "size": [150, 64] },
+    { "id": "waf", "type": "security", "label": "AWS WAF", "sublabel": "5 rules on ALB", "pos": [220, 90], "size": [150, 64] },
+    { "id": "alb", "type": "cloud", "label": "ALB", "sublabel": "HTTP :80", "pos": [420, 90], "size": [150, 64] },
+    { "id": "controller", "type": "backend", "label": "Controller", "sublabel": "EC2 x2, Node.js", "pos": [620, 90], "size": [150, 64] },
+    { "id": "sqs", "type": "messagebus", "label": "SQS", "sublabel": "job queue", "pos": [820, 90], "size": [150, 64] },
+    { "id": "redis", "type": "database", "label": "ElastiCache Redis", "sublabel": "result Pub/Sub", "brand": "redis", "pos": [620, 240], "size": [150, 64] },
+    { "id": "worker", "type": "backend", "label": "Worker ASG", "sublabel": "pools, scales on queue", "pos": [820, 240], "size": [150, 64] },
+    { "id": "ai", "type": "backend", "label": "AI node", "sublabel": "EC2, port 11434", "brand": "ollama", "pos": [820, 390], "size": [150, 64] },
+    { "id": "vpce", "type": "cloud", "label": "Gateway endpoints", "sublabel": "private route table", "pos": [420, 390], "size": [150, 64] },
+    { "id": "s3", "type": "database", "label": "S3", "sublabel": "code, outputs", "pos": [220, 390], "size": [150, 64] },
+    { "id": "ddb", "type": "database", "label": "DynamoDB", "sublabel": "function metadata", "pos": [220, 240], "size": [150, 64] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Public subnets, 2 AZ", "wraps": ["alb", "controller"] },
+    { "kind": "region", "label": "Private subnets", "wraps": ["redis", "worker", "ai"] }
+  ],
+  "connections": [
+    { "id": "request", "from": "client", "to": "waf", "label": "HTTP", "variant": "emphasis" },
+    { "id": "filtered", "from": "waf", "to": "alb", "variant": "emphasis" },
+    { "id": "forward", "from": "alb", "to": "controller", "label": ":8080", "variant": "emphasis" },
+    { "id": "enqueue", "from": "controller", "to": "sqs", "label": "send", "variant": "emphasis" },
+    { "id": "consume", "from": "sqs", "to": "worker", "label": "receive", "variant": "security", "labelDy": 24 },
+    { "id": "publish", "from": "worker", "to": "redis", "label": "publish" },
+    { "id": "result", "from": "redis", "to": "controller", "label": "result", "labelDx": 40 },
+    { "id": "infer", "from": "worker", "to": "ai", "label": "infer", "variant": "security", "labelDy": 24 },
+    { "id": "storage", "from": "worker", "to": "vpce", "label": "no NAT" },
+    { "id": "objects", "from": "vpce", "to": "s3" },
+    { "id": "items", "from": "vpce", "to": "ddb" }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Execution",
+      "items": [
+        "Controller and Worker share only the SQS queue",
+        "Python, Node.js, C++, Go containers are paused in pools and reused",
+        "A CloudWatch alarm on queue depth adds or removes one worker"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Security",
+      "items": [
+        "Worker IAM: 3 SQS actions on one queue",
+        "AI node accepts port 11434 from the Worker security group only"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Network",
+      "items": [
+        "Controllers sit in public subnets across 2 AZs, workers in private subnets",
+        "S3 and DynamoDB go through Gateway VPC Endpoints, not NAT"
+      ]
+    }
+  ]
+}

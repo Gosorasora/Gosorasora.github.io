@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt, FaTimes, FaFileAlt } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -9,6 +9,8 @@ import './Portfolio.css';
 const Portfolio = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [expanded, setExpanded] = useState(false);
+  const listRef = useRef(null);
   const { language } = useLanguage();
   const t = content[language].portfolio;
 
@@ -26,6 +28,19 @@ const Portfolio = () => {
     ? others
     : others.filter(project => project.category === t.filters[filter])
   ).slice().sort(byImpact);
+
+  // 「전체」에서는 앞 6개만 먼저 보여 주고 나머지는 접어 둔다. 카테고리를 고르면 전부 보여 준다.
+  const FRONT = 6;
+  const collapsible = filter === 'all' && filteredProjects.length > FRONT;
+  const visibleProjects = collapsible && !expanded ? filteredProjects.slice(0, FRONT) : filteredProjects;
+
+  // 펼친 직후 새로 나온 첫 카드로 포커스를 옮겨 키보드 사용자가 이어서 읽게 한다.
+  const justExpanded = useRef(false);
+  useEffect(() => {
+    if (!justExpanded.current) return;
+    justExpanded.current = false;
+    listRef.current?.children[FRONT]?.querySelector('button')?.focus();
+  }, [expanded]);
 
   return (
     <section id="other" className="section portfolio-section">
@@ -45,8 +60,8 @@ const Portfolio = () => {
           ))}
         </motion.div>
 
-        <motion.ul className="other-grid" {...revealDelay(0.15)}>
-          {filteredProjects.map((project) => (
+        <motion.ul id="other-grid" ref={listRef} className="other-grid" {...revealDelay(0.15)}>
+          {visibleProjects.map((project) => (
             <li key={project.id}>
               <button type="button" className="other-card" onClick={() => setSelectedId(project.id)}>
                 <span className="other-cat">{project.category}</span>
@@ -63,6 +78,18 @@ const Portfolio = () => {
             </li>
           ))}
         </motion.ul>
+
+        {collapsible && (
+          <button
+            type="button"
+            className="other-more"
+            aria-expanded={expanded}
+            aria-controls="other-grid"
+            onClick={() => { justExpanded.current = !expanded; setExpanded(!expanded); }}
+          >
+            {expanded ? t.showLess : `${t.showMore} (${filteredProjects.length - FRONT})`}
+          </button>
+        )}
 
         <AnimatePresence>
           {selectedId && (
@@ -85,7 +112,12 @@ const Portfolio = () => {
                 </button>
                 
                 <div className="modal-header">
-                  {selectedProject.image && <img src={selectedProject.image} alt={selectedProject.title} className="modal-image" />}
+                  {selectedProject.image && (
+                    <details className="case-diagram-wrap">
+                      <summary>{content[language].sections.diagram}</summary>
+                      <img src={selectedProject.image} alt={selectedProject.title} className="modal-image" />
+                    </details>
+                  )}
                   <div className="modal-title-row">
                     <div>
                       <span className="modal-category">{selectedProject.category}</span>
@@ -125,8 +157,12 @@ const Portfolio = () => {
                   <div className="modal-section">
                     <h3>{t.modal.overview}</h3>
                     <p>{selectedProject.description}</p>
-                    <p>{selectedProject.details.problem}</p>
-                    <p>{selectedProject.details.solution}</p>
+                    {['problem', 'decision', 'result', 'learned'].map(key => selectedProject.details[key] && (
+                      <div key={key} className="modal-block">
+                        <h4>{t.modal[key]}</h4>
+                        <p>{selectedProject.details[key]}</p>
+                      </div>
+                    ))}
                   </div>
 
                   <div className="modal-row">
@@ -144,14 +180,16 @@ const Portfolio = () => {
                     </div>
                   </div>
 
-                  <div className="modal-section">
-                    <h3>{t.modal.keyFeatures}</h3>
-                    <ul className="feature-list">
-                      {selectedProject.details.features.map((feature, i) => (
-                        <li key={i}>{feature}</li>
-                      ))}
-                    </ul>
-                  </div>
+                  {selectedProject.details.features?.length > 0 && (
+                    <div className="modal-section">
+                      <h3>{t.modal.keyFeatures}</h3>
+                      <ul className="feature-list">
+                        {selectedProject.details.features.map((feature, i) => (
+                          <li key={i}>{feature}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             </motion.div>

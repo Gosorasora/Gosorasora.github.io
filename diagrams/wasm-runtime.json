@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Wasm vs Container per Pipeline Layer",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1010,
+      540
+    ]
+  },
+  "components": [
+    {
+      "id": "go",
+      "type": "external",
+      "label": "Go workload",
+      "sublabel": "same logic, IoT logs",
+      "pos": [
+        20,
+        238
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "wasm",
+      "type": "backend",
+      "label": "SpinKube Wasm",
+      "sublabel": "Wasmtime, shim-spin",
+      "pos": [
+        250,
+        90
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "ctr",
+      "type": "backend",
+      "label": "Container",
+      "sublabel": "scratch image",
+      "pos": [
+        250,
+        386
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "edge",
+      "type": "frontend",
+      "label": "Edge",
+      "sublabel": "cold start: Wasm",
+      "pos": [
+        480,
+        238
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "transform",
+      "type": "backend",
+      "label": "Transform",
+      "sublabel": "density, cost: Wasm",
+      "pos": [
+        660,
+        238
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "ingestion",
+      "type": "messagebus",
+      "label": "Ingestion",
+      "sublabel": "throughput: Container",
+      "pos": [
+        840,
+        238
+      ],
+      "size": [
+        150,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "AKS 1.34, 6 vCPU cluster",
+      "wraps": [
+        "wasm",
+        "ctr"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "build-wasm",
+      "from": "go",
+      "to": "wasm",
+      "label": "Wasm module"
+    },
+    {
+      "id": "build-ctr",
+      "from": "go",
+      "to": "ctr",
+      "label": "scratch build"
+    },
+    {
+      "id": "w-edge",
+      "from": "wasm",
+      "to": "edge",
+      "label": "11x faster",
+      "variant": "emphasis"
+    },
+    {
+      "id": "w-transform",
+      "from": "wasm",
+      "to": "transform",
+      "label": "up to 64x cheaper",
+      "variant": "emphasis"
+    },
+    {
+      "id": "w-ingest",
+      "from": "wasm",
+      "to": "ingestion",
+      "variant": "dashed"
+    },
+    {
+      "id": "c-edge",
+      "from": "ctr",
+      "to": "edge",
+      "variant": "dashed"
+    },
+    {
+      "id": "c-transform",
+      "from": "ctr",
+      "to": "transform",
+      "variant": "dashed"
+    },
+    {
+      "id": "c-ingest",
+      "from": "ctr",
+      "to": "ingestion",
+      "label": "24-28K rps",
+      "variant": "emphasis"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Setup",
+      "items": [
+        "One Go workload built twice: SpinKube Wasm module and scratch container",
+        "Language, logic and load held equal so only the runtime differs",
+        "Three of four layers compared; Storage is modeled only"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Result per layer",
+      "items": [
+        "Edge: Wasm scale-from-zero cold start 11x faster",
+        "Transform: Wasm up to 64x cheaper per tenant at 2,500 tenants",
+        "Ingestion: containers held 24-28K rps vs about 1,264 rps for Wasm"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Limits",
+      "items": [
+        "6 vCPU free-tier cluster, single Go workload",
+        "SpinKube and Wasmtime only; container baseline at 128Mi request"
+      ]
+    }
+  ]
+}

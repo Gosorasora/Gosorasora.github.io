@@ -16,6 +16,8 @@
 }
 
 .case-num {
+    flex-shrink: 0;
+    white-space: nowrap;
     font-family: monospace;
     font-size: 1.4rem;
     font-weight: 700;
@@ -53,11 +55,24 @@
     margin-bottom: 20px;
 }
 
+.case-diagram-wrap {
+    margin-bottom: 20px;
+}
+
+.case-diagram-wrap > summary {
+    cursor: pointer;
+    font-family: monospace;
+    font-weight: 600;
+    color: var(--primary-color);
+    padding: 6px 0;
+    margin-bottom: 8px;
+}
+
 .case-diagram {
     display: block;
     width: 100%;
     padding: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 8px;
     background: var(--bg-color);
     border: 1px solid #e5e7eb;
     border-radius: 6px;
@@ -68,12 +83,76 @@
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: 1010 / 540;
+}
+
+.case-diagram-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 24px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
 }
 
 .case-pdr {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 28px;
+}
+
+.case-detail > .case-problem {
+    margin-bottom: 24px;
+}
+
+.case-detail > .case-learned {
+    margin-top: 28px;
+}
+
+.case-constraints,
+.case-incident {
+    margin-bottom: 24px;
+    padding: 16px 18px;
+    background: var(--bg-color);
+    border-left: 3px solid var(--accent-color);
+    border-radius: 4px;
+}
+
+.case-incident {
+    margin: 28px 0 0;
+}
+
+.case-constraints h4,
+.case-incident h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.case-constraints ul {
+    list-style: disc;
+    padding-left: 18px;
+}
+
+.case-constraints li,
+.case-incident dd {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+}
+
+.case-incident dt {
+    font-family: monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-top: 10px;
+}
+
+.case-incident dd {
+    margin-left: 0;
 }
 
 .case-col h4 {
@@ -138,17 +217,6 @@
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid #e5e7eb;
-}
-
-.case-full {
-    margin-top: 24px;
-}
-
-.case-full p {
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 14px;
-    white-space: pre-line;
 }
 
 .lightbox-img {

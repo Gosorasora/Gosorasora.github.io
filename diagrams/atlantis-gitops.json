@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Atlantis GitOps for Terraform",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "viewBox": [1010, 540]
+  },
+  "components": [
+    { "id": "dev", "type": "external", "label": "Developer", "sublabel": "opens PR, comments apply", "pos": [20, 90], "size": [150, 64] },
+    { "id": "reviewer", "type": "external", "label": "Reviewer", "sublabel": "approves PR", "pos": [20, 240], "size": [150, 64] },
+    { "id": "repo", "type": "frontend", "label": "Bitbucket", "sublabel": "Terraform repo, PR", "brand": "bitbucket", "pos": [220, 90], "size": [150, 64] },
+    { "id": "atlantis", "type": "backend", "label": "Atlantis", "sublabel": "Helm release, pod", "pos": [420, 90], "size": [150, 64] },
+    { "id": "base", "type": "security", "label": "Base role", "sublabel": "IRSA, init only", "pos": [620, 90], "size": [150, 64] },
+    { "id": "target", "type": "security", "label": "Target roles", "sublabel": "one per service", "pos": [820, 90], "size": [150, 64] },
+    { "id": "lock", "type": "database", "label": "Lock table", "sublabel": "state lock", "pos": [420, 240], "size": [150, 64] },
+    { "id": "state", "type": "database", "label": "State bucket", "sublabel": "deny outside allowlist", "pos": [620, 240], "size": [150, 64] },
+    { "id": "resources", "type": "cloud", "label": "AWS resources", "sublabel": "service scope only", "pos": [820, 240], "size": [150, 64] },
+    { "id": "local", "type": "external", "label": "Local terraform", "sublabel": "no access keys left", "pos": [620, 390], "size": [150, 64] }
+  ],
+  "boundaries": [
+    { "kind": "region", "label": "Kubernetes cluster", "wraps": ["atlantis"] },
+    { "kind": "security-group", "label": "AWS IAM", "wraps": ["base", "target"] }
+  ],
+  "connections": [
+    { "id": "open-pr", "from": "dev", "to": "repo", "label": "PR", "variant": "emphasis" },
+    { "id": "approve", "from": "reviewer", "to": "repo", "label": "approve" },
+    { "id": "webhook", "from": "repo", "to": "atlantis", "label": "webhook", "variant": "emphasis" },
+    { "id": "comment", "from": "atlantis", "to": "repo", "label": "plan comment", "variant": "dashed", "fromSide": "top", "toSide": "top" },
+    { "id": "irsa", "from": "atlantis", "to": "base", "label": "IRSA", "variant": "security" },
+    { "id": "assume", "from": "base", "to": "target", "label": "AssumeRole", "variant": "security", "labelDy": -26 },
+    { "id": "apply", "from": "target", "to": "resources", "label": "plan / apply", "variant": "emphasis", "labelDy": 24 },
+    { "id": "state-rw", "from": "base", "to": "state", "label": "read / write", "labelDy": 24 },
+    { "id": "locking", "from": "atlantis", "to": "lock", "label": "lock on plan", "labelDy": 24 },
+    { "id": "denied", "from": "local", "to": "state", "label": "denied", "variant": "dashed" }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "PR is the only path",
+      "items": [
+        "Opening a PR triggers plan; the result is posted as a PR comment",
+        "Apply runs only after approval, then the PR is merged"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Least privilege",
+      "items": [
+        "Pod gets the base role through IRSA",
+        "Base role assumes one target role per service at run time"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "No local bypass",
+      "items": [
+        "State bucket policy explicitly denies principals outside the allowlist",
+        "One break-glass admin stays on the allowlist"
+      ]
+    }
+  ]
+}

@@ -241,14 +241,14 @@
   <div class="entry">
     <div class="entry-header">
       <span class="entry-title">NanoGrid: マネージドFaaSの制約を取り払った関数実行プラットフォーム (SoftBank Hackathon 本戦)</span>
-      <span class="entry-date">2024.11 - 2024.12</span>
+      <span class="entry-date">2025.12</span>
     </div>
     <div class="entry-sub">
       <span>Infrastructure &amp; Security</span>
       <span><a href="https://github.com/Softbank-Final">GitHub ↗</a> &nbsp;|&nbsp; <a href="https://builder.aws.com/content/3I2Mw8lAM0x9sODvAwmHN8RylXM/building-a-faas-on-ec2-without-lambda-and-splitting-cold-start-into-three-layers">AWS Article ↗</a></span>
     </div>
     <ul>
-      <li>AWS EC2 上にセルフホスト型 FaaS プラットフォームを設計。Docker Warm Pool (Pause/Unpause) により Cold Start を 30 倍改善 (3 秒 → 0.2 秒)、リアルタイムメモリ分析 Auto-Tuner で関数別の適正メモリを算定 (分析基準で最大 96% の過剰割当)</li>
+      <li>AWS EC2 上にセルフホスト型 FaaS プラットフォームを設計。Docker Warm Pool (Pause/Unpause) により Cold Start を改善 (3 秒 → 0.2 秒)、リアルタイムメモリ分析 Auto-Tuner で関数別の適正メモリを算定 (分析基準で最大 96% の過剰割当)</li>
       <li>リクエスト量に応じたオートスケーリングを自ら設計：CPU使用率ではなくSQSの待機リクエスト数を基準に拡張し、負荷がサーバーに反映される前に対応。EC2ウォームプールでインスタンスを停止状態で待機させ、常時2台分の費用で5台分の拡張を準備（1万件のリクエストを約11秒で処理）</li>
     </ul>
   </div>
@@ -321,7 +321,7 @@
     <div class="row"><span class="label">U-LINC アドベンチャーデザインコンテスト 奨励賞</span> · 2022.12 · 東国大学校 LINC 3.0 事業団長</div>
     <div class="row"><span class="label">学内学習施設 混雑度分析システム 奨励賞</span> · 2022.12 · 東国大学校 LINC 3.0 事業団長</div>
     <div class="row"><span class="label">トーチ章 (횃불상)</span> · 2023.08 · 大韓民国 陸軍情報通信学校長</div>
-    <div class="row"><span class="label">SoftBank Hackathon 本戦進出</span> · 2024.11 - 2024.12 · NanoGrid</div>
+    <div class="row"><span class="label">SoftBank Hackathon 本戦進出</span> · 2025.12 · NanoGrid</div>
   </div>
 </div>
 

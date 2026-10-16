@@ -13,11 +13,19 @@ const withBold = (t) => t.split(NUM).map((x, i) => (i % 2 ? <strong key={i}>{x}<
 const Case = ({ c, project, index, s, onZoom }) => {
   const [hasDiagram, setHasDiagram] = useState(true);
   const [open, setOpen] = useState(false);
+  const col = (k, bold = false) => c[k] && (
+    <section className={`case-col case-${k}`}>
+      <h4>{s[k]}</h4>
+      <ul>
+        {bullets(c[k]).map((b, i) => <li key={i}>{bold ? withBold(b) : b}</li>)}
+      </ul>
+    </section>
+  );
 
   return (
     <motion.article className="case" {...reveal}>
       <header className="case-head">
-        <span className="case-num">{String(index + 1).padStart(2, '0')}</span>
+        <span className="case-num">{index + 1}</span>
         <div>
           <h3 className="case-title">{project.title}</h3>
           <p className="case-outcome">{withBold(c.outcome)}</p>
@@ -41,26 +49,48 @@ const Case = ({ c, project, index, s, onZoom }) => {
           <p className="case-summary">{c.summary}</p>
 
           {c.diagram && hasDiagram && (
-            <button type="button" className="case-diagram" onClick={() => onZoom(c.diagram)} aria-label={s.zoom}>
-              <img src={c.diagram} alt={project.title} loading="lazy" onError={() => setHasDiagram(false)} />
-            </button>
+            <details className="case-diagram-wrap">
+              <summary>{s.diagram}</summary>
+              <button type="button" className="case-diagram" onClick={() => onZoom(c.diagram)} aria-label={s.zoom}>
+                <img src={c.diagram} alt={c.diagramAlt || project.title} loading="lazy" onError={() => setHasDiagram(false)} />
+              </button>
+              <a className="case-diagram-open" href={c.diagram} target="_blank" rel="noopener noreferrer">
+                <FaExternalLinkAlt aria-hidden="true" /> {s.zoom}
+              </a>
+            </details>
+          )}
+
+          {col('problem')}
+
+          {c.constraints?.length > 0 && (
+            <div className="case-constraints">
+              <h4>{s.constraints}</h4>
+              <ul>
+                {c.constraints.map((line) => <li key={line}>{line}</li>)}
+              </ul>
+            </div>
           )}
 
           <div className="case-pdr">
-            {[['problem', false], ['decision', false], ['result', true]].map(([k, bold]) => (
-              <section key={k} className={`case-col case-${k}`}>
-                <h4>{s[k]}</h4>
-                <ul>
-                  {bullets(c[k]).map((b, i) => <li key={i}>{bold ? withBold(b) : b}</li>)}
-                </ul>
-              </section>
-            ))}
+            {col('decision')}
+            {col('result', true)}
           </div>
 
-          <div className="case-full">
-            <p>{project.details.problem}</p>
-            <p>{project.details.solution}</p>
-          </div>
+          {c.incident && (
+            <section className="case-incident">
+              <h4>{c.incident.title}</h4>
+              <dl>
+                {c.incident.steps.map((step) => (
+                  <React.Fragment key={step.label}>
+                    <dt>{step.label}</dt>
+                    <dd>{step.text}</dd>
+                  </React.Fragment>
+                ))}
+              </dl>
+            </section>
+          )}
+
+          {col('learned')}
         </div>
       )}
     </motion.article>

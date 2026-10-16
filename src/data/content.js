@@ -4,13 +4,13 @@ export const content = {
       greeting: "Hello, I'm",
       title: "Ko Donghyeon.",
       subtitle: "DevOps Engineer.",
-      description: "사람과의 연결을 중시하는 DevOps 엔지니어입니다. 인프라와 AX로 팀의 일을 잇고, 전공과 동아리가 다른 개발자들이 섞이는 커뮤니티를 만들고 이끌어 왔습니다.\nTerraform과 Atlantis로 인프라 변경을 PR 승인 절차로 옮기고, LLM과 Notion 에이전트로 사내 반복 업무를 자동화합니다.\n영업팀 리드 배정처럼 개발 밖의 업무도 담당자를 직접 인터뷰해 측정 기준부터 세웁니다.",
+      description: "Terraform과 Atlantis로 인프라 변경을 PR 승인 절차로 옮기고, LLM과 Notion 에이전트로 사내 반복 업무를 자동화합니다.\n사람과의 연결을 중시하는 DevOps 엔지니어입니다. 인프라와 AX로 팀의 일을 잇고, 전공과 동아리가 다른 개발자들이 섞이는 커뮤니티를 만들고 이끌어 왔습니다.\n영업팀 리드 배정처럼 개발 밖의 업무도 담당자를 직접 인터뷰해 측정 기준부터 세웁니다.",
       cta: "프로젝트 보기",
       label: "DevOps Engineer · BUZZ & BEYOND 2026~",
       highlights: [
         { label: "DevOps", text: "Terraform과 Atlantis로 GitOps 구축, 개발자 Access Key 전량 회수" },
-        { label: "AX", text: "Notion과 FLEX를 잇는 전사 업무량 모니터링 구축 및 운영, CS와 리드 응대 에이전트 구축" },
         { label: "Open Source", text: "CNCF Atlantis 버그 수정, 공식 릴리스 v0.41.0 반영" },
+        { label: "AX", text: "Notion과 FLEX를 잇는 전사 업무량 모니터링 구축 및 운영, CS와 리드 응대 에이전트 구축" },
         { label: "Community", text: "AWS SBG at DGU Leader, Notion Campus Leader" }
       ],
       links: [
@@ -27,44 +27,79 @@ export const content = {
       problem: "문제",
       decision: "판단",
       result: "결과",
+      learned: "배운 점",
+      constraints: "구성의 전제와 제약",
       more: "상세",
-      zoom: "다이어그램 확대"
+      zoom: "다이어그램 확대",
+      diagram: "아키텍처 보기"
     },
     cases: [
       {
         projectId: 1,
-        diagram: null,
+        diagram: "/assets/diagrams/atlantis-gitops.svg",
+        diagramAlt: "Atlantis GitOps 구성도. 개발자의 PR이 Bitbucket Webhook으로 Kubernetes 위 Atlantis에 전달되고, 파드의 base role이 서비스별 target role을 AssumeRole해 plan과 apply를 실행합니다. 상태 파일 버킷은 허용 목록 밖의 접근을 거부해 로컬 실행이 막힙니다.",
         summary: "로컬 Terraform 실행을 PR 승인 절차로 옮기고, 그 과정에서 막힌 안전장치는 끄지 않고 업스트림에서 고쳤습니다.",
-        outcome: "로컬 장기 Access Key 0개, Terraform 작업 전건 PR 단위 감사 추적",
-        problem: "엔지니어마다 로컬에서 Terraform을 실행해 상태 파일 충돌과 변경 이력 추적 불가가 겹쳐 있었습니다. 로컬 실행을 위해 개발자 각자가 장기 AWS Access Key를 들고 있었고 권한 범위도 제각각이었습니다.",
-        decision: "Terraform Cloud는 비용과 외부 SaaS 상태 위탁 때문에, GitHub Actions 직접 구성은 결국 Atlantis를 다시 만드는 일이라 기각하고 Atlantis 자체 호스팅을 골랐습니다. 우회 경로가 남으면 절차는 권고가 되므로 Access Key를 전량 회수했고, 긴급 배포 속도를 포기하는 대신 승인자를 복수로 두었습니다.",
-        result: "Terraform 작업 전건을 PR 단위로 감사 추적하고 로컬 장기 Access Key는 0개가 됐습니다. 운영 중 plan_requirements: mergeable이 PR을 항상 막던 버그는 옵션을 끄지 않고 직접 고쳐 PR #6186으로 v0.41.0에 머지됐습니다.",
+        outcome: "개발자 PC의 장기 Access Key 0개, 비상 복구 외 Terraform 변경은 PR 단위로 기록",
+        problem: "인프라를 만지는 사람이 한 명에서 여럿으로 늘었습니다. 한 명일 때는 로컬에서 terraform apply를 실행해도 문제가 드러나지 않았지만, 사람이 늘자 같은 구조가 그대로 문제가 됐습니다. 전 시스템이 관리자 권한으로 돌아가고 있어 누구에게나 전부를 열어 주는 구조였습니다. 누가 언제 무엇을 바꿨는지 추적할 수 없었습니다. 동시 작업으로 State Lock이 걸리면 누가 잡고 있는지 메신저로 물어봐야 했습니다. 로컬 실행을 위해 개발자 각자가 장기 AWS Access Key를 들고 있었습니다.",
+        decision: "변경을 사람의 기억과 합의에 맡기지 않고 저장소의 기록과 승인 절차로 옮기기로 했습니다. Terraform Cloud는 유료이고 상태 파일을 외부 SaaS에 맡겨야 해서 제외했습니다. 범용 CI로 직접 구성하면 plan 결과를 PR에 붙이고 apply를 승인과 연동하는 로직을 전부 만들어야 해 결국 Atlantis를 다시 만드는 일이 됩니다. 그래서 Atlantis를 자체 호스팅했고, 문제가 나면 우리가 고쳐야 한다는 비용을 받아들였습니다. 배포 위치는 별도 EC2 대신 이미 운영 중이던 Kubernetes 클러스터로 정해 관측과 롤아웃, 시크릿 관리를 있던 체계 그대로 썼습니다. Access Key가 남아 있으면 급할 때 누군가는 그 길을 쓰므로 전량 회수하고, AssumeRole로 배포 시점에만 서비스별 최소 권한을 발급했습니다. 로컬 우회는 상태 파일 버킷 정책의 명시적 거부로 막았습니다. 삭제 권한 제거는 잘못 만든 리소스도 못 지우게 되고 태그 기반 제어는 태그를 바꿔 우회할 수 있어 기각했습니다. 긴급 배포 속도를 포기하는 대신 승인자를 복수로 두어 대기 시간을 줄였습니다.",
+        result: "Terraform 변경은 Atlantis의 PR 단위로 기록되고, 승인 없이는 apply할 수 없습니다. 개발자 PC에 있던 장기 Access Key는 0개가 됐습니다. 권한은 서비스별 역할로 나뉘어, 정의되지 않은 서비스에 접근하면 거부됩니다. 운영 중 plan_requirements: mergeable이 정상 PR까지 막던 버그는 옵션을 끄지 않고 직접 고쳐 PR #6186으로 Atlantis v0.41.0에 반영됐습니다.",
+        learned: "우회할 길을 열어 둔 채로 만든 절차는 절차가 아니라 권고가 됩니다. 구축 중 겪은 설정 문제 여럿은 서버 설정(values.yaml)과 저장소 설정(atlantis.yaml)이 각각 어디까지 적용되는지 몰라서 생겼습니다. 계층이 둘인 설정 체계에서는 각 계층의 범위부터 확인했어야 했습니다. 명시적 거부는 강력한 만큼 되돌리기 어렵습니다. 업스트림 수정에서는 고치는 시간보다 증상에서 원인을 좁히고 처음 보는 코드베이스의 관례에 맞춰 테스트를 쓰는 시간이 훨씬 길었습니다. Go에 미숙했던 것이 오히려 도움이 됐습니다. 안다고 생각했다면 건너뛰었을 코드를 한 줄씩 읽다가 IsMergeable이 어디서도 채워지지 않는다는 것을 찾았습니다.",
+        constraints: [
+          "Atlantis가 올라간 Kubernetes 클러스터에 장애가 나면 인프라 배포도 함께 멈춥니다. 인프라 배포는 상시 필요한 작업이 아니라고 보고 감수했습니다.",
+          "상태 파일 버킷은 허용 목록 밖의 접근을 관리자 권한까지 거부합니다. 정책을 잘못 걸면 파이프라인 전체가 막히고 클러스터 장애 때는 복구할 길이 필요해, 비상 복구용 관리자 계정 하나만 허용 목록에 남겼습니다."
+        ],
+        incident: {
+          title: "장애 대응 기록: 메모리 부족 종료 뒤 Lock DB 손상",
+          steps: [
+            { label: "증상", text: "Atlantis 파드가 메모리 부족(OOM)으로 강제 종료된 뒤 재시작하자 「must be mergeable」과 「invalid key」 두 에러가 함께 떴고, 병합할 수 있는 PR인데 plan이 막혔습니다. 두 에러는 원인이 서로 달랐습니다." },
+            { label: "원인 좁히기", text: "키가 없을 때는 「Lock not found」라는 다른 문구가 나오므로 「invalid key」가 걸렸습니다. 소스를 확인하니 이 에러는 Atlantis가 Lock을 보관하는 내장 BoltDB 파일에서 키를 읽지 못할 때 나는 것이었습니다. 에러는 OOM 강제 종료 직후부터 났고, IAM plan 하나만으로도 메모리 정점이 한계에 가까웠습니다. 이를 근거로 병렬로 돌던 plan이 메모리 한계를 넘어 쓰기 도중 강제 종료되면서 DB 파일이 깨졌다고 판단했습니다." },
+            { label: "조치", text: "plan과 apply를 병렬에서 순차로 바꿨습니다. Atlantis의 Lock은 PR 충돌을 막는 용도이고 State를 지키는 Terraform Lock은 DynamoDB에 따로 있어, 다시 만들 수 있는 데이터라고 판단해 DB 파일을 지우고 파드를 재시작했습니다." },
+            { label: "재발 방지", text: "순차 실행을 유지하고 대시보드에서 메모리 패턴을 확인했습니다. Lock 저장소를 Redis로 옮기는 안은 관리 대상과 비용이 늘어 기각했습니다." },
+            { label: "이후", text: "남은 「must be mergeable」은 Atlantis 자체 버그였습니다. 댓글로 실행하는 run() 경로에는 PR의 병합 가능 상태를 조회하는 FetchPullStatus() 호출이 있는데 runAutoplan() 경로에는 없어, IsMergeable이 Go의 기본값 false로 남아 조건이 항상 실패했습니다. 같은 증상의 이슈가 같은 원인인지 CNCF Slack에서 확인한 뒤, 빠진 조회를 더하는 10줄을 고치고 autoplan 경로가 병합 상태를 조회한다는 사실 자체를 테스트 91줄로 고정했습니다. 2026.03.26에 머지됐고, 3년 가까이 열려 있던 이슈 #3486이 닫혔습니다." }
+          ]
+        },
         links: [
           { label: "PR #6186", url: "https://github.com/runatlantis/atlantis/pull/6186" }
         ]
       },
       {
         projectId: 7,
-        diagram: null,
-        summary: "관리형 FaaS의 실행 시간 상한과 데이터 반출 제약을 EC2 위에서 걷어내고, 대가로 떠안은 확장성은 콜드 스타트를 세 층으로 나눠 풀었습니다.",
+        diagram: "/assets/diagrams/nanogrid.svg",
+        diagramAlt: "NanoGrid 구성도. 요청은 AWS WAF와 ALB를 거쳐 퍼블릭 서브넷의 Controller EC2로 들어가고, SQS를 통해 프라이빗 서브넷의 Worker ASG로 전달됩니다. 결과는 ElastiCache Redis로 돌아오며, Worker는 Gateway VPC Endpoint로 S3와 DynamoDB에 접근하고 AI 노드를 호출합니다.",
+        summary: "관리형 FaaS의 실행 시간 상한과 데이터 반출 제약을 EC2 위에서 걷어내고, 대가로 떠안은 확장성은 콜드 스타트를 시간 규모가 다른 세 층으로 나눠 보고, 실행 단위는 컨테이너 풀로, 스케일링 판단은 큐 깊이로 풀었습니다.",
         outcome: "실행 단위 콜드 스타트 3초에서 0.2초, 워커 IAM을 큐 하나의 3개 액션으로 축소",
-        problem: "HTTP 요청 처리를 EC2 위에서 해야 한다는 제약 아래, Lambda가 대신 해주던 함수 업로드와 호출, 즉시 실행을 직접 만들고 확장성도 스스로 책임져야 했습니다.",
-        decision: "6시간 만에 띄운 API Gateway와 Dispatcher Lambda 프로토타입은 요청 경로에 API Gateway가 남아 걷어내고 ALB와 EC2 Controller로 전환했습니다. 콜드 스타트를 실행 단위, 워커 인스턴스, 스케일링 판단의 세 층으로 나눴고, 스케일링 기준은 사후 지표인 CPU 대신 SQS 큐 깊이로 잡았습니다.",
-        result: "실행 단위 3초에서 0.2초, ASG Warm Pool로 상시 2대 비용에 5대분 확장을 준비했습니다. 피보나치 1만 건 약 11초(동일 워크로드 Lambda 30~40초), 이틀간 AWS 비용은 약 3만 원입니다.",
+        problem: "과제는 HTTP 요청 처리를 EC2 위에서 해야 한다는 제약이었습니다. Lambda가 대신 해 주던 함수 업로드와 HTTP 호출, 즉시 실행을 관리형 FaaS 없이 직접 만들어야 했습니다. 요청이 몰릴 때 워커를 늘리는 확장성도 스스로 책임져야 했습니다. 팀은 여기에 목표를 하나 더 얹어, 직접 호스팅한다면 관리형 FaaS의 제약(당시 구성한 API Gateway의 29초 통합 타임아웃, 런타임 제약, 추론 데이터의 외부 반출)도 함께 풀기로 했습니다.",
+        decision: "익숙한 API Gateway와 Dispatcher Lambda로 6시간 만에 프로토타입을 띄웠지만 요청 경로에 API Gateway가 남아 실행 시간 상한이 그대로였습니다. 202를 먼저 돌려주고 결과를 나중에 알리는 우회는 제약을 옮길 뿐이라 택하지 않고, ALB와 EC2 Controller로 바꿨습니다. 콜드 스타트는 실행 단위, 워커 인스턴스, 스케일링 판단이라는 시간 규모가 다른 세 층으로 나눠 봤습니다. 실행 단위는 요청마다 컨테이너를 만들지 않고 런타임별(Python, Node.js, C++, Go) 풀에서 빌려 쓰고 반납하게 했습니다. 스케일링 판단은 CPU 대신 SQS 큐 깊이를 기준으로 삼았습니다. CPU는 임계값에 닿을 때면 이미 사용자가 지연을 겪은 뒤이고, 큐 길이는 부하가 워커에 닿기 전에 올라가기 때문입니다. 작업 투입은 유실되면 안 되므로 SQS에, 결과 전달은 호출자가 기다리고 있으므로 지연이 낮은 Redis Pub/Sub에 맡겼습니다. 임의의 사용자 코드를 실행하는 플랫폼이라 워커 IAM을 SQS FullAccess에서 큐 하나의 3개 액션으로 줄였습니다.",
+        result: "실행 단위 콜드 스타트는 3초에서 0.2초로 줄었습니다. Prometheus의 worker_job_duration_seconds 히스토그램으로 적용 전후 분포가 옮겨 간 것을 확인한 값입니다. 워커 권한의 폭발 반경은 계정 전체에서 큐 하나로 줄었습니다. 추론 노드(Ollama)는 인터넷 경로와 퍼블릭 주소가 없는 프라이빗 서브넷에 두고, 워커 보안 그룹에서만 닿게 했습니다. SoftBank Hackathon 본선에 올랐습니다.",
+        learned: "세 층 모두 「어떻게 더 빨리 준비할까」라는 같은 질문이었습니다. 끝나고 나서야 「애초에 켤 것을 얼마나 작게 만들 수 있을까」라는 다른 축의 질문이 있다는 것을 알았고, 이것이 WebAssembly 런타임 연구로 이어졌습니다.",
+        constraints: [
+          "해커톤 본선에서 만든 구성이고, 실사용자 트래픽을 받아 본 시스템은 아닙니다. 팀에서 저는 인프라와 보안을 맡았습니다.",
+          "Controller와 Worker를 잇는 것은 SQS 하나뿐이고 서로를 알지 못합니다. Controller는 퍼블릭 서브넷 2개 AZ에, Worker는 프라이빗 서브넷에 둡니다.",
+          "S3와 DynamoDB에는 Gateway VPC Endpoint를 붙여 워커 트래픽이 NAT을 거치지 않게 했습니다."
+        ],
         links: [
           { label: "AWS Article", url: "https://builder.aws.com/content/3I2Mw8lAM0x9sODvAwmHN8RylXM/building-a-faas-on-ec2-without-lambda-and-splitting-cold-start-into-three-layers" },
           { label: "GitHub", url: "https://github.com/Softbank-Final" }
         ]
       },
       {
-        projectId: 4,
-        diagram: null,
-        summary: "배포 기준을 팀별로 합의해 고정하고, 릴리스 문서 자체를 DORA 지표의 원천으로 삼아 배포가 끝나면 측정도 끝나게 했습니다.",
-        outcome: "DORA 4개 지표 매일 자동 산출, 크루와 리더가 같은 대시보드로 확인",
-        problem: "업무는 Notion 태스크에, 배포는 릴리스 문서에, 장애는 또 다른 DB에 흩어져 있어 조직 차원에서 생산성을 점검할 하나의 기준이 없었습니다.",
-        decision: "측정 전용 도구를 들이면 측정이 또 하나의 업무가 되므로 이미 모두가 쓰는 Notion에서 뽑았습니다. 커밋 수와 토큰 사용량은 생산성 근거로 부족해 기각하고 의미 있는 배포만 인정했으며, 검수는 개별 정확도보다 일관성을 택해 Notion 커스텀 에이전트에 맡겼습니다.",
-        result: "팀별 배포 기준을 각 팀과 합의해 문서로 고정했고, DORA 4개 지표를 매일 자동 산출해 크루와 리더가 같은 화면으로 봅니다. 이 지표는 R&R 논의와 1on1 대화 소재로 쓰입니다.",
-        links: []
+        projectId: 6,
+        diagram: "/assets/diagrams/wasm-runtime.svg",
+        diagramAlt: "Wasm과 컨테이너 비교 실험 구성도. 같은 Go 워크로드를 SpinKube Wasm 모듈과 scratch 컨테이너로 각각 빌드해 AKS 1.34 클러스터에 올리고, Edge, Transform, Ingestion 계층에서 콜드스타트와 Pod Ready, 테넌트 밀도와 비용, 처리량을 비교합니다. Storage 계층은 모델링만 하고 비교하지 않았습니다.",
+        summary: "벤더가 런타임만 떼어 잰 Wasm의 이점이 쿠버네티스 운영 스택을 지나서도 남는지, 같은 Go 워크로드를 Wasm과 컨테이너로 만들어 AKS에서 직접 쟀습니다.",
+        outcome: "실측 결과로 Ingestion은 컨테이너, Transform과 Edge는 Wasm이라는 계층별 배정 기준 제안",
+        problem: "Wasm 런타임 벤더는 컨테이너보다 콜드스타트가 약 400배 빠르고 Pod 밀도가 43배 높다고 주장하지만, 이 수치는 런타임만 떼어 잰 마이크로벤치마크 값입니다. 쿠버네티스 운영 스택(shim, SDK, HTTP 계층)을 지난 전체 경로에서도 같은 이점이 남는지는 검증되지 않았습니다.",
+        decision: "IoT 로그 파이프라인을 Edge, Transform, Ingestion, Storage 네 계층으로 모델링하고, 그중 세 계층을 같은 Go 워크로드의 SpinKube Wasm 모듈과 scratch 컨테이너로 각각 만들어 AKS 1.34 위에서 비교했습니다. 언어와 로직, 부하 조건을 같게 맞춰 런타임 차이만 남겼습니다. 결론을 「어느 런타임이 낫다」로 내지 않았습니다. 계층마다 유리한 쪽이 반대로 나왔기 때문에, 하나를 고르는 대신 계층별로 배정하는 기준을 제안했습니다. 차이가 우연인지는 통계 검정(정규성에 따라 Welch t 또는 Mann-Whitney U, 10개 지표군에 Bonferroni 보정)으로 가렸습니다.",
+        result: "Ingestion은 컨테이너가 24~28K rps를 유지해 Wasm(약 1,264 rps)보다 처리량이 높았습니다. Transform은 테넌트마다 격리를 강제한 월 비용 모형에서 2,500 테넌트일 때 Wasm의 테넌트당 비용이 최대 64배 낮았습니다. Edge는 scale-from-zero 콜드스타트에서 Wasm이 11배 빨랐고, 대기 메모리는 컨테이너(2Mi)가 더 적었습니다. 런타임 인스턴스화만 재면 0.436ms로, 벤더 주장(0.5ms)과 통계적으로 유의한 차이가 없었습니다(p=0.71, n=10). 표본이 작아 둘이 같다는 근거로 쓰지는 않고, 인스턴스화는 shim 로그 타임스탬프로 재서 컨테이너와 측정 경로가 다릅니다. 전체 요청 경로 1.55ms 중 직접 잰 런타임 인스턴스화의 비중은 28%였습니다. 나머지 72%는 쿠버네티스, shim, SDK, HTTP 계층에서 더해진 몫이고, 계층마다 따로 재지 않아 어느 계층이 얼마를 더했는지는 나누지 못했습니다.",
+        learned: "처음 외부 로드밸런서를 거쳐 부하를 걸었을 때 고부하 구간에서 반대 결과가 나왔습니다. 호스트와 외부 로드밸런서 사이의 네트워크 영향으로 밝혀져 클러스터 안에서 다시 쟀습니다. 같은 실험도 부하를 어디서 거느냐에 따라 결론이 뒤집힐 수 있다는 것을 배웠습니다.",
+        constraints: [
+          "6 vCPU free-tier 클러스터에서 잰 값이라 41 Pod 한계와 8,000 테넌트 상한 같은 절대 수치는 운영 규모와 다를 수 있습니다.",
+          "단일 Go 워크로드로, SpinKube와 Wasmtime에 한정한 결과입니다. Storage 계층은 비교하지 않았습니다.",
+          "컨테이너는 쿠버네티스 권장 최소 요청(128Mi) 기준이라 요청을 낮추면 밀도와 비용 결과가 달라집니다."
+        ],
+        links: [
+          { label: "논문 PDF", url: "/assets/wasm-spinkube-iot-layer-allocation.pdf" }
+        ]
       }
     ],
     writing: [
@@ -100,12 +135,12 @@ export const content = {
             ],
             '사내 AX 생산성 지표 체계 구축 (측정 지표로 DORA 채택)',
             [
-              '일 200건 이상 업무 자동 분류 (정확도 91.7%)',
-              '팀별 배포 기준을 합의·문서화해 산출 기준으로 고정, R&R 논의와 1on1 대화 소재로 사용'
+              '일 200건 이상 업무 자동 분류',
+              '팀별 배포 기준을 합의·문서화해 산출 기준으로 고정'
             ],
             '인바운드 리드 SLA 체계 구축',
             [
-              '리드 접수에서 담당자 배정까지 평균 33.6시간을 0.4시간으로 단축 (98.7% 단축), 1시간 내 담당자 배정 비율 9% → 86%',
+              '리드 접수에서 담당자 배정까지 평균 33.6시간을 약 26분으로 단축 (98.7% 단축), 1시간 내 담당자 배정 비율 9% → 86%',
               '영업시간 기준 SLA 자동 측정, 방치 리드 알림·에스컬레이션 체계 구축'
             ],
             'Notion 사내 에이전트 구축·운영',
@@ -181,10 +216,9 @@ export const content = {
         {
           title: 'SoftBank Hackathon',
           role: 'Participant',
-          period: '2024.11 ~ 2024.12',
+          period: '2025.12',
           description: [
-            '예선 참가 (2024.11.08 ~ 2024.11.09)',
-            '본선 진출 (2024.12.06 ~ 2024.12.07)'
+            '본선 진출 (2025.12.06 ~ 2025.12.07)'
           ]
         }
       ],
@@ -258,8 +292,10 @@ export const content = {
     },
     portfolio: {
       title: "Other Projects",
-      metrics: { 2: "PR #6186 머지, v0.41.0 포함", 3: "일 200건+ 업무 자동 분류", 15: "담당자 배정 33.6시간 → 0.4시간", 6: "AKS 1.34 실측", 5: "PR #124 머지", 8: "비시즌 유휴 리소스 비용 0원", 11: "2022년 자발적 이전", 12: "벤더와 용도별 지출 추적, 임계치 알림", 13: "팀별 배포 기준 문서화", 14: "전사 배포" },
-      order: [3, 2, 15, 13, 14, 12, 6, 5, 10, 9, 8, 11],
+      metrics: { 4: "DORA 4지표 매일 자동 산출, 검수 에이전트 전사 사용", 3: "일 200건+ 업무 자동 분류", 15: "담당자 배정 33.6시간 → 약 26분", 6: "AKS 1.34 실측", 5: "PR #124 머지", 8: "비시즌 실행 비용이 들지 않는 구성", 11: "2022년 자발적 이전", 12: "벤더와 용도별 지출 추적, 임계치 알림", 14: "전사 배포" },
+      order: [15, 3, 4, 8, 12, 14, 5, 10, 9, 11],
+      showMore: "더 보기",
+      showLess: "접기",
       filters: {
         all: "전체",
         web: "DevOps & Infra",
@@ -274,6 +310,10 @@ export const content = {
         role: "역할",
         techStack: "기술 스택",
         keyFeatures: "주요 기능",
+        problem: "문제",
+        decision: "판단",
+        result: "결과",
+        learned: "배운 점",
         links: {
           github: "GitHub",
           demo: "Live",
@@ -287,45 +327,19 @@ export const content = {
           title: 'Atlantis 기반 GitOps Terraform CI/CD 구축',
           category: 'DevOps & Infra',
           image: null,
-          description: '인프라 변경을 승인받은 뒤에만 반영되게 바꿔 누가 언제 무엇을 바꿨는지 모두 기록으로 남겼습니다. 서비스별로 권한을 나눠 개인 PC의 접근 키를 전부 회수했습니다.',
-          how: "상태 파일을 외부 SaaS에 위탁하는 Terraform Cloud와, plan 가독성과 Lock 관리가 약한 범용 CI를 비교한 뒤 Atlantis 자체 호스팅을 채택했습니다.",
+          description: "Terraform 변경을 로컬 실행에서 Atlantis의 PR 승인 절차(GitOps)로 옮겨, 누가 언제 무엇을 바꿨는지 PR 단위로 기록에 남겼습니다. 서비스별 AssumeRole로 권한을 나눠 개발자 PC의 장기 Access Key를 전부 회수했습니다.",
+          how: "Terraform 변경을 PR 승인 뒤에만 적용하려고 Atlantis를 자체 호스팅했습니다. 상태 파일을 외부 SaaS에 맡기는 Terraform Cloud와, plan 게시와 Lock 관리를 직접 만들어야 하는 범용 CI는 제외했습니다.",
           details: {
-            problem: '인턴으로 합류해 처음 맡은 과제였습니다. 엔지니어들이 각자 로컬에서 Terraform을 실행하는 구조였고 여기서 상태 파일 충돌, 변경 이력 추적 불가, 환경 간 정합성 어긋남이 동시에 일어나고 있었습니다. 더 큰 문제는 보안 쪽이었습니다. 로컬 실행을 위해 개발자 각자가 장기 AWS Access Key를 들고 있었고 권한 범위도 제각각이었습니다.',
-            solution: '선택지는 세 가지였습니다. Terraform Cloud는 관리 부담이 없지만 비용과 외부 SaaS에 상태를 위탁하는 문제가 있었고, GitHub Actions로 직접 구성하면 plan 결과를 PR에 붙이고 apply를 승인과 연동하는 로직을 전부 직접 짜야 해서 결국 Atlantis를 다시 만드는 일이 됩니다. 그래서 Atlantis 자체 호스팅을 골랐고, 문제가 나면 우리가 고쳐야 한다는 비용을 지불하기로 했습니다. 실제로 한 달 뒤 그 청구서가 왔고 그것이 PR #6186입니다.\n\n배포 위치는 이미 운영 중이던 Kubernetes 클러스터로 정했습니다. Atlantis만을 위해 별도 EC2를 세우면 그 인스턴스의 패치와 모니터링을 따로 관리해야 하는데, 기존 클러스터에 얹으면 관측과 롤아웃, 시크릿 관리를 이미 있는 체계로 그대로 씁니다. 대신 클러스터 장애가 인프라 배포 능력까지 함께 멈추는 단일 실패 지점이 생기는데, 인프라 배포가 상시 필요한 작업이 아니고 최악의 경우 로컬 실행으로 임시 복구가 가능하다고 보고 감수했습니다.\n\n가장 오래 고민한 것은 Access Key였습니다. GitOps로 옮기면 로컬에서 apply할 일이 없어지지만 키가 남아 있으면 급할 때 누군가는 반드시 그 경로를 씁니다. 우회할 길을 열어둔 채로 만든 절차는 절차가 아니라 권고가 됩니다. 그래서 키를 전량 회수하고 AssumeRole로 배포 시점에만 최소 권한 임시 자격증명을 발급하는 구조로 옮겼습니다. 포기한 것은 긴급 상황의 속도입니다. 급한 장애 대응에서 PR을 올리고 승인을 기다리는 시간은 그대로 비용이 되는데, 검증 없이 인프라가 바뀌는 쪽의 손실이 더 크다고 판단해 이 교환을 받아들이고 대신 승인자를 복수로 두어 대기 시간을 줄였습니다.\n\n요구사항 정리부터 Helm 배포와 IAM 설계, 팀 온보딩까지 진행했습니다. 다만 인프라 자체는 DevOps 팀의 일이고 제가 혼자 맡은 영역이 아니라, 이 과제에서 제 범위가 여기까지라는 점은 밝혀둡니다.',
+            problem: "인프라를 만지는 사람이 한 명에서 여럿으로 늘었습니다. 전 시스템이 관리자 권한으로 돌아가고 있어 사람이 늘자 누구에게나 전부를 열어 주는 구조가 됐고, 누가 언제 무엇을 바꿨는지 추적할 수 없었으며, 동시 작업으로 잠금이 걸리면 누가 잡고 있는지 메신저로 물어봐야 했습니다.",
+            decision: "변경을 사람의 기억에 맡기지 않고 저장소의 기록과 승인 절차로 옮기기로 했습니다. Terraform Cloud는 상태 파일을 외부에 맡겨야 했고 범용 CI는 승인 절차를 직접 만들어야 해서, Atlantis를 자체 운영하는 쪽을 골랐습니다. 접근 키가 남아 있으면 급할 때 누군가는 그 길을 쓴다고 보고 키도 함께 회수했습니다.",
+            result: "권한을 서비스별로 나누고 개인 PC의 접근 키를 전부 회수했으며, 모든 변경이 승인을 거쳐 기록으로 남습니다.",
             role: 'Platform Engineer (DevOps 팀)',
             tech: ['Terraform', 'Atlantis', 'Kubernetes', 'Helm', 'AWS IAM (AssumeRole)', 'Bitbucket'],
             features: [
-              'Atlantis를 Helm Chart로 Kubernetes에 배포, 인프라 변경을 전부 PR 기반 GitOps로 전환',
-              'plan_requirements: [mergeable]로 병합 불가 PR이 인프라에 적용되는 경로 차단',
-              'AWS AssumeRole 전환, 개발자 로컬 장기 Access Key 전량 회수 (잔여 0개)',
-              '로컬 우회 실행 차단: 삭제 권한 제거는 잘못 만든 리소스도 못 지우고 태그 기반 제어는 태그 변경으로 우회 가능해 기각. 상태 파일 버킷 정책에 허용 목록 외 전부 거부를 걸어 명시적 거부가 명시적 허용보다 우선한다는 평가 순서를 이용했습니다. 허용 목록에 없으면 관리자 권한으로도 상태 파일을 읽을 수 없어 로컬 실행이 성립하지 않으며, 정책 오류로 파이프라인이 마비될 경우를 대비해 비상용 관리자 계정은 허용 목록에 남겼습니다',
-              'Terraform 작업 전건에 대한 PR 단위 감사 추적 확보',
-              '트레이드오프: 긴급 배포 속도를 포기하는 대신 승인자를 복수로 두어 대기 시간 완화'
-            ]
-          },
-          links: {
-            demo: null,
-            github: 'https://github.com/runatlantis/atlantis/pull/6186'
-          }
-        },
-        {
-          id: 2,
-          title: 'Atlantis 오픈소스 버그 수정 기여',
-          category: '오픈소스',
-          image: null,
-          description: 'Atlantis autoplan에서 plan_requirements: mergeable 설정 시 PR이 항상 차단되는 버그를 발견하고 직접 수정하여 v0.41.0에 Merge',
-          how: "옵션 비활성화라는 우회는 운영 기준을 낮춘다고 판단해 배제하고, Go 코드를 추적해 autoplan 경로에 누락된 PR 병합 상태 조회를 추가했습니다.",
-          details: {
-            problem: 'plan_requirements: [mergeable] 설정 시, 충돌 없는 깨끗한 PR에서도 autoplan이 항상 "Pull request must be mergeable before running plan" 에러를 발생시킴',
-            solution: '팀장님의 판단은 우회였습니다. 옵션을 끄거나 조건을 완화하면 당장 배포는 돌아갑니다. 우리 서비스 코드도 아닌 외부 오픈소스를 파고드는 데 시간을 쓰는 것보다 일정에 맞춰 비켜 가는 편이 합리적이라는 의견이었고, 회사 입장에서 타당한 판단이었습니다. 다만 저는 그 옵션이 왜 거기 있는지를 알고 있었습니다. 병합할 수 없는 PR이 인프라에 적용되는 것을 막으려고 제가 직접 건 안전장치였고, 그것을 끄는 순간 GitOps로 전환한 이유 자체가 사라집니다. 우회는 문제를 해결한 것이 아니라 우리가 세운 기준을 낮춘 셈이라고 봤습니다. 그래서 일정에 영향을 주지 않는 선에서 원인을 찾아보기로 했습니다. 문제가 하나 더 있었는데 Atlantis는 Go로 작성돼 있었고 저는 그때 Go를 처음 봤습니다.\n\n1주 동안 약 10시간을 썼습니다. 문법과 관용구를 익히는 데 3시간, 실행 경로를 따라가며 로직을 파악하는 데 2시간, 그 과정에서 CNCF 슬랙에 초대받아 같은 증상으로 보이는 이슈가 정말 같은 원인인지 논의하는 데 3시간, 나머지 2시간이 수정과 테스트 작성, 업스트림 리뷰 대응이었습니다.\n\n원인은 두 실행 경로의 차이였습니다. 댓글 기반 run() 경로에는 FetchPullStatus() 호출이 있어 PR의 병합 가능 상태를 갱신하는데 runAutoplan() 경로에는 그 호출이 없었습니다. 그래서 autoplan에서는 IsMergeable이 한 번도 세팅되지 않은 채 Go의 zero value인 false로 남았고, mergeable 조건은 PR의 실제 상태와 무관하게 항상 실패했습니다. 값이 없는 상태와 병합 불가능한 상태가 구분되지 않으니 컴파일러도 잡아주지 않고 런타임에서는 조용히 차단으로만 동작합니다.\n\n수정 자체는 다른 실행 경로에 있던 조회를 autoplan 경로에 추가하는 일이라 프로덕션 코드는 10줄입니다. 시간이 든 쪽은 증상에서 원인을 좁히는 과정과 처음 보는 코드베이스의 컨벤션에 맞춰 승인되는 테스트를 쓰는 일이었고, 테스트는 91줄이 됐습니다. 호출 한 줄을 더하면 지금은 맞지만 다음에 누군가 실행 경로를 하나 더 만들면 같은 일이 반복되기 때문에, autoplan 경로가 병합 상태를 조회한다는 사실 자체를 테스트로 고정해두는 편이 낫다고 판단했습니다.\n\n돌아보면 처음 보는 언어였던 것이 오히려 도움이 됐습니다. 안다고 생각했다면 건너뛰었을 코드를 한 줄씩 읽어야 했고, IsMergeable이 어디서도 세팅되지 않는다는 사실은 그 과정에서 발견했습니다.',
-            role: 'Open Source Contributor',
-            tech: ['Golang', 'Atlantis', 'Terraform', 'Git'],
-            features: [
-              'Go를 처음 다루는 상태에서 1주 10시간 투입 (문법 3h · 경로 추적 2h · CNCF 슬랙 논의 3h · 수정과 테스트 2h)',
-              '원인: runAutoplan() 경로에 FetchPullStatus() 호출 누락, IsMergeable이 Go zero value인 false로 고정',
-              '프로덕션 10줄 · 테스트 91줄. 두 실행 경로가 다시 어긋나는 것을 막는 회귀 테스트를 우선',
-              '2026.03.26 머지, Atlantis v0.41.0 포함. 리뷰어 lukemassa · jamengual',
-              '3년 가까이 열려 있던 이슈 #3486 종료. 사내에서는 안전장치를 끄지 않은 채 GitOps 유지'
+              "Atlantis를 Helm으로 Kubernetes에 배포, 인프라 변경을 PR 승인 절차로 전환",
+              "병합할 수 없는 PR은 plan 단계에서 차단 (plan_requirements: mergeable)",
+              "AssumeRole로 배포 시점에만 임시 권한 발급, 개인 PC 접근 키 전부 회수",
+              "상태 파일 버킷에 허용 목록 외 전부 거부를 걸어 로컬 우회 실행 차단"
             ]
           },
           links: {
@@ -338,23 +352,17 @@ export const content = {
           title: 'NanoGrid: 관리형 FaaS의 제약을 걷어낸 함수 실행 플랫폼',
           category: 'DevOps & Infra',
           image: null,
-          description: '관리형 FaaS가 정해둔 실행 시간 상한과 런타임 제약, 추론 데이터의 외부 반출을 EC2 위에서 걷어낸 함수 실행 플랫폼. 대가로 직접 떠안은 확장성은 콜드 스타트를 세 층으로 나눠 해결했습니다. 실행 단위 3초에서 0.2초, 서버는 평소 2대 비용만 내면서 5대까지 바로 늘릴 수 있게 준비해 두었습니다 (SoftBank Hackathon 본선)',
-          how: "후행 지표인 CPU 대신 SQS 큐 깊이를 스케일링 기준으로 삼고, 요청마다 생성하던 컨테이너를 런타임별 풀에서 재사용하도록 전환했습니다.",
+          description: "관리형 FaaS(AWS Lambda)의 실행 시간 상한과 런타임 제약, 추론 데이터의 외부 반출을 EC2 위에서 걷어낸 함수 실행 플랫폼입니다. 대가로 직접 떠안은 확장성은 콜드 스타트를 실행 단위, 워커 인스턴스, 스케일링 판단의 세 층으로 나눠 풀었고, 실행 단위 콜드 스타트는 컨테이너 풀 재사용으로 3초에서 0.2초가 됐습니다(Prometheus 히스토그램으로 전후 측정). SoftBank Hackathon 본선 진출작입니다.",
+          how: "CPU 사용률은 오를 때면 이미 사용자가 지연을 겪은 뒤라 SQS 큐 깊이로 워커를 늘리고, 요청마다 만들던 Docker 컨테이너는 런타임별 풀에서 빌려 쓰게 바꿨습니다.",
           details: {
-            problem: 'HTTP 요청 처리를 EC2 위에서 해야 한다는 제약 아래 Lambda가 대신 해주던 일을 직접 만들어야 했습니다. 함수 업로드, HTTP 호출, 즉시 실행을 관리형 FaaS 없이 구현하면서 확장성을 스스로 책임져야 했습니다.',
-            solution: '먼저 기존 FaaS의 한계가 EC2 위에서 풀리는지 따졌습니다. API Gateway 29초 타임아웃, 런타임 제약, 벤더 락인, 추론 데이터 외부 유출은 풀리고 확장성만 나빠지는 구조였습니다. 익숙한 API Gateway와 Dispatcher Lambda로 6시간 만에 프로토타입을 띄웠지만 요청 경로에 API Gateway가 남는 구성이라 걷어내고 ALB와 EC2 Controller로 전환해 실행 시간 상한을 없애고 컴퓨트가 앉을 서브넷을 직접 정할 수 있게 만들었습니다. 남은 확장성 문제를 파고들며 콜드 스타트가 실행 단위, 워커 인스턴스, 스케일링 판단이라는 서로 다른 시간 규모의 세 층이라는 것을 확인하고 각각에 다른 도구를 적용했습니다. 임의의 사용자 코드를 실행하는 플랫폼이라 Zip Slip 차단, 컨테이너 리소스 쿼터, 작업별 타임아웃, IAM 최소 권한, WAF 룰 5종을 함께 붙였습니다.',
-            role: 'Infrastructure & Security',
+            problem: "HTTP 요청 처리를 EC2 위에서 해야 한다는 제약 아래, Lambda가 대신 해 주던 함수 업로드와 호출, 실행을 직접 만들어야 했습니다. 요청이 몰릴 때 서버를 늘리는 일도 스스로 책임져야 했습니다.",
+            decision: "익숙한 API Gateway와 Lambda로 먼저 프로토타입을 띄웠지만 실행 시간 상한이 그대로 남아, 걷어내고 ALB와 EC2 Controller로 바꿨습니다. 요청마다 컨테이너를 새로 만들지 않고 런타임별로 미리 띄워 둔 것을 빌려 쓰게 했고, 서버를 늘릴지는 CPU가 아니라 SQS에 쌓인 요청 수로 판단했습니다. CPU는 수치가 오를 때면 이미 사용자가 지연을 겪은 뒤이기 때문입니다.",
+            result: "실행을 시작하기까지 걸리는 시간이 3초에서 0.2초로 줄었고, SoftBank Hackathon 본선에 올랐습니다.",
+            role: "Infrastructure & Security. 팀에서 인프라와 보안을 맡았습니다.",
             tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
             features: [
-              '① 실행 단위: 런타임별(Python, Node.js, C++, Go) 컨테이너 풀을 미리 띄워 요청마다 만들지 않고 빌려 쓰고 반납. 3초 → 0.2초. Prometheus worker_job_duration_seconds 히스토그램으로 전후 분포 이동을 측정',
-              '② 워커 인스턴스: EC2 Auto Scaling Warm Pool로 인스턴스를 정지 상태로 대기. InService 2대 + Warm Pool 3대로 상시 2대 비용에 ASG 최대 5대분 확장 준비. 정지 상태는 컴퓨트 미과금, EBS만 청구',
-              '③ 스케일링 판단: CPU 대신 SQS 큐 깊이 기준. CPU는 사후 지표라 임계값에 닿을 땐 이미 사용자가 지연을 겪은 뒤. Backlog per Instance와 Step Scaling으로 과잉 프로비저닝 방지',
-              '부하 테스트: 피보나치 1만 건 약 11초 (동일 워크로드 Lambda 30~40초). 개별 실행이 밀리초인 워크로드에서 실행 환경 할당 오버헤드가 전체 시간을 지배',
-              '보안: 워커 IAM을 관리형 SQS FullAccess에서 큐 하나의 3개 액션으로 축소해 폭발 반경을 계정 전체에서 단일 큐로 제한. WAF 룰 5종(SQLi, XSS, Log4j, 레이트 리밋, 바디 상한)',
-              '네트워크: Multi-AZ 구성, Controller는 퍼블릭 서브넷 2 AZ, Worker는 프라이빗 서브넷. 둘을 잇는 건 SQS 하나뿐. S3와 DynamoDB에 Gateway VPC Endpoint를 붙여 NAT 우회',
-              'Private AI Node: 프라이빗 서브넷에 Ollama 배치, 인터넷 경로와 퍼블릭 주소 없이 워커 SG에서만 접근 허용해 추론 데이터가 VPC 밖으로 나가지 않도록 구성',
-              '멀티 클라우드 이중화: 진행 기간 중 AWS 한 리전의 화재로 실제 장애를 겪고, 한 벤더에 묶이면 대응 수단이 없다는 것을 확인해 GCP Cloud Storage로 데이터를 복제했습니다',
-              '이틀간 AWS 비용 약 3만 원'
+              "워커 권한을 큐 하나의 3개 액션으로 축소, WAF 룰 5종 적용",
+              "인터넷 경로가 없는 프라이빗 서브넷에 Ollama를 두고 워커에서만 접근"
             ]
           },
           links: {
@@ -368,19 +376,17 @@ export const content = {
           title: 'Deploy Land: 배포 과정을 게임 화면으로 보여주는 CI/CD 플랫폼',
           category: 'DevOps & Infra',
           image: null,
-          description: '배포라는 행위 자체를 즐겁게 만든 서버리스 CI/CD 플랫폼. 로그만 흐르던 화면을 캐릭터가 파이프라인을 뛰어가는 게임 화면으로 바꿔 배포 상태를 실시간 공유',
-          how: "파이프라인 성공 응답만으로 배포 성공을 판정하지 않고, 배포 후 헬스 상태와 HTTP 200 응답을 재검증해 미통과 시 실패로 처리했습니다.",
+          description: "배포 상태를 캐릭터가 파이프라인을 뛰어가는 게임 화면으로 실시간 공유하는 서버리스 CI/CD 플랫폼입니다.",
+          how: "배포 뒤에 환경 상태와 실제 HTTP 200 응답을 다시 확인해, 통과하지 못하면 파이프라인이 성공을 돌려줘도 실패로 뒤집었습니다.",
           details: {
-            problem: '배포 상태가 로그로만 흘러 개발자 외에는 지금 어디까지 왔는지 알 수 없었고, 실패해도 즉각 인지가 어려웠습니다. 파이프라인의 성공 응답만으로는 배포된 서비스가 실제로 응답하는지 알 수 없었습니다.',
-            solution: '배포를 지켜보는 일을 게임으로 만들었습니다. GitHub Push부터 Build, Deploy, Health Check까지의 상태를 캐릭터가 파이프라인 단계를 뛰어가는 화면으로 실시간 공유합니다. CodePipeline과 CodeBuild, Elastic Beanstalk의 상태 변화를 EventBridge가 잡아 Lambda로 DynamoDB에 기록하고, Amplify 모니터링 앱이 이를 읽어 그립니다. 파이프라인이 성공을 반환해도 그것을 최종 성공으로 보지 않고, 배포 후 Elastic Beanstalk 환경 헬스와 실제 HTTP 200 응답을 다시 확인해 통과하지 못하면 실패로 뒤집습니다. 실패 로그는 Bedrock으로 원인을 요약하되 호출 제한(ThrottlingException)에는 지수 백오프로 최대 3회 재시도하고, Discord·Slack으로 즉시 알립니다. Infra와 Backend를 맡아 Terraform 인프라와 Lambda API를 구현했습니다.',
-            role: 'Infra & Backend',
+            problem: "배포 상태가 로그로만 흘러 개발자가 아니면 지금 어디까지 왔는지 알 수 없었습니다. 파이프라인이 성공을 돌려줘도 배포된 서비스가 실제로 응답하는지는 알 수 없었습니다.",
+            decision: "배포 과정을 캐릭터가 단계를 뛰어가는 게임 화면으로 바꿔 누구나 실시간으로 보게 했습니다. 파이프라인의 성공 응답을 최종 성공으로 보지 않고, 배포 뒤에 환경 상태와 실제 HTTP 200 응답을 다시 확인해 통과하지 못하면 실패로 뒤집었습니다. 실패하면 Bedrock이 로그에서 원인을 요약해 Discord와 Slack으로 바로 알립니다.",
+            result: "GitHub Push부터 Build, Deploy, Health Check까지 전 과정이 자동으로 이어지고, 상태는 모니터링 화면에 실시간으로 그려집니다.",
+            role: "Infra & Backend. Terraform 인프라와 Lambda API 구현을 맡았습니다.",
             tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
             features: [
-              '캐릭터가 파이프라인 단계를 뛰어가는 게임형 실시간 배포 모니터링',
-              'GitHub Push → Build → Deploy → Health Check 전 과정 자동화',
-              'EventBridge → Lambda → DynamoDB로 상태를 기록하고 DynamoDB Streams가 Health Check Lambda를 다시 호출하는 2단 구조',
-              '파이프라인 성공 후 EB 환경 헬스와 HTTP 200을 재확인해 미통과 시 실패로 판정, Bedrock 실패 로그 요약 (Throttling 시 지수 백오프 재시도)',
-              'Discord·Slack Webhook 즉시 알림, Terraform IaC 인프라 관리'
+              "EventBridge → Lambda → DynamoDB로 배포 상태 기록",
+              "Bedrock 호출 제한에는 지수 백오프로 최대 3회 재시도"
             ]
           },
           links: {
@@ -393,20 +399,15 @@ export const content = {
           title: 'Notion + FLEX: 업무량 모니터링 체계 구축 및 운영',
           category: 'AX 업무자동화',
           image: null,
-          description: 'Notion 업무 기록과 FLEX 근태 데이터를 이어, 팀별로 휴가와 실제 업무 기록, 생산성에 영향을 주는 정도를 판단하는 지표 체계와 모니터링을 구축하고 운영. 일 200건 이상 업무를 LLM으로 13개 업무유형, 14개 미팅유형으로 자동 분류',
-          how: "같은 업무명도 로드맵에 따라 성격이 달라지는 점을 고려해, 로드맵 판정 후 유형을 나누는 2단계 LLM 분류로 팀별 업무량을 집계했습니다.",
+          description: "Notion 업무 기록과 FLEX 근태 데이터를 이어 팀별 휴가와 실제 업무 기록을 함께 보는 모니터링을 구축하고 운영합니다. 분류 결과는 사내 다른 서비스가 GraphQL로 조회할 수 있습니다.",
+          how: "같은 업무명도 속한 로드맵에 따라 성격이 달라져, 로드맵을 먼저 판정한 뒤 업무 유형을 나누는 2단계 LLM 분류(Gemini 2.5 Flash)로 팀별 업무량을 집계했습니다.",
           details: {
-            problem: '업무가 여러 Notion DB에 흩어져 있어 조직 구성원의 시간이 실제로 어디에 들어가는지 집계할 수 없었습니다. 수동 분류는 사람마다 기준이 달라 같은 성격의 일이 다른 유형으로 쌓였고, 그 위에 어떤 지표를 올려도 신뢰하기 어려운 상태였습니다.',
-            solution: '분산된 Notion 태스크 데이터를 통합하고 Gemini 2.5 Flash 기반 계층적 분류를 적용해 13개 업무유형과 14개 미팅유형으로 자동 배정했습니다.\n\n계층적 분류를 택한 이유는 정확도입니다. 단일 프롬프트에 제목만 주고 13개 중 하나를 고르라고 하면 정확도가 떨어집니다. 같은 제목이라도 어떤 로드맵에 속한 일이냐에 따라 유형이 달라지기 때문입니다. 그래서 로드맵 성격을 먼저 판정하고 그 결과를 컨텍스트로 넣어 태스크를 분류하는 2단 구조로 갔습니다. LLM 호출이 늘어나는 비용을 지불하고 정확도를 산 셈인데, 하루 한 번 도는 배치라 지연은 문제가 되지 않았습니다.\n\nFlash를 택한 이유는 운영비입니다. 하루 200건 이상을 매일 도는 배치에서는 모델 단가가 그대로 운영비가 됩니다. 분류는 추론 난이도가 높은 작업이 아니라 판단 기준의 일관성이 중요한 작업이라, 상위 모델을 쓰는 것보다 프롬프트와 계층 구조에 투자하는 편이 비용 대비 효과가 낫다고 판단했습니다.\n\n결과를 Apollo Federation Subgraph로 분리한 이유는 재사용입니다. 분류 결과를 이 파이프라인 안에만 두면 다른 기능에서 같은 계산을 다시 하게 되어, GraphQL Subgraph로 노출해 사내 다른 서비스가 조회하도록 했습니다.',
+            problem: "업무가 여러 Notion DB에 흩어져 있어 구성원의 시간이 실제로 어디에 들어가는지 집계할 수 없었습니다. 손으로 분류하면 사람마다 기준이 달라 같은 성격의 일이 다른 유형으로 쌓였고, 그 위에 어떤 지표를 올려도 믿기 어려웠습니다.",
+            decision: "단일 프롬프트에 제목만 주고 13개 유형 중 하나를 고르게 하면 정확도가 떨어졌습니다. 같은 제목이라도 어느 로드맵에 속한 일이냐에 따라 유형이 달라지기 때문입니다. 그래서 로드맵의 성격을 먼저 판정하고 그 결과를 컨텍스트로 넣어 업무를 분류하는 2단계로 나눴습니다. LLM 호출이 늘어나는 비용은 감수했습니다. 하루 한 번 도는 배치라 지연은 문제가 되지 않았습니다.\n\n모델은 상위 모델 대신 Gemini 2.5 Flash를 골랐습니다. 하루 200건 이상을 매일 도는 배치에서는 모델 단가가 그대로 운영비가 됩니다. 분류는 추론 난이도보다 판단 기준의 일관성이 중요한 작업이라, 모델을 올리기보다 프롬프트와 계층 구조에 투자하는 편이 낫다고 판단했습니다.\n\n분류 결과는 Apollo Federation Subgraph로 분리했습니다. 파이프라인 안에만 두면 다른 기능에서 같은 계산을 다시 하게 되어, 사내 다른 서비스가 GraphQL로 조회하게 했습니다.",
+            result: "하루 200건 이상의 업무를 13개 업무유형과 14개 미팅유형으로 Argo CronWorkflow에서 매일 자동 분류하고, 이 결과를 FLEX 근태 데이터와 이어 팀별 업무량을 봅니다.",
             role: 'AX Engineer',
             tech: ['Gemini 2.5 Flash', 'Python', 'Argo Workflows', 'Apollo Federation', 'GraphQL', 'Notion API'],
-            features: [
-              '로드맵 성격 판정 후 태스크를 분류하는 2단 계층 구조로 단일 프롬프트 대비 정확도 확보',
-              '하루 200건 이상을 Argo CronWorkflow로 매일 정기 처리',
-              '사내 검수 기준 분류 정확도 91.7%. 다만 표본 구성과 다수 클래스 베이스라인이 정리되지 않은 내부 측정치라 수동 분류 대비 개선이라는 방향까지만 주장합니다',
-              '배치 운영비를 이유로 상위 모델 대신 Flash를 선택하고 프롬프트와 계층 구조에 투자',
-              '분류 결과를 Apollo Federation Subgraph로 분리해 사내 다른 서비스가 재계산 없이 조회'
-            ]
+            features: []
           },
           links: {
             demo: null,
@@ -415,23 +416,19 @@ export const content = {
         },
         {
           id: 4,
-          title: '생산성 지표 체계 구축',
+          title: '생산성 지표 체계와 배포 검수 에이전트',
           category: 'AX 업무자동화',
-          image: null,
-          description: '「무엇을 배포로 셀지」를 팀마다 합의해 문서로 고정하고, 배포 빈도와 실패율 같은 지표를 매일 자동으로 냅니다. 정성으로만 말하던 생산성을 숫자로 증명하게 되어 사내 AX 전환의 주요 지표로 씁니다.',
-          how: "변경량에 불과한 커밋 수와 조작이 쉬운 토큰 사용량을 배제하고, 팀별로 합의한 유효 배포만 생산성 지표로 인정했습니다.",
+          image: "/assets/diagrams/ax-metrics.svg",
+          description: "「무엇을 배포로 셀지」를 팀마다 합의해 문서로 고정하고, DORA 4지표(배포 빈도, 변경 리드 타임, 변경 실패율, 복구 시간)를 Notion 릴리스 문서에서 매일 자동으로 산출합니다. 기준을 채웠는지는 Notion Custom Agent가 릴리스 문서를 받아 판정합니다.",
+          how: "커밋 수는 변경량일 뿐이고 토큰 사용량은 부풀리기 쉬워 제외하고, 팀마다 합의해 문서로 정한 기준을 채운 배포만 세어 DORA 4지표를 냅니다.",
           details: {
-            problem: '지금 모두가 에이전틱 AI로 생산성이 올랐다고 말합니다. 그런데 "그래서 얼마나 올랐나요"라는 질문에 답할 수 있는 곳은 거의 없습니다. 개인의 생산성은 실제로 달라지고 있는데 조직 차원에서 그것을 점검할 방법이 없었고, 원인은 도구가 아니라 데이터가 놓인 위치였습니다. 업무는 Notion 태스크에, 배포는 릴리스 문서에, 장애는 또 다른 DB에 남아서 하나의 기준으로 이어붙는 곳이 없었습니다.',
-            solution: '측정의 출발점으로 Notion을 골랐습니다. 측정을 시작할 때 가장 흔한 실수는 측정 전용 도구부터 들이는 일이라고 봅니다. 새 도구를 넣으면 사람들이 거기에 데이터를 넣어줘야 하고 그 순간 측정이 또 하나의 업무가 됩니다. 이미 모두가 매일 쓰고 있는 곳에서 뽑아내는 편이 정착 확률이 훨씬 높다고 판단했습니다.\n\n다음은 무엇을 생산성으로 볼 것인가였습니다. CTO께서 DevOps 지표인 DORA를 생산성 지표로 삼자는 방향을 제시해주었고, 저는 그 방향을 실제로 측정 가능한 구조로 만드는 일을 맡았습니다. 레퍼런스를 찾아보니 깃 커밋과 배포 이력을 세는 방식과 토큰 사용량을 세는 방식이 있었는데, 코드 변경량이 많은 것을 생산성이라 부를 수 없고 토큰 사용량은 개개인이 조작하기 쉬워 둘 다 부족하다고 봤습니다. 의미 있는 배포로 이어져야 생산성으로 인정한다는 기준을 세웠습니다.\n\n그 기준을 제가 혼자 정하지는 않았습니다. 기준을 혼자 정하면 각 팀은 자기 일과 맞지 않는다고 느끼고, 그렇게 되면 지표 자체를 신뢰하지 않습니다. 팀마다 따로 이야기해 배포 기준을 합의하고 문서로 고정하는 데 시간을 더 썼습니다.\n\n기준 충족 여부 검수는 사람이 눈으로 보는 대신 Notion 커스텀 에이전트가 판단하게 했습니다. 사람이 하는 검수는 초기에는 정확하지만 반복되면 형식화됩니다. 에이전트 검수는 개별 판단의 정확도가 사람보다 낮을 수 있어도 기준이 흔들리지 않고, 지표에서는 일관성이 개별 정확도보다 중요하다고 봤습니다. 릴리스에 연결되지 않은 TASK를 찾아 매핑하는 일도 에이전트에 맡겨 릴리스 문서 자체가 지표의 원천이 되게 했습니다. 배포가 끝나면 측정도 함께 끝납니다. 측정이 별도 작업으로 남아 있으면 바쁠 때 가장 먼저 밀리고, 밀린 데이터로 만든 지표는 신뢰를 잃습니다.\n\n측정 전용 SaaS를 붙이는 선택지도 있었지만 우리 조직의 배포 정의는 이미 Notion 릴리스 문서 안에 있었습니다. 외부 도구를 붙이면 그 도구의 배포 정의에 우리를 맞춰야 하고, 그러면 팀과 합의한 기준이 무의미해집니다.',
-            role: 'AX Engineer. DORA 채택 방향은 CTO 제시, 측정 구조 설계와 구현이 담당 범위',
-            tech: ['Python', 'Notion API', 'Notion Custom Agent', 'Argo Workflows', 'SQLite', 'Grafana'],
-            features: [
-              '팀별 배포 기준을 각 팀과 합의해 문서로 고정, 산출 기준으로 사용',
-              'Deploy Frequency · Lead Time to Changes · Change Fail Rate · MTTR 매일 자동 산출, 크루·리더 대시보드에서 같은 화면으로 공유',
-              '릴리스 문서 자체를 지표 원천으로 삼아 배포가 끝나면 측정도 함께 끝나는 구조',
-              '이 지표가 R&R 논의와 1on1 대화 소재로 사용됨. 리포트로만 남는 지표와 갈리는 지점',
-              '릴리스 문서 기준 배포 건수는 구축 이전 한 달 대비 16% 증가. 다만 계측 시스템이 측정 기간 중에 들어왔고 이전 값은 수동 집계라 완전히 같은 기준은 아닙니다'
-            ]
+            problem: "모두가 AI로 생산성이 올랐다고 말하지만 얼마나 올랐는지 답할 방법이 없었습니다. 업무는 Notion 태스크에, 배포는 릴리스 문서에, 장애는 또 다른 DB에 남아 하나의 기준으로 이어지지 않았습니다. 배포 품질 검수는 담당자가 릴리스 문서를 직접 확인하는 방식이라 기준이 사람에 따라 달랐고, 릴리스와 태스크를 잇는 일도 손으로 하고 있었습니다.",
+            decision: "커밋 수는 코드를 많이 바꿨다는 뜻일 뿐이고 토큰 사용량은 개인이 부풀리기 쉬워, 의미 있는 배포로 이어진 것만 생산성으로 인정했습니다. 무엇을 배포로 셀지는 팀마다 따로 이야기해 합의하고 문서로 고정했는데, 기준을 한쪽에서 정하면 팀이 지표를 믿지 않기 때문입니다. 지표는 모두가 매일 쓰는 Notion 릴리스 문서에서 뽑아 배포가 끝나면 측정도 함께 끝나게 했습니다.\n\n사람이 하는 검수는 처음에는 정확하지만 반복되면 형식만 남고 기준이 흔들린다고 봤습니다. 그래서 판정을 Notion Custom Agent에 옮겨, 릴리스 문서를 입력으로 받아 팀별 배포 기준 문서를 옮긴 프롬프트에 비춰 판정하게 했습니다. 판단 하나하나의 정확도가 사람보다 낮을 수 있다는 점은 감수했습니다. 릴리스에 연결되지 않은 태스크를 찾아 잇는 일도 에이전트에 맡겨, 배포 기록과 업무 기록이 어긋나지 않게 했습니다.",
+            result: "배포 품질 검수, 릴리스에 연결되지 않은 태스크 찾아 잇기, DORA 점수 리포트 발행이 모두 자동으로 돌고, 배포 검수 에이전트는 전사에서 씁니다. 정성으로만 말하던 생산성을 숫자로 증명하게 되어 사내 AX 전환의 주요 지표로 씁니다.",
+            learned: "측정이 별도 작업으로 남아 있으면 바쁠 때 가장 먼저 밀리고, 밀린 데이터로 만든 지표는 신뢰를 잃습니다. 그래서 구현보다 팀마다 배포 기준을 합의하고 문서로 고정하는 데 시간을 더 썼습니다.",
+            role: "AX Engineer. 측정 구조 설계와 구현 담당",
+            tech: ['Python', 'Notion API', 'Notion Custom Agent', '프롬프트 엔지니어링', 'Argo Workflows', 'SQLite', 'Grafana'],
+            features: []
           },
           links: {
             demo: null,
@@ -443,18 +440,16 @@ export const content = {
           title: 'Spin Framework 오픈소스 예제 수정 기여',
           category: '오픈소스',
           image: null,
-          description: 'Spin Framework Python SDK의 Postgres 예제가 쿼리 결과를 반환하지 않던 문제를 다른 사용자의 이슈(#115)를 받아 수정, 머지 (PR #124). 예제 문서 오류 2건 추가 수정 (#126, #128)',
-          how: "Python 예제만 결과를 로그로 출력하고 고정 문자열을 반환하던 문제를, 다른 언어 SDK와 같이 쿼리 결과를 표 형태로 응답하도록 수정했습니다.",
+          description: "Spin Framework Python SDK의 Postgres 예제 수정 기여입니다.",
+          how: "Spin Python SDK의 Postgres 예제만 쿼리 결과를 로그에 찍고 고정 문자열을 돌려줘 결과를 볼 수 없었기에, 다른 언어 SDK처럼 표 형태로 HTTP 응답에 담도록 고쳤습니다.",
           details: {
-            problem: 'spin-postgres 예제가 쿼리 결과를 서버 로그로만 출력하고 HTTP 응답에는 고정 문자열을 반환해, 예제를 따라 해도 Postgres 결과를 확인할 수 없었음',
-            solution: 'Spin의 Postgres 바인딩이 값을 래퍼 객체로 돌려주는 점에 맞춰 format_value, format_rowset 헬퍼를 추가해 컬럼명과 행을 표 형태로 응답 본문에 반환하도록 고쳤습니다. 예제가 전제하는 test 테이블의 생성 SQL을 README에 추가해 그대로 따라 하면 실행되게 했습니다.',
+            problem: "Spin Python SDK의 Postgres 예제가 쿼리 결과를 서버 로그에만 찍고 응답으로는 고정 문자열을 돌려줘, 예제를 따라 해도 결과를 확인할 수 없었습니다.",
+            decision: "다른 사용자가 올린 이슈(#115)를 받아, 다른 언어 SDK처럼 쿼리 결과를 표 형태로 응답에 담도록 고쳤습니다.",
+            result: "PR #124가 2025.12.15에 머지됐고, 예제 문서 오류 2건(#126, #128)도 함께 고쳤습니다.",
             role: 'Open Source Contributor',
             tech: ['Python', 'WebAssembly', 'Spin Framework', 'Git'],
             features: [
-              'PR #124: 다른 사용자가 올린 이슈 #115 해결, 2025.12.15 머지',
-              'format_value, format_rowset 헬퍼로 쿼리 결과를 HTTP 응답에 표 형태로 반환',
-              'README에 예제용 test 테이블 생성 SQL 추가',
-              'PR #126, #128: 예제 README 제목 오류와 오타 수정 (본인 제기 Issue #125, #127)'
+              "README에 예제용 test 테이블 생성 SQL 추가"
             ]
           },
           links: {
@@ -468,27 +463,26 @@ export const content = {
           category: 'DevOps & Infra',
           image: null,
           description: 'AKS 1.34 실환경에서 동일 Go 워크로드를 SpinKube Wasm과 컨테이너로 구현해 계층별 실측한 학술 논문. Wasm 벤더가 주장한 콜드스타트 이점이 운영 스택을 지나며 어디까지 희석되는지 검증',
-          how: "벤더 마이크로벤치마크에 의존하지 않고 동일한 Go 워크로드를 Wasm과 컨테이너로 실측해, 단일 런타임 대신 계층별 할당 기준을 제안했습니다.",
+          how: "벤더 수치는 런타임만 떼어 잰 값이라, 같은 Go 워크로드를 SpinKube Wasm과 컨테이너로 만들어 AKS에서 직접 재고 계층별로 런타임을 나눠 배정하는 기준을 제안했습니다.",
           details: {
-            problem: 'Wasm 런타임 벤더는 컨테이너 대비 콜드스타트 약 400배, Pod 밀도 43배 우위를 주장하지만 이 수치는 격리된 마이크로벤치마크에서 나온 값이다. 쿠버네티스 운영 스택(shim·SDK·HTTP 계층)을 통과한 종단 경로에서도 같은 이점이 남는지는 검증되지 않았다.',
-            solution: 'IoT 로그 파이프라인을 Edge·Transform·Ingestion·Storage 네 계층으로 모델링하고, 그중 세 계층을 동일한 Go 워크로드의 SpinKube Wasm 모듈과 scratch 컨테이너로 각각 구현해 Azure Kubernetes Service(AKS 1.34) 위에서 실측 비교했습니다. 언어와 비즈니스 로직, 부하 조건을 통제해 런타임 차이만 격리 측정했고, Shapiro-Wilk 정규성 검정 후 Welch t 검정 또는 Mann-Whitney U 검정을 자동 선택해 확정적 10개 지표군에 Bonferroni 보정을 적용했습니다. 그 결과 벤더가 제시한 런타임 수준의 정량 이점은 실제 운영 스택을 지나며 크게 희석되고, 계층마다 유리한 런타임이 상반된다는 점을 확인해 단일 런타임 선택이 아닌 계층별 할당을 제안했습니다. 이에 앞선 선행 실험에서는 Python Wasm의 연산 한계를 Rust 네이티브 Wasm 마이그레이션으로 해결해 바이너리 91배 감소(35.86MB→0.39MB)와 처리량 7.8배 향상을 확보했습니다.',
-            role: '학부연구생 (CSDC Lab 개별연구, 단독 수행)',
+            problem: "Wasm 런타임 벤더는 컨테이너보다 콜드스타트가 약 400배 빠르고 Pod 밀도가 43배 높다고 주장하지만, 이 수치는 런타임만 떼어 잰 마이크로벤치마크 값입니다. 쿠버네티스 운영 스택(shim, SDK, HTTP 계층)을 지난 전체 경로에서도 같은 이점이 남는지는 검증되지 않았습니다.",
+            decision: "벤더 수치를 그대로 믿지 않고 직접 재기로 했습니다. IoT 로그 파이프라인을 Edge, Transform, Ingestion, Storage 네 계층으로 모델링하고, 그중 세 계층을 같은 Go 워크로드의 SpinKube Wasm 모듈과 scratch 컨테이너로 각각 만들어 AKS 1.34 위에서 비교했습니다. 언어와 로직, 부하 조건을 같게 맞춰 런타임 차이만 남겼습니다.\n\n차이가 우연인지 가리기 위해 Shapiro-Wilk 정규성 검정 뒤 Welch t 검정 또는 Mann-Whitney U 검정을 자동으로 고르게 하고, 10개 지표군에 Bonferroni 보정을 적용했습니다.\n\n결론을 「어느 런타임이 낫다」로 내지 않았습니다. 계층마다 유리한 쪽이 반대로 나왔기 때문에, 하나를 고르는 대신 계층별로 배정하는 기준을 제안했습니다.",
+            result: "런타임 인스턴스화만 재면 0.436ms로, 벤더 주장(0.5ms)과 통계적으로 유의한 차이가 없었습니다(p=0.71). 전체 요청 경로 1.55ms 중 직접 잰 런타임 인스턴스화의 비중은 28%였습니다. 나머지 72%는 쿠버네티스, shim, SDK, HTTP 계층에서 더해진 몫이고, 계층마다 따로 재지 않아 어느 계층이 얼마를 더했는지는 나누지 못했습니다. Ingestion은 컨테이너가, Transform과 Edge는 Wasm이 유리했습니다.",
+            role: "학부연구생 (CSDC Lab 개별연구로 수행)",
             tech: ['SpinKube', 'WebAssembly', 'WASI', 'Rust', 'Go', 'Azure AKS', 'KEDA', 'Kubernetes', 'containerd-shim-spin', '통계 검정'],
             features: [
-              '런타임 실측 0.436ms로 벤더 주장(0.5ms)과 통계적으로 구별되지 않음(p=0.71). 다만 전체 요청 경로 1.55ms 중 런타임 비중은 28%, 나머지 72%는 쿠버네티스·shim·SDK·HTTP 계층',
-              'Ingestion 계층은 컨테이너 우세: 24~28K rps 유지 vs Wasm 약 1,264 rps 한계 (19~22배)',
-              'Transform 계층은 Wasm 우세: 컨테이너는 테넌트당 격리 강제 시 약 41 Pod에서 한계, Wasm 공유 풀은 8,000 테넌트 무손실. 테넌트당 비용 최대 64배 저렴 ($4.69 → $0.07)',
-              'Edge 계층은 Wasm 우세: scale-from-zero 콜드스타트 11배 빠름, arm64 빌드 컨테이너가 amd64 노드에서 실패한 반면 동일 Wasm 모듈은 cross-arch 이식 성공',
-              '선행 실험: Python Wasm → Rust 네이티브 Wasm 마이그레이션으로 바이너리 35.86MB → 0.39MB(91배), 처리량 1,713 → 13,389 req/s(7.8배)',
-              'Threats to Validity 6건 명시 (6 vCPU free-tier 클러스터 한계, 단일 Go 워크로드, 측정 도구 기준 차이 등)'
+              "수신(Ingestion) 계층은 컨테이너 우세: 24~28K rps vs Wasm 약 1,264 rps",
+              "변환(Transform) 계층은 Wasm 우세: 8,000 테넌트 무손실. 테넌트마다 격리를 강제한 월 비용 모형에서 2,500 테넌트일 때 테넌트당 비용 최대 64배 낮음(6 vCPU 클러스터 기준)",
+              "Edge 계층은 Wasm 우세: scale-from-zero 콜드스타트 11배 빠름",
+              "선행 실험: Python Wasm을 Rust 네이티브 Wasm으로 옮겨 바이너리 35.86MB → 0.39MB, 처리량 7.8배",
+              "한계 6건 명시 (6 vCPU 클러스터, 단일 Go 워크로드, SpinKube/Wasmtime 한정 등)"
             ]
           },
           links: {
             demo: null,
             github: null,
             papers: [
-              { label: '논문 · 계층별 런타임 할당 (AKS 실측)', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' },
-              { label: '선행 실험 자료 · 런타임 비교와 Rust 최적화', url: '/assets/wasm-spinkube-runtime-comparison.pdf' }
+              { label: '논문 · 계층별 런타임 할당 (AKS 실측)', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' }
             ]
           }
         },
@@ -498,18 +492,16 @@ export const content = {
           category: 'DevOps & Infra',
           image: null,
           description: '시즌별 기숙사 매칭 서비스. AWS 풀 서버리스 아키텍처 + Terraform IaC (Lambda 9개, Step Functions, DynamoDB)',
-          how: "시즌성 트래픽에 맞춰 Lambda와 DynamoDB 온디맨드로 구성하고, 사용량 계획이 불필요해 REST API 대신 HTTP API v2를 선택했습니다.",
+          how: "전체 인프라를 Terraform으로 남겨 시즌마다 다시 세울 수 있습니다.",
           details: {
-            problem: '시즌별 운영 특성에 따른 유휴 비용 발생과 매칭 워크플로우 복잡성',
-            solution: 'Lambda 9개 함수, Step Functions 매칭 워크플로우, DynamoDB 4개 테이블, API Gateway(HTTP API v2), Cognito OAuth 2.0 인증, SES 이메일 발송까지 전체 인프라를 Terraform으로 코드화했습니다. Lambda와 DynamoDB 온디맨드(PAY_PER_REQUEST)만 써서 쓰지 않는 기간의 리소스 비용은 0원입니다. 설문 수집, 매칭 연산, 결과 통보로 이어지는 흐름이 어디서 끊겼는지 보이도록 매칭 워크플로를 Step Functions에 두어 실행 이력을 콘솔에서 확인하게 했고, 사용량 계획과 요청 검증이 필요 없어 REST API 대신 비용과 지연이 낮은 HTTP API v2를 골랐습니다. 비시즌에 리소스를 내리고 시즌에 다시 세울 수 있도록 전부 Terraform으로 남겼습니다.',
-            role: 'Cloud Architect',
+            problem: "기숙사 매칭은 시즌에만 쓰여, 서버를 계속 켜 두면 쓰지 않는 기간에도 비용이 나갑니다. 설문 수집, 매칭 연산, 결과 통보로 이어지는 흐름도 길어 어디서 끊겼는지 보여야 했습니다.",
+            decision: "쓴 만큼만 내는 Lambda와 DynamoDB 온디맨드로만 구성했습니다. 매칭 흐름은 Step Functions에 두어 실행 이력을 콘솔에서 확인하게 했고, 사용량 계획과 요청 검증이 필요 없어 REST API 대신 비용과 지연이 낮은 HTTP API v2를 골랐습니다.",
+            result: "쓰지 않는 기간에는 실행 비용이 들지 않는 구조이고, 전체 인프라를 Terraform으로 남겨 시즌마다 다시 세울 수 있습니다.",
+            role: "Cloud Architect. 아키텍처 설계와 Terraform IaC 전체를 맡았습니다.",
             tech: ['Terraform', 'AWS Lambda', 'AWS Step Functions', 'DynamoDB', 'API Gateway', 'Cognito'],
             features: [
-              'Lambda 9개 함수 + Step Functions 매칭 워크플로우',
-              'DynamoDB 4개 테이블 (Forms, FormResponses, Results, Students)',
-              'Cognito OAuth 2.0 인증 + API Gateway HTTP API',
-              'Lambda와 DynamoDB 온디맨드 구성으로 쓰지 않는 기간의 리소스 비용 0원',
-              'Terraform으로 전체 인프라 코드화'
+              "Lambda 9개 함수, DynamoDB 4개 테이블 (Forms, FormResponses, Results, Students)",
+              "Cognito OAuth 2.0 인증, SES 이메일 발송"
             ]
           },
           links: {
@@ -523,17 +515,16 @@ export const content = {
           category: 'Security',
           image: null,
           description: 'Terraform IAM 리소스 관계를 그래프로 만들고 시간과 서비스 목적 컨텍스트를 함께 보는 보안 분석기. 규칙 기반 스캐너가 놓치는 만료 계정, 미사용 계정, 목적 불일치를 탐지',
-          how: "기존 스캐너를 대체하기보다 보완하는 방향으로, IAM 관계를 그래프로 모델링하고 만료일과 서비스 목적은 규칙 기반으로 분석해 Checkov 결과와 병합했습니다.",
+          how: "같은 테스트 파일로 비교한 TFSec과 Checkov가 잡지 않은 유형을 탐지하며, 동작을 유닛 테스트 11건으로 고정했습니다.",
           details: {
-            problem: '규칙 기반 정적 분석 도구(TFSec, Checkov)는 패턴에 걸리는 것만 잡아, 개별 리소스는 정상이지만 연결하면 위험해지는 구성과 만료 계정 같은 시간 기반 위험을 놓침',
-            solution: 'python-hcl2로 Terraform을 파싱해 IAM 리소스 관계(assume_role, pass_role 등 7종)를 NetworkX 그래프로 만들고, 위험 IAM 액션 17종 사전과 액션 조합 매칭으로 권한 상승 경로를 판정했습니다. 계정의 만료일과 마지막 사용일, 서비스 목적과 부여된 권한을 함께 비교해 규칙 기반 스캐너가 구조적으로 못 보는 위험을 잡습니다. 기존 도구를 대체하지 않고 보완하도록 Checkov 결과를 병합하는 모듈을 두었고, BERT(bert-base-uncased) 임베딩 유사도 모듈도 구현했습니다.',
+            problem: "TFSec, Checkov 같은 규칙 기반 도구는 정해진 패턴에 걸리는 것만 잡습니다. 리소스 하나하나는 정상인데 이어 놓으면 위험해지는 구성이나, 만료된 계정처럼 시간이 지나 생기는 위험은 놓칩니다.",
+            decision: "Terraform의 IAM 리소스 관계를 그래프로 만들어 권한이 올라가는 경로를 찾고, 계정의 만료일과 마지막 사용일, 서비스 목적과 부여된 권한을 함께 비교했습니다. 기존 도구를 대체하기보다 보완하는 쪽이 맞다고 보고 Checkov 결과를 합치는 모듈을 두었습니다.",
+            result: "만료 계정, 미사용 계정, 목적 불일치처럼 같은 테스트 파일로 비교한 TFSec과 Checkov가 잡지 않은 유형을 탐지하며, 동작을 유닛 테스트 11건으로 고정했습니다.",
             role: 'Security Researcher & Developer',
             tech: ['Python', 'BERT', 'Terraform', 'NetworkX', 'AWS IAM', 'Hugging Face', 'NLP'],
             features: [
-              '만료 계정, 미사용 계정, 목적 불일치, 시간 기반 위험처럼 TFSec과 Checkov가 탐지하지 않는 유형을 탐지',
-              'IAM 관계 그래프 위에서 위험 액션 17종 사전과 액션 조합 매칭으로 권한 상승 경로 판정',
-              'Checkov 결과 병합으로 기존 스캐너와 상호 보완',
-              '탐지 기능 동작을 유닛 테스트 11건으로 고정'
+              "python-hcl2로 파싱한 IAM 관계 7종을 NetworkX 그래프로 구성",
+              "위험 액션 17종 사전과 액션 조합으로 권한 상승 경로 판정"
             ]
           },
           links: {
@@ -546,18 +537,16 @@ export const content = {
           title: 'AWS 클라우드 마이그레이션 (CAPS 동아리)',
           category: 'DevOps & Infra',
           image: null,
-          description: '2022년, 누가 시키지 않았지만 동아리 서버를 물리 PC에서 AWS로 직접 이전. 정전과 재부팅에 멈추던 서비스를 상시 운영하고 학교 밖에서도 관리',
-          how: "정전과 재부팅에 취약하고 현장 관리가 필요했던 동아리 서버를 2022년 자발적으로 AWS로 이전해, 원격 운영이 가능한 구조로 바꿨습니다.",
+          description: "동아리 서버를 물리 PC에서 AWS로 옮긴 작업입니다.",
+          how: "물리 PC로 돌리던 동아리 서버가 정전과 재부팅 때마다 멈추고 학교에서만 손댈 수 있어, 2022년에 자발적으로 AWS로 옮기고 Docker 컨테이너로 구성했습니다.",
           details: {
-            problem: '물리 PC로 돌리던 동아리 서버가 정전과 재부팅에 그대로 노출되고, 관리자가 학교에 있어야만 손을 댈 수 있던 문제',
-            solution: '동아리 서버를 AWS로 옮겨 정전과 재부팅의 영향을 없애고 학교 밖에서도 관리할 수 있게 해 24/7 서비스 가용성을 확보했습니다.',
+            problem: "물리 PC로 돌리던 동아리 서버가 정전과 재부팅 때마다 멈췄고, 관리자가 학교에 있어야만 손을 댈 수 있었습니다.",
+            decision: "2022년에 누가 시키지 않았지만 서버를 AWS로 옮기고, 서비스는 Docker 컨테이너로 구성했습니다.",
+            result: "교내 PC의 정전과 재부팅에 서비스가 멈추던 의존을 없앴고, 학교 밖에서도 관리할 수 있게 됐습니다.",
             role: 'Cloud Architect',
             tech: ['AWS EC2', 'AWS EBS', 'AWS S3', 'AWS RDS', 'Docker'],
             features: [
-              'AWS 클라우드 전체 마이그레이션',
-              '24/7 서비스 가용성 확보',
-              '정전, 재부팅 영향과 현장 관리 필요성 제거',
-              'Docker 기반 컨테이너화'
+
             ]
           },
           links: {
@@ -570,17 +559,17 @@ export const content = {
           title: 'LLM 비용 라벨링 체계 구축',
           category: 'DevOps & Infra',
           image: null,
-          description: 'LLM 호출마다 어느 회사 모델을 어떤 용도로 썼는지 표시를 붙여, 용도별 지출을 추적하고 한도를 넘으면 알림이 가게 했습니다.',
-          how: "AI 사용 확대에 앞서 비용 가시성을 확보하고자, 사내 LLM 서버 코드에 벤더와 용도 라벨을 적용해 지출을 분리 추적했습니다.",
+          description: "LLM 호출마다 벤더(Vertex AI, AI Studio, OpenAI)와 용도 라벨을 붙여 지출을 용도별로 나눠 추적하고, 임계치를 넘으면 알림이 가게 했습니다.",
+          how: "Vertex AI, AI Studio, OpenAI 지출을 벤더와 용도별로 나눠 보고, 임계치를 넘으면 알림이 갑니다.",
           details: {
-            problem: '사내 LLM 사용이 늘면서 어떤 벤더·기능에 비용이 발생하는지 추적할 수 없어 비용 관리가 어려운 상황',
-            solution: '사내 LLM 서버 코드에 벤더·용도 기반 라벨링 방식을 추가하여 Vertex AI, AI Studio, OpenAI 등 벤더별 LLM 지출을 모니터링할 수 있는 기반을 마련했습니다. AI 사용을 늘리기 전에 용도별 지출이 먼저 보여야 한다고 판단해 진행한 작업입니다. 입사 초기 과제로 진행하며 사내 코드 규칙과 GQL 컨벤션을 빠르게 익히는 계기가 되었습니다.',
+            problem: "사내 LLM 사용이 늘었지만 어느 회사 모델에, 어떤 기능에 돈이 나가는지 알 수 없었습니다.",
+            decision: "AI 사용을 늘리기 전에 용도별 지출부터 보여야 한다고 보고, 사내 LLM 서버 코드에서 호출마다 벤더와 용도 라벨을 붙였습니다.",
+            result: "Vertex AI, AI Studio, OpenAI 지출을 벤더와 용도별로 나눠 보고, 임계치를 넘으면 알림이 갑니다.",
+            learned: "입사 초기 과제로 진행하면서 사내 코드 규칙과 GraphQL 컨벤션을 익혔습니다.",
             role: 'AX / Platform Engineer',
             tech: ['GraphQL', 'Cost Monitoring', 'FinOps'],
             features: [
-              '벤더별(Vertex AI·AI Studio·OpenAI) LLM 비용 라벨링',
-              '사용량 모니터링 환경과 임계치 기반 Alert 시스템 구축',
-              'LLM 비용 추적 라벨링 작성 가이드 문서화'
+              "라벨 작성 가이드 문서화"
             ]
           },
           links: {
@@ -593,43 +582,18 @@ export const content = {
           title: '인바운드 리드 SLA 체계 구축',
           category: 'Platform Engineering',
           image: null,
-          description: '접수 → 담당자 배정 평균 33.6시간을 0.4시간으로 단축 (98.7% 단축). 「응답」의 기준을 정하는 일부터 영업시간 기준 측정, 알림, 오래 방치된 문의를 윗선에 넘기는 절차까지 만들었습니다.',
-          how: "고객이 체감하는 응답은 첫 컨택이라는 점에서 배정 시각과 첫 컨택을 함께 측정하고, 개선 전후를 동일한 영업시간 기준으로 비교했습니다.",
+          description: "「응답」을 무엇으로 볼지 SLA 정의부터 세우고, 영업시간 기준 자동 측정과 알림, 방치된 리드를 상위 직급자에게 넘기는 에스컬레이션까지 만들었습니다.",
+          how: "담당자 배정만 세면 숫자는 좋아 보여도 고객이 느끼는 응답은 첫 연락이라, SLA를 배정 시각과 첫 고객 연락 두 가지로 재고 전후를 같은 영업시간 기준으로 비교했습니다.",
           details: {
-            problem: '상반기 사내 리드 응답은 1시간 내 응답 45.5%, 평균 응답 4.3시간, 9시간 초과 방치 4건이었습니다. 초기 대응이 늦을수록 상담 전환이 떨어져 그대로 영업 기회 손실로 이어지는 상태였습니다.',
-            solution: '그전까지 제가 다룬 문제는 대부분 코드와 인프라 안에 있었는데 이번은 문제가 영업 조직의 업무 흐름 안에 있었고 저는 그 도메인을 전혀 몰랐습니다. 코드를 더 잘 짜서 풀 수 있는 문제가 아니라고 보고, 설계를 먼저 하지 않고 영업 담당자들의 실제 업무를 따라가며 물었습니다. 왜 이 리드는 연락이 늦었는지, 알림을 보고도 못 움직인 이유가 무엇인지, 주말에 온 문의는 어떻게 처리하는지를 하나씩 들었고 그 대화에서 지금의 설계가 나왔습니다.\n\n가장 어려웠던 것은 응답을 무엇으로 정의할 것인가였습니다. 시스템 관점에서는 담당자가 배정된 시각이 자연스럽고 영업 관점에서는 실제로 고객과 통화가 닿은 시각입니다. 이 정의 하나로 지표가 완전히 달라지고 팀이 무엇을 개선할지도 달라집니다. 담당자 배정만 세면 숫자는 훨씬 좋아 보이지만, 두 지표를 모두 남기고 더 불리한 첫 고객 컨택 기준을 버리지 않기로 했습니다. 고객 입장에서 응답은 전화를 받은 순간이기 때문입니다. 유리한 기준으로 갈아타는 순간 지표는 개선 도구가 아니라 보고용 숫자가 됩니다.\n\nSLA는 영업시간 기준으로만 재도록 했습니다. 금요일 저녁에 온 문의를 월요일 아침에 받은 것까지 지연으로 세면 지표가 현실과 어긋나고, 어긋난 지표는 결국 아무도 보지 않습니다. 알림도 담당자가 실제로 대응할 수 있는 시간대에만 가도록 바꿨습니다. 알림을 늘리면 대응이 빨라질 것 같지만 대응할 수 없는 시간에 오는 알림은 알림 자체를 무시하게 만듭니다. 대신 방치된 리드에는 에스컬레이션이 걸리게 했고, 실시간 모니터링 화면을 만들어 담당자들이 같은 화면을 보게 했습니다.\n\n측정을 왜곡시키는 경로도 함께 걷어냈습니다. 도입 문의 폼 이메일 리드가 백오피스로 이중 인입되던 것을 제거했고, 리드를 수정하면 접수 시간이 초기화되던 문제를 고쳤으며, 변경 이력을 상세화하고 과거 데이터를 백필했습니다. 이 작업을 하지 않으면 개선 전후를 같은 기준으로 비교할 수 없습니다.\n\n2주 동안 업무시간 기준 약 55시간을 썼고 필요성 검토와 기획, 영업팀 인터뷰, SLA 정의 문서 작성, 실시간 모니터링 화면과 알림·에스컬레이션 구현, QA까지 직접 끝냈습니다. 그중 순수 개발보다 무엇을 어떻게 셀 것인가를 합의하고 문서로 못 박는 데 더 많은 시간이 들어갔습니다.',
+            problem: "리드가 접수된 뒤 담당자가 배정되기까지 평균 33.6시간이 걸렸고, 1시간 안에 배정되는 비율은 9%였습니다(영업시간 기준). 고객에게 첫 연락이 언제 닿았는지는 지표로 남지 않아 늦은 대응은 사후에 우연히 발견됐습니다.",
+            decision: "문제가 코드가 아니라 영업 조직의 업무 흐름 안에 있어, 설계에 앞서 영업 담당자의 업무를 따라가며 물었습니다. 왜 연락이 늦었는지, 알림을 보고도 움직이지 못한 이유가 무엇인지를 들었고 지금의 설계는 그 대화에서 나왔습니다.\n\n가장 어려웠던 것은 「응답」의 정의였습니다. 시스템 관점에서는 담당자가 배정된 시각이고, 영업 관점에서는 고객과 실제로 연락이 닿은 시각입니다. 배정만 세면 숫자는 훨씬 좋아 보이지만 두 지표를 모두 남기고, 더 불리한 첫 고객 연락 기준을 버리지 않았습니다. 대가는 성과를 보고할 때 미달 지표를 함께 들고 가야 한다는 점입니다.\n\nSLA는 영업시간 기준으로만 쟀습니다. 금요일 저녁 문의를 월요일 아침에 받은 것까지 지연으로 세면 지표가 현실과 어긋나기 때문입니다. 알림은 담당자가 대응할 수 있는 시간대로 좁히고, 방치된 리드는 상위 직급자에게 넘어가게 했습니다.",
+            result: "접수에서 담당자 배정까지 평균 33.6시간이 약 26분으로 줄었고, 1시간 안에 배정되는 비율은 9%에서 86%로 올랐습니다(98.7% 단축, 개선 전후 모두 영업시간 기준). 첫 고객 연락 기준 지표는 아직 목표에 미치지 못합니다. 접수와 배정 시각은 이전에도 기록되던 필드라 전후를 같은 필드, 같은 기준으로 계산했습니다.",
+            learned: "유리한 기준으로 갈아타는 순간 지표는 개선 도구가 아니라 보고용 숫자가 됩니다.",
             role: 'DevOps Engineer',
             tech: ['Notion', '사내 백오피스', 'SLA 지표 설계', '알림·에스컬레이션', '과거 데이터 백필'],
             features: [
-              '배정 지표: 리드 접수에서 담당자 배정까지 평균 33.6시간 → 0.4시간(약 26분), 1시간 내 담당자 배정 비율 9% → 86%',
-              '응답 지표(첫 고객 컨택)는 아직 목표 미달. 유리한 기준으로 갈아타지 않기 위해 불리한 쪽을 함께 유지 중',
-              '영업시간 기준 SLA 자동 측정 (주말·공휴일·업무시간 외 제외), 개선 전후 동일 기준으로 계산',
-              '대응 가능 시간대 알림 + 방치 리드 에스컬레이션 + 실시간 모니터링 화면',
-              '이중 인입 제거, 접수 시간 초기화 버그 수정, 변경 이력 상세화와 백필로 측정 왜곡 제거'
-            ]
-          },
-          links: {
-            demo: null,
-            github: null
-          }
-        },
-        {
-          id: 13,
-          title: 'Notion: 배포 검수 에이전트와 릴리스 데이터 정합성',
-          category: 'AX 업무자동화',
-          image: null,
-          description: '팀별 배포 기준을 정립하고 에이전트로 배포 품질을 자동 검수, 배포와 연결되지 않은 작업을 찾아 이어 붙여, 배포 기록과 업무 기록이 어긋나지 않게 했습니다.',
-          how: "반복되는 수작업 검수는 형식화되기 쉽다고 판단해, 개별 판단의 정확도보다 기준의 일관성을 우선하는 커스텀 에이전트에 검수를 위임했습니다.",
-          details: {
-            problem: '배포 품질 점검과 릴리스 기준이 사람에 의존해 누락·편차가 발생하고, 릴리스와 TASK 연결이 수작업으로 관리되던 문제',
-            solution: 'Notion 커스텀 에이전트와 팀별 배포 기준 문서·프롬프트를 정립하여 배포 품질을 자동 점검하는 체계를 구축했습니다. 릴리스에 연결되지 않은 TASK를 자동 매핑하는 봇도 함께 만들고, 앞서 구축한 DORA 점수 리포트 또한 커스텀 에이전트로 완전 자동화했습니다. 사람이 하는 검수는 초기에는 정확하지만 반복되면 형식화되어 기준이 흔들리기 때문에, 개별 판단의 정확도보다 같은 기준을 계속 적용하는 쪽을 택해 에이전트에 맡겼습니다.',
-            role: 'AX Engineer',
-            tech: ['Notion Custom Agent', '프롬프트 엔지니어링', 'Notion API'],
-            features: [
-              '에이전트 기반 배포 품질 자동 점검',
-              '릴리스 연관 태스크 자동 추적·연결',
-              '팀별 배포 기준 문서·프롬프트 정립',
-              'DORA 점수 리포트 완전 자동 발행'
+              "접수, 담당자 배정, 첫 고객 연락 3구간 시각을 자동 기록하고 실시간 모니터링 화면으로 표시",
+              "이중 접수 제거, 접수 시간이 초기화되던 버그 수정, 변경 이력 상세화와 과거 데이터 백필"
             ]
           },
           links: {
@@ -642,17 +606,16 @@ export const content = {
           title: 'Notion: 캘린더 기반 회의록 자동 생성 에이전트',
           category: 'AX 업무자동화',
           image: null,
-          description: '캘린더 일정이 끝나면 정해진 양식의 회의록이 자동으로 만들어지게 했고, 지금은 전사에서 씁니다.',
-          how: "전용 서버는 규모 대비 과하다고 판단해 서버리스인 Notion Workers를 채택하고, 배포 이후 실사용을 위해 팀별 도입을 지원했습니다.",
+          description: "캘린더 일정에서 정해진 양식의 회의록이 자동으로 만들어지게 했습니다.",
+          how: "배포만으로는 쓰는 사람이 늘지 않아, 캘린더 기반 회의록 자동 생성과 함께 사용 문서를 쓰고 팀별 도입을 안내했습니다.",
           details: {
-            problem: '주최자가 회의록을 직접 만들어 생성 시점이 회의마다 달랐고, 미리 만들어지지 않으면 논의할 내용을 주최자가 만들 때까지 다른 곳에 두어야 했던 문제. 애자일 회고에서도 반복 수작업으로 지적됨',
-            solution: 'Notion Workers(서버리스)를 활용해 캘린더 일정에서 구조화된 회의록을 자동 생성하는 파이프라인을 구축하고 전사에 배포했습니다. 회의록 자동화 규모에 전용 인프라는 과하다고 보고 AWS Lambda와 유사한 서버리스 모델인 Notion Workers를 택했습니다. 기능 배포만으로는 쓰는 사람이 늘지 않아 사용 문서를 따로 쓰고 팀별로 도입 방법을 안내했습니다.',
+            problem: "회의록을 주최자가 직접 만들다 보니 만들어지는 시점이 회의마다 달랐고, 미리 만들어지지 않으면 논의할 내용을 다른 곳에 적어 둬야 했습니다.",
+            decision: "캘린더 일정에서 정해진 양식의 회의록이 자동으로 만들어지게 했습니다. 배포만으로는 쓰는 사람이 늘지 않아 사용 문서를 쓰고 팀별로 도입 방법을 안내했습니다.",
+            result: "Notion Workers로 구성했고, 지금은 전사에서 씁니다.",
             role: 'AX Engineer',
             tech: ['Notion Workers (서버리스)', 'Notion API', 'Calendar API'],
             features: [
-              '캘린더 일정에서 구조화된 회의록 자동 생성',
-              'AWS Lambda 유사 서버리스 구성',
-              '전사 단위 배포·운영'
+              "AWS Lambda와 비슷한 서버리스(Notion Workers) 구성"
             ]
           },
           links: {
@@ -674,13 +637,13 @@ export const content = {
       greeting: "Hi, I'm",
       title: "Ko Donghyeon.",
       subtitle: "DevOps Engineer.",
-      description: "I'm a DevOps engineer who cares about connecting people. I tie teams' work together through infrastructure and AI transformation (AX), and I've built and led communities that bring together developers across majors and student clubs.\nI moved infrastructure changes onto PR approval with Terraform and Atlantis, and automate repetitive internal work with LLMs and Notion agents.\nEven outside engineering, such as sales lead assignment, I interview the people doing the work and set the measurement criteria first.",
+      description: "I moved infrastructure changes onto PR approval with Terraform and Atlantis, and automate repetitive internal work with LLMs and Notion agents.\nI'm a DevOps engineer who cares about connecting people. I tie teams' work together through infrastructure and AI transformation (AX), and I've built and led communities that bring together developers across majors and student clubs.\nEven outside engineering, such as sales lead assignment, I interview the people doing the work and set the measurement criteria first.",
       cta: "Check out my work",
       label: "DevOps Engineer · BUZZ & BEYOND 2026~",
       highlights: [
         { label: "DevOps", text: "Built a GitOps workflow with Terraform and Atlantis; revoked all developer AWS access keys" },
-        { label: "AI Automation", text: "Built and ran company-wide workload monitoring linking Notion with FLEX (HR system), plus customer-support and lead-response agents" },
         { label: "Open Source", text: "Fixed a CNCF Atlantis bug, shipped in official release v0.41.0" },
+        { label: "AI Automation", text: "Built and ran company-wide workload monitoring linking Notion with FLEX (HR system), plus customer-support and lead-response agents" },
         { label: "Community", text: "Leader, AWS Student Builder Group at Dongguk University; Notion Campus Leader" }
       ],
       links: [
@@ -697,44 +660,80 @@ export const content = {
       problem: "Problem",
       decision: "Decision",
       result: "Result",
+      learned: "What I learned",
+      constraints: "Assumptions and limits of this setup",
       more: "Details",
-      zoom: "Enlarge diagram"
+      zoom: "Enlarge diagram",
+      diagram: "View architecture"
     },
     cases: [
       {
         projectId: 3,
-        diagram: null,
+        diagram: "/assets/diagrams/atlantis-gitops.svg",
+        diagramAlt: "Atlantis GitOps diagram. A developer's PR reaches Atlantis on Kubernetes through a Bitbucket webhook, and the pod's base role assumes a per-service target role to run plan and apply. The state bucket denies access from outside the allowlist, so local runs are blocked.",
         summary: "Moved local Terraform runs onto PR approval, and when a safeguard got in the way, fixed it upstream instead of turning it off.",
-        outcome: "Zero long-lived local access keys, every Terraform change audited per PR",
-        problem: "Every engineer ran Terraform locally, so state file conflicts and untraceable changes piled up. Local runs also meant each developer held a long-lived AWS Access Key with inconsistent permissions.",
-        decision: "Rejected Terraform Cloud (cost, state held by an external SaaS) and a hand-built GitHub Actions flow (effectively rebuilding Atlantis), and self-hosted Atlantis. A bypass left open turns a process into a suggestion, so every Access Key was revoked; emergency deploy speed was traded away, softened by multiple approvers.",
-        result: "Every Terraform change is now audited per PR and no long-lived local Access Keys remain. When plan_requirements: mergeable kept blocking PRs, I fixed the bug instead of disabling it, and PR #6186 shipped in v0.41.0.",
+        outcome: "Zero long-lived access keys on developer machines; Terraform changes outside emergency recovery recorded per PR",
+        problem: "The number of people touching infrastructure grew from one to several. With one person, running terraform apply locally caused no visible problem; with several, the same setup became the problem. Every system ran on admin permissions, so access meant opening everything to everyone. There was no way to trace who changed what and when. When concurrent work hit a state lock, finding out who held it meant asking around on chat. Each developer also held a long-lived AWS Access Key for local runs.",
+        decision: "We moved changes out of people's memory and agreement and into repository history and an approval step. Terraform Cloud was ruled out because it is paid and keeps state files in an external SaaS. Building it on general-purpose CI would mean writing the logic to post plan output on the PR and tie apply to approval, which amounts to rebuilding Atlantis. So we self-hosted Atlantis and accepted the cost that when it breaks, we fix it. It runs on the Kubernetes cluster we already operated rather than a separate EC2 instance, reusing the existing observability, rollout and secret management. A leftover Access Key gets used the moment someone is in a hurry, so every key was withdrawn and AssumeRole issues per-service least-privilege credentials only at deploy time. Local bypass is blocked by an explicit deny in the state bucket policy. Removing delete permissions was rejected because mistakes could no longer be cleaned up, and tag-based control because tags can be edited to get around it. Emergency deploy speed was traded away, softened by having multiple approvers.",
+        result: "Terraform changes are recorded per PR in Atlantis, and nothing applies without approval. The only exception with direct access to the state bucket is an admin account kept for emergency recovery. Long-lived Access Keys on developer machines went to zero. Permissions are split into per-service roles, and access to a service that is not defined is denied. When plan_requirements: mergeable started blocking clean PRs in operation, I fixed the bug instead of turning the option off, and PR #6186 shipped in Atlantis v0.41.0.",
+        learned: "A process built with a bypass left open is a suggestion, not a process. Several configuration problems during the build came from not knowing how far the server config (values.yaml) and the repo config (atlantis.yaml) each reach. With two layers of configuration, the scope of each layer should be checked first. An explicit deny is as hard to undo as it is strong.",
+        constraints: [
+          "If the Kubernetes cluster hosting Atlantis goes down, infrastructure deploys stop with it. We accepted this because infrastructure deploys are not needed constantly. Normally a local run is denied at the state bucket; only in an emergency like this is recovery done locally with the admin account kept on the allowlist.",
+          "The state bucket denies everything outside an allowlist, admin permissions included. A wrong policy would lock the whole pipeline out, so one break-glass admin account stays on the allowlist.",
+          "Because of the memory limit, plan and apply run sequentially, not in parallel."
+        ],
+        incident: {
+          title: "Incident record: lock DB corrupted after an out-of-memory kill",
+          steps: [
+            { label: "Symptom", text: "After the Atlantis pod was OOM-killed and restarted, two errors appeared together: \"must be mergeable\" and \"invalid key\". Plan was blocked on a PR that could be merged." },
+            { label: "Narrowing down", text: "The wording \"invalid key\" did not fit, because a missing key produces a different message (\"Lock not found\"). Reading the source showed the error is raised when a key cannot be read from the embedded BoltDB file where Atlantis keeps locks. The errors started right after the OOM kill, and a single IAM plan alone already peaked close to the memory limit. From this I concluded that parallel plans pushed memory over the limit and the process was killed mid-write, corrupting the file. The two errors had different causes." },
+            { label: "Action", text: "Plan and apply were switched from parallel to sequential. Atlantis locks only guard against PR conflicts, while the Terraform state lock lives separately in DynamoDB, so I judged the lock data could be regenerated, deleted the DB file and restarted the pod." },
+            { label: "Prevention", text: "Sequential execution stays on, and the dashboard confirmed the normal pattern of memory dropping after each plan and rising again. Moving the lock store to Redis was rejected because it added a component to manage and cost." },
+            { label: "Afterwards", text: "The remaining \"must be mergeable\" error was a bug in Atlantis itself, which led to the upstream fix (PR #6186)." }
+          ]
+        },
         links: [
           { label: "PR #6186", url: "https://github.com/runatlantis/atlantis/pull/6186" }
         ]
       },
       {
         projectId: 7,
-        diagram: null,
+        diagram: "/assets/diagrams/nanogrid.svg",
+        diagramAlt: "NanoGrid diagram. Requests pass AWS WAF and the ALB to Controller EC2 instances in public subnets, then go through SQS to the Worker ASG in private subnets. Results return through ElastiCache Redis, and workers reach S3 and DynamoDB through Gateway VPC Endpoints and call the AI node.",
         summary: "Shed managed FaaS limits on execution time and data egress by running on EC2, then paid back the lost scalability by splitting cold start into three layers.",
         outcome: "Execution-unit cold start from 3s to 0.2s; worker IAM narrowed to three actions on a single queue",
-        problem: "HTTP request handling had to run on EC2, so function upload, invocation and immediate execution that Lambda normally provides had to be built by hand, along with scalability.",
-        decision: "A six-hour API Gateway plus Dispatcher Lambda prototype left API Gateway on the request path, so it was replaced with ALB and an EC2 Controller. Cold start was split into execution unit, worker instance and scaling decision, and scaling keys off SQS queue depth instead of CPU, a lagging indicator.",
-        result: "Execution unit from 3s to 0.2s, and an ASG Warm Pool keeps five workers ready at the cost of two. 10,000 Fibonacci requests in about 11s (30 to 40s on Lambda), about 30,000 KRW of AWS spend over two days.",
+        problem: "The brief required HTTP request handling to run on EC2. Function upload, HTTP invocation and immediate execution, which Lambda normally provides, had to be built without a managed FaaS. Scaling workers when requests pile up was ours to handle too. The team added one more goal: if we host it ourselves, also remove the limits of managed FaaS (the 29-second integration timeout of the API Gateway setup we used then, runtime constraints, inference data leaving the network). On the team, I owned infrastructure and security.",
+        decision: "A prototype on the familiar API Gateway plus a Dispatcher Lambda was up in six hours, but API Gateway stayed on the request path and so did the execution time ceiling. Returning 202 and reporting the result later would only have moved the constraint, so we replaced it with an ALB and an EC2 Controller. We treated cold start as three layers with different time scales: execution unit, worker instance and scaling decision. For the execution unit, containers are no longer created per request but borrowed from and returned to per-runtime pools (Python, Node.js, C++, Go). For the scaling decision we used SQS queue depth instead of CPU. By the time CPU reaches its threshold users have already felt the delay, while queue length rises before the load reaches the workers. Job intake must not be lost, so it goes through SQS; result delivery has a caller waiting, so it goes through low-latency Redis Pub/Sub. Because the platform runs arbitrary user code, worker IAM was cut from SQS FullAccess to three actions on a single queue.",
+        result: "Execution-unit cold start fell from 3s to 0.2s. That figure comes from the shift in the Prometheus worker_job_duration_seconds histogram before and after the change. The blast radius of worker credentials shrank from the whole account to one queue. The inference node (Ollama) sits in a private subnet with no internet route or public address, reachable only from the worker security group. The project reached the SoftBank Hackathon finals.",
+        learned: "All three layers asked the same question: how do we get ready faster. Only afterwards did I see there was a question on another axis: how small can we make the thing we start in the first place. That led to my WebAssembly runtime research.",
+        constraints: [
+          "SQS is the only link between Controller and Worker; neither knows the other. The Controller sits in public subnets across two AZs, Workers in private subnets.",
+          "S3 and DynamoDB are reached through Gateway VPC Endpoints, so worker traffic does not go through NAT.",
+          "This was built for a hackathon final and has not served real user traffic."
+        ],
         links: [
           { label: "AWS Article", url: "https://builder.aws.com/content/3I2Mw8lAM0x9sODvAwmHN8RylXM/building-a-faas-on-ec2-without-lambda-and-splitting-cold-start-into-three-layers" },
           { label: "GitHub", url: "https://github.com/Softbank-Final" }
         ]
       },
       {
-        projectId: 1,
-        diagram: null,
-        summary: "Agreed deploy criteria with each team, then made release documents the source of DORA metrics so measurement ends when the deploy does.",
-        outcome: "Four DORA metrics computed daily, checked by crew and leads on the same dashboard",
-        problem: "Tasks lived in Notion, deploys in release documents and incidents in yet another DB, so there was no single basis for checking productivity across the organization.",
-        decision: "A dedicated measurement tool would turn measuring into another chore, so data comes from Notion where everyone already works. Commit counts and token usage were rejected as evidence of productivity; only meaningful deploys count, and review goes to a Notion custom agent because consistency matters more than per-item accuracy.",
-        result: "Per-team deploy criteria are agreed and documented, and the four DORA metrics are computed daily on one dashboard shared by crew and leads. They also feed R&R discussions and 1on1 conversations.",
-        links: []
+        projectId: 6,
+        diagram: "/assets/diagrams/wasm-runtime.svg",
+        diagramAlt: "Wasm versus container experiment diagram. The same Go workload is built as a SpinKube Wasm module and as a scratch container, deployed on an AKS 1.34 cluster, and compared on the Edge, Transform and Ingestion layers for cold start and pod readiness, tenant density and cost, and throughput. The Storage layer was modeled but not compared.",
+        summary: "Measured on AKS whether the Wasm advantage vendors report for the runtime alone survives a Kubernetes operational stack, by building the same Go workload as Wasm and as a container.",
+        outcome: "Measured per layer and proposed allocation criteria: containers for Ingestion, Wasm for Transform and Edge",
+        problem: "Wasm runtime vendors claim cold starts roughly 400x faster and 43x higher pod density than containers, but those figures come from microbenchmarks that measure the runtime in isolation. Whether the advantage survives the full path through a Kubernetes operational stack (shim, SDK, HTTP layer) had not been tested.",
+        decision: "Rather than take the vendor figures as given, I measured. I modeled an IoT log pipeline as four layers (Edge, Transform, Ingestion, Storage) and built three of them twice from the same Go workload, as SpinKube Wasm modules and as scratch containers, then compared them on AKS 1.34. Language, logic and load were held equal so that only the runtime differed. To tell real differences from noise, each comparison runs a Shapiro-Wilk normality test and then picks Welch's t-test or the Mann-Whitney U test automatically, with Bonferroni correction across 10 metric groups. I did not conclude that one runtime is better. The better runtime flipped from layer to layer, so instead of picking one, I proposed criteria for assigning a runtime per layer.",
+        result: "Runtime instantiation alone measured 0.436ms, with no statistically significant difference from the vendor's 0.5ms claim (p=0.71, n=10). The sample is small, so I do not read this as the two being equal. Of the 1.55ms full request path, the directly measured instantiation accounted for 28%. The remaining 72% was added by Kubernetes, the shim, the SDK and the HTTP layer; the layers were not probed separately, so how much each one added could not be split out. In Ingestion, containers held 24-28K rps against about 1,264 rps for Wasm. In Transform, a monthly cost model with per-tenant isolation enforced put Wasm up to 64x cheaper per tenant at 2,500 tenants. In Edge, Wasm's scale-from-zero cold start was 11x faster.",
+        learned: "The first runs, with load sent through an external load balancer, showed the opposite result at high load. That turned out to be a network effect between the host and the external load balancer, so I re-measured from inside the cluster. Where the load comes from can flip the conclusion of the same experiment.",
+        constraints: [
+          "Measured on a 6 vCPU free-tier cluster, so absolute figures such as the 41-pod plateau and the 8,000-tenant ceiling may differ at production scale.",
+          "Results cover a single Go workload on SpinKube and Wasmtime only. The Storage layer was not compared.",
+          "Containers were set at the Kubernetes recommended minimum request (128Mi), so a lower request would change the density and cost results. Instantiation was read from shim journal timestamps, a different measurement path from the container baseline."
+        ],
+        links: [
+          { label: "Paper PDF", url: "/assets/wasm-spinkube-iot-layer-allocation.pdf" }
+        ]
       }
     ],
     writing: [
@@ -770,12 +769,12 @@ export const content = {
             ],
             'Built the internal AX productivity metric system (DORA adopted as the measure)',
             [
-              'Auto-classifies 200+ tasks per day at 91.7% accuracy',
-              'Agreed and documented per-team deploy criteria as the fixed basis; used in R&R discussions and 1on1 conversations'
+              'Auto-classifies 200+ tasks per day',
+              'Agreed and documented per-team deploy criteria as the fixed basis for the metrics'
             ],
             'Built an SLA system for inbound leads',
             [
-              'Cut lead intake-to-owner assignment from 33.6h to 0.4h on average (98.7% faster); leads assigned to an owner within 1h rose from 9% to 86%',
+              'Cut lead intake-to-owner assignment from 33.6h to about 26 minutes on average (98.7% faster); leads assigned to an owner within 1h rose from 9% to 86%',
               'Measures SLA on business hours only, with alerts and escalation for leads left untouched'
             ],
             'Built and ran internal Notion agents',
@@ -845,8 +844,8 @@ export const content = {
         {
           title: 'SoftBank Hackathon',
           role: 'Finalist',
-          period: '2024.11 ~ 2024.12',
-          description: ['Preliminary round (2024.11.08 ~ 2024.11.09)', 'Advanced to Final round (2024.12.06 ~ 2024.12.07)']
+          period: '2025.12',
+          description: ['Advanced to Final round (2025.12.06 ~ 2025.12.07)']
         }
       ],
       certs: [
@@ -919,8 +918,10 @@ export const content = {
     },
     portfolio: {
       title: "Other Projects",
-      metrics: { 4: "PR #6186 merged, in v0.41.0", 2: "200+ tasks auto-classified/day", 15: "Owner assignment 33.6h → 0.4h", 6: "Measured on AKS 1.34", 5: "PR #124 merged", 8: "Zero idle resource cost off-season", 11: "Moved to AWS on my own in 2022", 12: "Spend tracked by vendor and use, threshold alerts", 13: "Team deploy criteria documented", 14: "Rolled out company-wide" },
-      order: [2, 4, 15, 13, 14, 12, 6, 5, 10, 9, 8, 11],
+      metrics: { 1: "Four DORA metrics computed daily", 4: "PR #6186 merged, in v0.41.0", 2: "200+ tasks auto-classified/day", 15: "Owner assignment 33.6h → about 26 min", 6: "Measured on AKS 1.34", 5: "PR #124 merged", 8: "Designed for no execution cost off-season", 11: "Self-initiated move to AWS, 2022", 12: "Spend tracked by vendor and use, threshold alerts", 13: "Release review and task linking automated", 14: "Rolled out company-wide" },
+      order: [15, 2, 4, 1, 13, 8, 12, 14, 5, 10, 9, 11],
+      showMore: "Show more",
+      showLess: "Show less",
       filters: {
         all: "All",
         web: "DevOps & Infra",
@@ -935,6 +936,10 @@ export const content = {
         role: "Role",
         techStack: "Tech Stack",
         keyFeatures: "Key Features",
+        problem: "Problem",
+        decision: "Decision",
+        result: "Result",
+        learned: "What I learned",
         links: {
           github: "GitHub",
           demo: "Live",
@@ -947,20 +952,20 @@ export const content = {
           id: 1,
           title: 'Productivity Metrics System',
           category: 'AX Automation',
-          image: null,
-          description: 'Agreed with each team on what counts as a deployment and fixed it in writing, then automated daily metrics such as deploy frequency and failure rate. Productivity that had only been described in words can now be shown in numbers, and the metrics serve as a key indicator of our internal AX transition.',
-          how: "Counted only meaningful deploys agreed with each team as productivity, setting aside commit counts, which only show volume, and token usage, which is easy to game.",
+          image: "/assets/diagrams/ax-metrics.svg",
+          description: "Agreed with each team on what counts as a deployment and fixed it in writing, then computed the four DORA metrics (deployment frequency, lead time for changes, change failure rate, time to restore) daily from Notion release documents. Productivity that had only been described in words can now be shown in numbers, and the metrics serve as a key indicator of our internal AX transition.",
+          how: "Commit counts only show volume and token usage is easy to inflate, so the four DORA metrics count only deployments that meet criteria agreed and documented with each team.",
           details: {
-            problem: 'Manual DORA metric calculation inefficiency, scattered data across multiple Notion DBs, unfair metrics due to unaccounted non-working days.',
-            solution: 'Consolidated deployment and incident data scattered across multiple Notion DBs into a unified pipeline, auto-calculating DORA 4 metrics (Deploy Frequency, Lead Time, Change Fail Rate, MTTR) daily with 7/30/90-day sliding windows. Designed weighted team/individual DORA Score system and integrated FLEX API to correct Deploy Frequency based on actual business days (excluding holidays/PTO).',
+            problem: "Everyone says AI has raised productivity, but there was no way to answer by how much. Work lived in Notion tasks, deployments in release documents and incidents in yet another database, with nothing tying them to one standard.",
+            decision: "Commit counts only show that a lot of code changed, and token usage is easy for an individual to inflate, so only work that led to a meaningful deployment counts as productivity. What counts as a deployment was agreed team by team and fixed in writing, because teams do not trust a metric whose rules were set for them. The metrics are drawn from the Notion release documents everyone already uses daily, so measurement finishes when the deployment does.",
+            result: "Productivity that had only been described in words can now be shown in numbers, and the metrics serve as a key indicator of our internal AX transition.",
+            learned: "When measurement is left as a separate job it is the first thing dropped in a busy week, and metrics built on late data lose trust. So more time went into agreeing deploy criteria with each team and fixing them in writing than into the implementation.",
             role: 'DevOps Engineer',
             tech: ['Python', 'SQLite', 'REST API', 'Grafana'],
             features: [
-              'Consolidated scattered Notion DB deployment/incident data',
-              '7/30/90-day sliding window DORA 4 metrics auto-calculation',
-              'Weighted team/individual DORA Score system',
-              'FLEX API business-day correction for Deploy Frequency',
-              'Crew/leader dashboard DORA Metric view'
+              "Deployment criteria agreed with each team and fixed in writing",
+              "Four DORA metrics (deploy frequency, lead time, change fail rate, MTTR) calculated daily",
+              "A Notion custom agent checks whether each release meets the criteria"
             ]
           },
           links: { demo: null, github: null }
@@ -971,18 +976,18 @@ export const content = {
           category: 'AX Automation',
           image: null,
           description: 'Connected Notion work records with FLEX attendance data to build and run a metric system and monitoring that show, per team, leave taken, actual work logged, and how much it affects productivity. An LLM auto-classifies 200+ tasks a day into 13 task types and 14 meeting types.',
-          how: "Linked Notion work logs with FLEX attendance to show workload per team; because the same title means different work under different roadmaps, classified the roadmap first and the task second instead of using one prompt.",
+          how: "The same task title means different work under different roadmaps, so a two-step LLM classification (Gemini 2.5 Flash) judges the roadmap first and the task type second to total workload per team.",
           details: {
-            problem: 'Inconsistent manual task classification causing human errors, making it impossible to track where team members actual Workload is being spent.',
-            solution: 'Consolidated scattered Notion task data and applied Gemini 2.5 Flash hierarchical classification (roadmap context + task context) into 13 task types and 14 meeting types. This made it possible to track quantitatively where Workload goes for each member.',
+            problem: "Work was spread across several Notion databases, so there was no way to total where people's time actually went. Classifying by hand meant each person used a different standard, the same kind of work piled up under different types, and no metric built on top could be trusted.",
+            decision: "Asking a single prompt to pick one of 13 types from a title alone was not accurate enough, because the same title can be a different type depending on which roadmap it belongs to. So I split it into two steps: judge the nature of the roadmap first, then classify the task with that result as context. That costs more LLM calls, which I accepted; it is a once-a-day batch, so latency did not matter.\n\nFor the model I chose Gemini 2.5 Flash over a higher-tier model. In a batch that runs 200+ items every day, the model's unit price is the running cost. Classification depends on consistent criteria more than hard reasoning, so investing in the prompts and the two-step structure paid off better than a bigger model.\n\nThe results are split out as an Apollo Federation Subgraph. Kept inside this pipeline, other features would have to redo the same computation, so other internal services query them over GraphQL instead.",
+            result: "More than 200 tasks a day are sorted automatically into 13 task types and 14 meeting types by an Argo CronWorkflow, and the results are joined with FLEX attendance data to show workload per team.",
             role: 'DevOps & AX Engineer',
             tech: ['Gemini', 'Argo Workflows', 'Python', 'Apollo Federation', 'GraphQL'],
             features: [
-              'Consolidated scattered Notion data + Gemini 2.5 Flash hierarchical classification',
-              '200+ daily auto-classification, 91.7% accuracy',
-              'Per-member Workload allocation quantitative tracking',
-              'Argo CronWorkflow daily scheduled execution',
-              'Apollo Federation Subgraph separation for reusability'
+              "Two-step LLM classification (Gemini 2.5 Flash): roadmap nature first, then the task",
+              "200+ tasks a day processed daily with Argo CronWorkflow",
+              "Automatic assignment to 13 task types and 14 meeting types",
+              "Results exposed as an Apollo Federation Subgraph for other services to query over GraphQL"
             ]
           },
           links: { demo: null, github: null }
@@ -992,23 +997,19 @@ export const content = {
           title: 'NanoGrid: A Function Platform Beyond Managed FaaS Limits',
           category: 'DevOps & Infra',
           image: null,
-          description: 'A function execution platform that sheds what managed FaaS fixes for you: the execution time ceiling, runtime constraints, and inference data leaving your network. The scalability you inherit in exchange was solved by splitting cold start into three layers. Execution unit from 3s to 0.2s, and servers that cost only two in normal operation but can grow to five right away (SoftBank Hackathon Finalist)',
-          how: "Rejected CPU as a lagging indicator and scaled on SQS queue-depth alarms, and replaced per-request container creation with borrowing from a per-runtime pool.",
+          description: "A function execution platform on EC2 that sheds what managed FaaS (AWS Lambda) fixes for you: the execution time ceiling, runtime constraints, and inference data leaving your network. The scalability inherited in exchange was handled by splitting cold start into three layers (execution unit, worker instance, scaling decision); reusing pooled containers cut execution-unit cold start from 3s to 0.2s, measured before and after with a Prometheus histogram. SoftBank Hackathon finalist.",
+          how: "By the time CPU climbs users have already felt the delay, so workers scale on SQS queue depth, and Docker containers once created per request are borrowed from a per-runtime pool.",
           details: {
-            problem: 'Under a constraint that HTTP request handling had to run on EC2, we had to build what Lambda normally does for you. Function upload, HTTP invocation, and immediate execution had to work without a managed FaaS, which meant owning scalability ourselves.',
-            solution: 'We first checked whether the limits we hit with managed FaaS actually dissolve on EC2. The API Gateway 29-second timeout, runtime constraints, vendor lock-in, and inference data leaving our network all dissolve; only scalability gets worse. A familiar API Gateway plus Dispatcher Lambda prototype ran within six hours, but it left API Gateway sitting on the request path, so we removed it and moved to ALB with an EC2 Controller. That eliminated the execution time ceiling and gave us control over which subnet compute sits in. Digging into the remaining scalability problem revealed that cold start is really three layers on different time scales, and each needed a different tool. Because the platform executes arbitrary user code, we also added Zip Slip blocking, container resource quotas, per-job timeouts, least-privilege IAM, and five WAF rule groups.',
-            role: 'Infrastructure & Security',
+            problem: "HTTP request handling had to run on EC2, so we had to build what Lambda normally does for you: function upload, invocation and execution. Adding servers when requests piled up was ours to handle too.",
+            decision: "We first got a prototype running on the familiar API Gateway and Lambda, but the execution time ceiling stayed, so we dropped it for an ALB and an EC2 Controller. Instead of creating a container per request, we keep containers started per runtime and reuse them, and we decide whether to add servers from the number of requests waiting in SQS rather than CPU. By the time CPU climbs, users have already felt the delay.",
+            result: "Time to start an execution dropped from 3 seconds to 0.2 seconds, and the project reached the SoftBank Hackathon finals.",
+            role: "Infrastructure & Security. On the team, I owned infrastructure and security.",
             tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
             features: [
-              'Layer 1, execution unit: pre-started container pools per runtime (Python, Node.js, C++, Go), borrowed and returned instead of created per request. 3s to 0.2s, measured as a distribution shift in the Prometheus worker_job_duration_seconds histogram',
-              'Layer 2, worker instance: EC2 Auto Scaling Warm Pool holding instances stopped. 2 InService plus 3 warm keeps ASG max of 5 ready at the cost of 2, since stopped instances bill EBS only with no compute charge',
-              'Layer 3, scaling decision: SQS queue depth instead of CPU. CPU is a lagging indicator, so by the time it crosses the threshold users have already absorbed the delay. Backlog per Instance and Step Scaling prevent over-provisioning',
-              'Load test: 10,000 Fibonacci requests in roughly 11 seconds versus 30 to 40 seconds on Lambda for the same workload, where execution environment allocation overhead dominates millisecond-scale invocations',
-              'Security: narrowed the worker IAM role from managed SQS FullAccess to three actions on a single queue, shrinking the blast radius from every queue in the account to one. Five WAF rule groups (SQLi, XSS, Log4j, rate limit, body size cap)',
-              'Network: Multi-AZ with Controllers in public subnets across two AZs and Workers in private subnets, joined only by SQS. Gateway VPC Endpoints for S3 and DynamoDB keep worker traffic off the NAT',
-              'Private AI Node: Ollama placed in a private subnet with no internet route and no public address, reachable only from the worker security group, so inference data never leaves the VPC',
-              'Multi-cloud redundancy: a fire in one AWS region caused a real outage during the event, which made it clear that being tied to a single vendor leaves no options, so data was replicated to GCP Cloud Storage.',
-              'Total AWS spend for two days: about 30,000 KRW'
+              "Pre-started container pools per runtime (Python, Node.js, C++, Go), reused across requests",
+              "Worker count adjusted by the number of requests waiting in SQS",
+              "Worker permissions cut to three actions on one queue; five WAF rules applied",
+              "Ollama in a private subnet with no internet route, reachable only from workers"
             ]
           },
           links: {
@@ -1023,18 +1024,18 @@ export const content = {
           category: 'DevOps & Infra',
           image: null,
           description: 'A serverless CI/CD platform that makes deploying fun: a log-only screen became a game view where a character runs through the pipeline stages, sharing deploy status in real time',
-          how: "Treated pipeline success as provisional: after each deploy, rechecked Elastic Beanstalk health and a real HTTP 200, and flipped the run to failed if either check failed.",
+          how: "A CodePipeline success says nothing about whether the service responds, so after each deploy we recheck Elastic Beanstalk health and a real HTTP 200, and mark the run failed if either does not pass.",
           details: {
-            problem: 'Deploy status only existed as logs, so nobody but the developer knew how far a deploy had gone, failures were noticed late, and a pipeline success alone did not show whether the deployed service actually responded.',
-            solution: 'Made watching a deploy feel like a game. Status from GitHub push through build, deploy and health check is shared in real time as a character running through pipeline stages. EventBridge catches state changes from CodePipeline, CodeBuild and Elastic Beanstalk, Lambda writes them to DynamoDB, and an Amplify monitoring app renders it. A pipeline success is not treated as final: after deploy, the Elastic Beanstalk environment health and a real HTTP 200 response are checked again, and the run is flipped to failed if either check fails. Bedrock summarizes failure logs, retrying with exponential backoff up to 3 times on ThrottlingException, and Discord/Slack get instant alerts. I owned Infra and Backend: Terraform infrastructure and the Lambda APIs.',
-            role: 'Infra & Backend',
+            problem: "Deploy status only existed as logs, so nobody but the developer could tell how far a deploy had gone. And a pipeline reporting success said nothing about whether the deployed service actually responded.",
+            decision: "We turned the deploy into a game screen where a character runs through the stages, so anyone can follow it live. A pipeline success is not treated as final: after deploy, the environment health and a real HTTP 200 response are checked again, and the run is flipped to failed if they do not pass. On failure, Bedrock summarizes the cause from the logs and the alert goes straight to Discord and Slack.",
+            result: "Everything from GitHub push through build, deploy and health check runs automatically, and the status is drawn on the monitoring screen in real time.",
+            role: "Infra & Backend. I built the Terraform infrastructure and the Lambda API.",
             tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
             features: [
-              'Game-style live deploy monitoring: a character runs through the pipeline stages',
-              'GitHub Push → Build → Deploy → Health Check full automation',
-              'EventBridge → Lambda → DynamoDB records state, then DynamoDB Streams invokes the health-check Lambda as a second stage',
-              'After pipeline success, EB environment health and HTTP 200 are rechecked and the deploy is marked failed if either fails; Bedrock failure-log summaries with exponential backoff on throttling',
-              'Discord/Slack instant alerts, Terraform-managed infrastructure'
+              "Game-style live deploy view: a character runs through the pipeline stages",
+              "EventBridge → Lambda → DynamoDB records deploy state",
+              "EB environment health and HTTP 200 rechecked after deploy; marked failed if they do not pass",
+              "Bedrock summarizes failure logs; throttling retried up to 3 times with exponential backoff"
             ]
           },
           links: {
@@ -1047,19 +1048,19 @@ export const content = {
           title: 'GitOps Terraform CI/CD with Atlantis',
           category: 'DevOps & Infra',
           image: null,
-          description: 'Changed infrastructure so that changes apply only after approval, leaving a record of who changed what and when. Split permissions per service and withdrew every access key from personal machines.',
-          how: "Self-hosted Atlantis over Terraform Cloud, which keeps state in an external SaaS, and over general-purpose CI, which lacks Terraform-specific plan readability and locking.",
+          description: "Moved Terraform changes from local runs to Atlantis PR approval (GitOps), so every change is recorded per PR with who changed what and when. Split permissions with per-service AssumeRole and withdrew every long-lived access key from developer machines.",
+          how: "Self-hosted Atlantis so Terraform changes apply only after PR approval, over Terraform Cloud, which keeps state in an external SaaS, and general-purpose CI, where plan posting and locking would have to be built by hand.",
           details: {
-            problem: 'Local-dependent Terraform deployments with no audit trail and Access Key security risks.',
-            solution: 'Transformed local Terraform workflows to Atlantis PR-based GitOps, built AWS AssumeRole least privilege security, and contributed a bug fix to Atlantis v0.41.0 (PR Merged).',
+            problem: "The number of people touching infrastructure grew from one to several. Every system ran on admin permissions, so more people meant opening everything to everyone, with no way to trace who changed what and when, and a state lock meant asking around on chat to find out who was holding it.",
+            decision: "We moved changes out of people's memory and into repository history and an approval step. Terraform Cloud would have meant handing our state files to an outside service, and a general-purpose CI would have meant building the approval flow ourselves, so we self-hosted Atlantis. A leftover access key gets used the moment someone is in a hurry, so the keys were withdrawn as well.",
+            result: "Permissions are split per service, every access key on personal machines has been withdrawn, and each change goes through approval and stays on record.",
             role: 'Platform Engineer',
             tech: ['Terraform', 'Atlantis', 'Kubernetes', 'Helm', 'AWS IAM', 'Golang'],
             features: [
-              'PR-based GitOps workflow transformation',
-              'AWS AssumeRole least privilege security',
-              'Blocked local bypass: stripping delete permissions would also block cleanup of mistaken resources, and tag-based control could be evaded by editing tags, so the state bucket policy denies everything outside an allowlist. Explicit deny outranks explicit allow, so anyone off the list cannot read state even with admin rights, while an emergency admin account stays listed in case a misconfigured policy stalls the pipeline.',
-              'Full developer Access Key revocation',
-              'Atlantis v0.41.0 open source contribution (PR Merged)'
+              "Atlantis deployed to Kubernetes with Helm; infrastructure changes go through PR approval",
+              "PRs that cannot be merged are blocked at plan (plan_requirements: mergeable)",
+              "AssumeRole issues temporary permissions only at deploy time; personal access keys withdrawn",
+              "State bucket denies everything outside an allowlist, blocking local runs that skip review"
             ]
           },
           links: { demo: null, github: 'https://github.com/runatlantis/atlantis' }
@@ -1070,17 +1071,19 @@ export const content = {
           category: 'Open Source',
           image: null,
           description: 'Discovered and fixed an autoplan bug in Atlantis where plan_requirements: mergeable always blocked clean PRs. Merged into v0.41.0.',
-          how: "Kept the option on, since disabling it would lower our own standard; traced unfamiliar Go code and added the PR merge-status fetch missing only from the autoplan path.",
+          how: "Traced Atlantis's Go code to find that only the autoplan path, unlike the comment-triggered one, skipped fetching the PR's merge status; added the fetch and pinned it with regression tests.",
           details: {
-            problem: 'With plan_requirements: [mergeable], autoplan always returned "Pull request must be mergeable before running plan" even on conflict-free PRs.',
-            solution: 'Root cause: runAutoplan() never called FetchPullStatus(), leaving IsMergeable at false (Go zero value). The comment-based run() already had this call, but it was missing from the autoplan path. Added the missing FetchPullStatus() call and wrote 2 unit tests. Merged March 2026, included in Atlantis v0.41.0.',
+            problem: "I had set plan_requirements: mergeable to stop unmergeable PRs from reaching infrastructure, but autoplan failed on clean, conflict-free PRs too, every time, with \"Pull request must be mergeable before running plan\", and infrastructure changes stopped.",
+            decision: "The cause was a difference between two execution paths. The comment-triggered run() path calls FetchPullStatus() to fetch the PR's mergeable status; runAutoplan() did not. IsMergeable therefore stayed at Go's zero value, false, and the check always failed.\n\nThe fix adds the missing fetch to the autoplan path, 10 lines. Adding only the call would be right today, but the same thing would happen again when another execution path appears, so I pinned the fact that autoplan fetches merge status with 91 lines of tests.",
+            result: "Merged on 2026.03.26 and included in Atlantis v0.41.0, closing issue #3486, which had been open for nearly three years. Internally, the approval flow runs with the safeguard still on.",
+            learned: "Narrowing the symptom down to the cause, and writing tests that fit the conventions of an unfamiliar codebase, took far longer than the fix itself. Being inexperienced with Go helped: I had to read line by line code I would have skipped had I thought I knew it, and that is where I found that IsMergeable was never set anywhere.",
             role: 'Open Source Contributor',
             tech: ['Golang', 'Atlantis', 'Terraform', 'Git'],
             features: [
-              'Discovered FetchPullStatus() omission in runAutoplan()',
-              'Analyzed Go zero value causing IsMergeable always false',
-              'Wrote 2 unit tests and submitted PR #6186',
-              'Merged March 2026, shipped in Atlantis v0.41.0'
+              "Cause: runAutoplan() was missing the FetchPullStatus() call, leaving IsMergeable at Go's zero value, false",
+              "10 lines of production code (server/events/plan_command_runner.go), 91 lines of regression tests (2 cases)",
+              "Confirmed on CNCF Slack that an open issue with the same symptom had the same cause before fixing",
+              "Merged 2026.03.26, included in Atlantis v0.41.0; closed issue #3486"
             ]
           },
           links: {
@@ -1094,17 +1097,17 @@ export const content = {
           category: 'Open Source',
           image: null,
           description: 'Fixed the Spin Framework Python SDK Postgres example, which never returned query results, in response to an issue filed by another user (#115); merged as PR #124. Also fixed 2 example documentation errors (#126, #128).',
-          how: "Fixed the Python example, the only one that logged results and returned a fixed string, to return column names and rows as a table in the response body like the other language SDK examples.",
+          how: "Only the Python SDK's Postgres example logged query results and returned a fixed string, so following it showed nothing; I changed it to return results as a table in the HTTP response, like the other language SDKs.",
           details: {
-            problem: 'The spin-postgres example printed query results only to the server log and returned a fixed string in the HTTP response, so following the example never showed Postgres results.',
-            solution: 'Because the Spin Postgres binding returns values as wrapper objects, added format_value and format_rowset helpers so the handler returns column names and rows as a table in the response body. Added the CREATE TABLE and INSERT SQL the example assumes to the README so it runs as written.',
+            problem: "The Postgres example in the Spin Python SDK printed query results only to the server log and returned a fixed string as the response, so following the example never showed any results.",
+            decision: "I picked up an issue another user had filed (#115) and changed the example to return query results as a table in the response, as the other language SDKs do.",
+            result: "PR #124 was merged on 2025.12.15, and I fixed two more errors in the example docs (#126, #128).",
             role: 'Open Source Contributor',
             tech: ['Python', 'WebAssembly', 'Spin Framework', 'Git'],
             features: [
-              'PR #124: resolved issue #115 filed by another user, merged 2025.12.15',
-              'format_value and format_rowset helpers return query results as a table in the HTTP response',
-              'Added test-table setup SQL for the example to the README',
-              'PR #126, #128: fixed example README titles and a typo (Issues #125, #127, filed by me)'
+              "format_value and format_rowset helpers return query results as a table",
+              "Added the example's test-table setup SQL to the README",
+              "PR #126, #128: fixed example README titles and a typo"
             ]
           },
           links: {
@@ -1118,27 +1121,26 @@ export const content = {
           category: 'DevOps & Infra',
           image: null,
           description: 'Empirical comparison on AKS 1.34: the same Go workload built as SpinKube Wasm modules and as containers, measured layer by layer, to see how much of the vendor-claimed cold-start advantage survives a real operational stack.',
-          how: "Instead of trusting vendor microbenchmarks, measured the same Go workload as Wasm and as containers, and proposed per-layer runtime allocation over a single runtime.",
+          how: "Vendor figures measure the runtime in isolation, so I built the same Go workload as SpinKube Wasm and as containers, measured both on AKS, and proposed criteria for assigning a runtime per layer.",
           details: {
-            problem: 'Wasm runtime vendors claim roughly 400x faster cold starts and 43x Pod density over containers, but those figures come from isolated microbenchmarks. Whether the advantage survives the Kubernetes operational stack (shim, SDK, HTTP layers) on an end-to-end path was untested.',
-            solution: 'Modeled an IoT log pipeline as four layers (Edge, Transform, Ingestion, Storage) and implemented three of them twice, as SpinKube Wasm modules and as scratch containers running the identical Go workload, then measured both on Azure Kubernetes Service (AKS 1.34). Language, business logic and load conditions were held constant so that only the runtime varied. After Shapiro-Wilk normality testing, Welch t-tests or Mann-Whitney U tests were selected automatically, with Bonferroni correction across ten confirmatory metric families. The result: the vendor-level runtime advantage is heavily diluted once the operational stack is included, and the favorable runtime flips per layer, which motivates layer-specific allocation rather than a single runtime choice. A preceding experiment resolved the compute ceiling of Python Wasm by migrating to native Rust Wasm, cutting binary size 91x (35.86MB to 0.39MB) and raising throughput 7.8x.',
-            role: 'Undergraduate Researcher (CSDC Lab, sole author)',
+            problem: "Wasm runtime vendors claim cold starts roughly 400x faster and 43x higher pod density than containers, but those figures come from microbenchmarks that measure the runtime in isolation. Whether the advantage survives the full path through a Kubernetes operational stack (shim, SDK, HTTP layer) had not been tested.",
+            decision: "Rather than take the vendor figures as given, I measured. I modeled an IoT log pipeline as four layers (Edge, Transform, Ingestion, Storage) and built three of them twice from the same Go workload, as SpinKube Wasm modules and as scratch containers, then compared them on AKS 1.34. Language, logic and load were held equal so that only the runtime differed.\n\nTo tell real differences from noise, each comparison runs a Shapiro-Wilk normality test and then picks Welch's t-test or the Mann-Whitney U test automatically, with Bonferroni correction across 10 metric groups.\n\nI did not conclude that one runtime is better. The better runtime flipped from layer to layer, so instead of picking one, the paper proposes criteria for assigning a runtime per layer.",
+            result: "Runtime instantiation alone measured 0.436ms, with no statistically significant difference from the vendor's 0.5ms claim (p=0.71). Of the 1.55ms full request path, the directly measured instantiation accounted for 28%. The remaining 72% was added by Kubernetes, the shim, the SDK and the HTTP layer; the layers were not probed separately, so how much each one added could not be split out. Containers were better for Ingestion, Wasm for Transform and Edge.",
+            role: "Undergraduate Researcher (CSDC Lab, individual research project)",
             tech: ['SpinKube', 'WebAssembly', 'WASI', 'Rust', 'Go', 'Azure AKS', 'KEDA', 'Kubernetes', 'containerd-shim-spin', 'Statistical testing'],
             features: [
-              'Measured instantiation at 0.436ms, statistically indistinguishable from the vendor claim of 0.5ms (p=0.71). But the runtime accounts for only 28% of the 1.55ms request path; the other 72% is Kubernetes, shim, SDK and HTTP.',
-              'Ingestion layer favors containers: 24-28K rps sustained vs a Wasm ceiling around 1,264 rps (19-22x)',
-              'Transform layer favors Wasm: containers hit a wall near 41 Pods under per-tenant isolation, while a shared Wasm pool absorbed 8,000 tenants loss-free at up to 64x lower cost per tenant ($4.69 to $0.07)',
-              'Edge layer favors Wasm: 11x faster scale-from-zero cold start, and an arm64-built container failed on amd64 nodes while the same Wasm module ran cross-arch',
-              'Preceding experiment: migrating Python Wasm to native Rust Wasm cut binary size 35.86MB to 0.39MB (91x) and raised throughput 1,713 to 13,389 req/s (7.8x)',
-              'Six threats to validity stated (6 vCPU free-tier cluster, single Go workload, measurement-tooling differences, and more)'
+              "Ingestion layer favors containers: 24-28K rps vs about 1,264 rps for Wasm",
+              "Transform layer favors Wasm: 8,000 tenants with no loss; in a monthly cost model with per-tenant isolation enforced, up to 64x cheaper per tenant at 2,500 tenants (6 vCPU cluster)",
+              "Edge layer favors Wasm: 11x faster scale-from-zero cold start",
+              "Preceding experiment: moving Python Wasm to native Rust Wasm cut the binary from 35.86MB to 0.39MB and raised throughput 7.8x",
+              "Six limitations stated (6 vCPU cluster, single Go workload, SpinKube/Wasmtime only, and others)"
             ]
           },
           links: {
             demo: null,
             github: null,
             papers: [
-              { label: 'Paper - Layer-specific runtime allocation (AKS)', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' },
-              { label: 'Preceding experiment - Runtime comparison and Rust optimization', url: '/assets/wasm-spinkube-runtime-comparison.pdf' }
+              { label: 'Paper - Layer-specific runtime allocation (AKS)', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' }
             ]
           }
         },
@@ -1148,18 +1150,18 @@ export const content = {
           category: 'DevOps & Infra',
           image: null,
           description: 'Full serverless AWS architecture + Terraform IaC for seasonal dormitory matching (9 Lambdas, Step Functions, DynamoDB)',
-          how: "Built the seasonal service on Lambda and on-demand DynamoDB, and chose HTTP API v2 over REST API because usage plans were not needed.",
+          how: "The service is used only in season, so it runs on pay-per-use Lambda and on-demand DynamoDB, with HTTP API v2 over REST API because usage plans and request validation were not needed.",
           details: {
-            problem: 'Idle cost during off-season and matching workflow complexity.',
-            solution: 'Designed full serverless architecture: 9 Lambda functions, Step Functions matching workflow, 4 DynamoDB tables, API Gateway HTTP API v2, Cognito OAuth 2.0 auth, SES email. all codified with Terraform. Using only Lambda and on-demand DynamoDB (PAY_PER_REQUEST) keeps off-season idle cost at zero. The matching workflow lives in Step Functions so that execution history shows where the survey, matching and notification chain stopped, and HTTP API v2 was chosen over REST API for lower cost and latency because usage plans and request validation were not needed. Everything stays in Terraform so resources can be torn down off-season and rebuilt for the next season.',
-            role: 'Cloud Architect',
+            problem: "Dormitory matching is only used in season, so servers left running cost money in the months nobody uses them. The flow from survey collection through matching to result notification is also long, so we needed to see where it stopped.",
+            decision: "We built it only from Lambda and on-demand DynamoDB, which charge for what is used. The matching flow lives in Step Functions so its execution history can be checked in the console, and since we needed neither usage plans nor request validation, we chose HTTP API v2 over REST API for its lower cost and latency.",
+            result: "Built only on Lambda and on-demand DynamoDB, which bill per request, the design incurs no execution cost in the months it is not used, and the whole infrastructure is kept in Terraform so it can be stood up again each season.",
+            role: "Cloud Architect. I owned the architecture design and all of the Terraform IaC.",
             tech: ['Terraform', 'AWS Lambda', 'AWS Step Functions', 'DynamoDB', 'API Gateway', 'Cognito'],
             features: [
-              '9 Lambda functions + Step Functions matching workflow',
-              '4 DynamoDB tables (Forms, FormResponses, Results, Students)',
-              'Cognito OAuth 2.0 auth + API Gateway HTTP API',
-              'Lambda plus on-demand DynamoDB: zero off-season idle cost',
-              'Full infrastructure codified with Terraform'
+              "9 Lambda functions + Step Functions matching workflow",
+              "4 DynamoDB tables (Forms, FormResponses, Results, Students)",
+              "Cognito OAuth 2.0 auth + API Gateway HTTP API v2",
+              "Entire infrastructure, through SES email, codified in Terraform"
             ]
           },
           links: {
@@ -1173,17 +1175,17 @@ export const content = {
           category: 'Security',
           image: null,
           description: 'A security analyzer that models Terraform IAM resource relationships as a graph and reads them with time and service-purpose context, catching expired accounts, unused accounts and purpose mismatches that rule-based scanners miss.',
-          how: "Complements rather than replaces existing scanners: models IAM relationships as a graph, checks expiry and service purpose with rules, and merges in Checkov results.",
+          how: "Rule-based scanners such as Checkov miss expired accounts and permissions that do not match a service's purpose, so I modeled Terraform IAM relationships as a graph, analyzed expiry and purpose alongside, and merged in Checkov results.",
           details: {
-            problem: 'Rule-based static analyzers (TFSec, Checkov) only catch what matches a pattern, so they miss configurations that are fine per resource but risky once connected, and time-based risks such as expired accounts.',
-            solution: 'Parsed Terraform with python-hcl2 into a NetworkX graph of IAM relationships (7 kinds, including assume_role and pass_role), then judged privilege escalation paths by matching a dictionary of 17 risky IAM actions and action combinations. Comparing account expiry and last-used dates, and a service purpose against its granted permissions, catches risks that rule-based scanners structurally cannot see. A module merges Checkov results so the tool complements existing scanners rather than replacing them, and a BERT (bert-base-uncased) embedding-similarity module is also implemented.',
+            problem: "Rule-based tools such as TFSec and Checkov only catch what matches a known pattern. They miss setups where each resource is fine on its own but risky once connected, and risks that appear over time, such as expired accounts.",
+            decision: "I turned the relationships between Terraform IAM resources into a graph to find paths where permissions escalate, and compared each account's expiry and last-used dates, and each service's purpose against the permissions it was granted. Complementing the existing tools made more sense than replacing them, so a module merges in Checkov's results.",
+            result: "It detects types that TFSec and Checkov did not flag when compared on the same test file, such as expired accounts, unused accounts and purpose mismatches, with the behavior pinned by 11 unit tests.",
             role: 'Security Researcher & Developer',
             tech: ['Python', 'BERT', 'Terraform', 'NetworkX', 'AWS IAM', 'Hugging Face', 'NLP'],
             features: [
-              'Detects risk types TFSec and Checkov do not: expired accounts, unused accounts, purpose mismatches, time-based risks',
-              'Privilege escalation paths judged on the IAM graph with a 17-action risk dictionary and action-combination matching',
-              'Merges Checkov results to complement existing scanners',
-              'Detection behavior pinned by 11 unit tests'
+              "Seven kinds of IAM relationships parsed with python-hcl2 into a NetworkX graph",
+              "Escalation paths judged with a 17-action risk dictionary and action combinations",
+              "Checkov results merged in to complement existing scanners"
             ]
           },
           links: {
@@ -1196,18 +1198,18 @@ export const content = {
           title: 'AWS Cloud Migration (CAPS Club)',
           category: 'DevOps & Infra',
           image: null,
-          description: 'In 2022, without being asked, I moved the club server from a physical PC to AWS myself, so the service no longer stopped on power cuts or reboots and could be managed from off campus.',
-          how: "Unasked, moved the club server, which stopped on every outage and reboot and could only be fixed on campus, to AWS in 2022.",
+          description: 'In 2022, without being asked, I moved the club server from a physical PC to AWS myself, removing the service\'s dependence on a campus PC that went down on power cuts and reboots, and making it manageable from off campus.',
+          how: "The club server ran on a physical PC that stopped on every power cut and reboot and could only be fixed on campus, so in 2022 I moved it to AWS on my own initiative and set it up as Docker containers.",
           details: {
-            problem: 'The club server ran on a physical PC, exposed to every power outage and reboot, and could only be fixed by someone on campus.',
-            solution: 'Moved the club server to AWS, removing exposure to outages and reboots and allowing management from off campus, for 24/7 service availability.',
+            problem: "The club server ran on a physical PC that went down with every power cut and reboot, and it could only be touched by someone on campus.",
+            decision: "In 2022, without being asked, I moved the server to AWS and set the services up as Docker containers.",
+            result: "The service no longer depends on a campus PC that stopped on power cuts and reboots, and it can be managed from off campus.",
             role: 'Cloud Architect',
             tech: ['AWS EC2', 'AWS EBS', 'AWS S3', 'AWS RDS', 'Docker'],
             features: [
-              'Full AWS Cloud Migration',
-              '24/7 Service Availability',
-              'No exposure to power outages or on-site management',
-              'Docker-based Containerization'
+              "Entire club server moved to AWS",
+              "Docker-based containerization",
+              "No longer dependent on a campus PC's power and reboots; managed from off campus"
             ]
           },
           links: {
@@ -1220,17 +1222,19 @@ export const content = {
           title: 'LLM Cost Labeling System',
           category: 'DevOps & Infra',
           image: null,
-          description: 'Tagged every LLM call with which vendor model was used and for what purpose, so spend can be tracked by purpose and an alert fires when a limit is exceeded.',
-          how: "Added vendor and purpose labels to the internal LLM server code first, so spend by purpose would be visible before AI use grew.",
+          description: "Labeled every LLM call with its vendor (Vertex AI, AI Studio, OpenAI) and purpose, so spend can be tracked by purpose and an alert fires when a threshold is exceeded.",
+          how: "Spend had to be visible before AI use grew, so the internal LLM server code labels each call with its vendor (Vertex AI, OpenAI and others) and purpose.",
           details: {
-            problem: 'As internal LLM usage grew, there was no way to track which vendor or feature was driving cost, making spend management impossible.',
-            solution: 'Added a vendor/purpose-based labeling scheme to the internal LLM server code, establishing a foundation to monitor LLM spend per vendor (Vertex AI, AI Studio, OpenAI). The reasoning was that spend by purpose has to be visible before AI usage grows. As an early onboarding task, it was also a fast way to learn the internal code conventions and GraphQL standards.',
+            problem: "Internal LLM usage was growing, but there was no way to tell which vendor's models or which features the money was going to.",
+            decision: "I judged that spend by purpose had to be visible before AI use grew, so the internal LLM server code labels each call with its vendor and purpose.",
+            result: "Spend on Vertex AI, AI Studio and OpenAI is broken down by vendor and purpose, and an alert fires when a threshold is exceeded.",
+            learned: "This was an early task after joining, and it is where I learned the internal code rules and GraphQL conventions.",
             role: 'AX / Platform Engineer',
             tech: ['GraphQL', 'Cost Monitoring', 'FinOps'],
             features: [
-              'Per-vendor (Vertex AI, AI Studio, OpenAI) LLM cost labeling',
-              'Usage monitoring environment and threshold-based alerting',
-              'Authored an LLM cost-labeling guide'
+              "Per-vendor (Vertex AI, AI Studio, OpenAI) LLM cost labeling",
+              "Usage monitoring and alerts when a limit is exceeded",
+              "Wrote a guide for adding labels"
             ]
           },
           links: {
@@ -1243,18 +1247,20 @@ export const content = {
           title: 'Inbound Lead SLA System',
           category: 'Platform Engineering',
           image: null,
-          description: 'Cut intake-to-owner assignment from 33.6h to 0.4h on average (98.7% faster), from defining what counts as a response to business-hours measurement, alerts, and a procedure that hands long-neglected inquiries up the chain.',
-          how: "Kept first customer contact alongside owner assignment, since assignment time can look good while customers feel the first contact, and measured before and after in business hours so weekend inquiries do not count as delays.",
+          description: "Cut lead intake-to-owner assignment from 33.6h to about 26 minutes on average (98.7% faster, both measured in business hours). Started by defining what counts as a \"response\" in the SLA, then built business-hours measurement, alerts, and escalation that hands neglected leads to someone more senior.",
+          how: "Assignment time alone can look good while what the customer feels is the first contact, so the SLA measures both, and before and after are compared in the same business hours.",
           details: {
-            problem: 'In the first half of the year, 45.5% of leads were answered within an hour, average response was 4.3 hours, and 4 leads sat untouched past 9 hours. Slow first responses cut straight into conversion.',
-            solution: 'Recorded intake, owner assignment and first customer contact on the same basis, and defined SLA measurement on business hours. Changed alert delivery so it only fires when an owner can act, and added escalation for untouched leads. Intake-to-assignment then fell from 33.6 hours to 0.4 hours on average, and assignment within an hour rose from 9% to 86%.',
+            problem: "It took 33.6 hours on average from lead intake to owner assignment, and only 9% of leads had an owner within an hour (in business hours). Nothing recorded when the customer was first contacted, so slow responses were found only afterwards, by chance.",
+            decision: "The problem sat inside the sales team's workflow, not in code, so before designing anything I followed the sales reps through their work and asked why contact was late and why an alert could not be acted on. The current design came out of those conversations.\n\nThe hardest part was defining \"response\". From the system's view it is when an owner is assigned; from sales' view it is when the customer is actually reached. Counting assignment alone makes the numbers look far better, but I kept both metrics and did not drop the less flattering first-contact one. The price is carrying a below-target metric into every report.\n\nThe SLA is measured in business hours only. Counting a Friday-evening inquiry picked up on Monday morning as a delay puts the metric out of step with reality. I narrowed alerts to hours when the owner can act instead of adding more, and neglected leads are handed to someone more senior instead.",
+            result: "Average time from intake to owner assignment fell from 33.6 hours to about 26 minutes, and leads assigned to an owner within an hour rose from 9% to 86%. Intake and assignment times were already being recorded, so before and after use the same fields and the same basis. The first-customer-contact metric is still short of target.",
+            learned: "The moment you switch to the flattering definition, a metric stops being a tool for improvement and becomes a number for reporting.",
             role: 'DevOps / FDE',
             tech: ['Notion', 'Backoffice', 'SLA Metrics', 'Alerting', 'Data Backfill'],
             features: [
-              'Intake to owner assignment: 33.6h → 0.4h (98.7% faster)',
-              'Assignment within 1 hour: 9% → 86%',
-              'SLA measured on business hours only (weekends, holidays, after-hours excluded)',
-              'Alerting and escalation for leads left untouched'
+              "Intake, owner assignment and first customer contact timestamps recorded automatically on one basis",
+              "SLA measured automatically in business hours (weekends, holidays, after-hours excluded)",
+              "Alerts only in hours the owner can act, escalation for neglected leads, live monitoring screen",
+              "Removed duplicate intake, fixed a bug that reset intake time, detailed change history and backfilled past data"
             ]
           },
           links: {
@@ -1267,18 +1273,19 @@ export const content = {
           title: 'Notion: Deploy Review Agent and Release Data Integrity',
           category: 'AX Automation',
           image: null,
-          description: 'Set team deploy criteria, auto-audited deployment quality with an agent, and found work not linked to any release and connected it, so release records and work records no longer drift apart.',
-          how: "Handed review to a custom agent that applies the same criteria every time, trading some per-decision accuracy, because human review turns into a formality with repetition.",
+          description: "A Notion Custom Agent takes each release document and judges whether it meets the team's deploy criteria, using prompts built from the criteria documents. It also finds tasks not linked to any release and connects them, so release records and work records do not drift apart, and publishes the DORA score report.",
+          how: "Review that a person did by opening each release document moved to a Notion Custom Agent that takes the release document as input, judges it against each team's criteria documents and prompts, and links missing tasks to releases.",
           details: {
-            problem: 'Deployment-quality checks and deploy criteria relied on people, causing omissions and inconsistency, while release-to-task links were managed by hand.',
-            solution: 'Established Notion custom agents plus team-specific deploy-criteria docs and prompts to auto-audit deployment quality. Built a companion bot that auto-maps release-unlinked tasks, and fully automated the previously built DORA score report through a custom agent. Human review is accurate at first but turns into a formality with repetition and the criteria drift, so I traded per-decision accuracy for consistent criteria and handed review to an agent.',
+            problem: "Deployment quality review meant a person opening each release document and checking it. Criteria varied by person, so things were missed or inconsistent, and linking releases to tasks was done by hand as well.",
+            decision: "Human review is accurate at first, but with repetition it becomes a formality and the criteria drift. So I moved the judgment to a Notion Custom Agent working from the same criteria documents and prompts, accepting that any single judgment may be less accurate than a person's.\n\nThe agent takes a release document as input and judges whether it meets the criteria, using prompts built from each team's deploy criteria documents. Finding tasks not linked to a release and connecting them also went to the agent, so release records and work records do not drift apart.",
+            result: "Deployment quality review, finding and linking tasks not tied to a release, and publishing the DORA score report all run automatically, and the review agent is used across the company.",
             role: 'AX Engineer',
             tech: ['Notion Custom Agent', 'Prompt Engineering', 'Notion API'],
             features: [
-              'Agent-based automatic deployment-quality checks',
-              'Automatic tracking and linking of release-related tasks',
-              'Team-specific deploy-criteria docs and prompts',
-              'Fully automated DORA score report publishing'
+              "Automatic deployment quality review by a Notion Custom Agent",
+              "Tasks not tied to a release found and linked automatically",
+              "Judged through prompts built from each team's criteria documents",
+              "DORA score report published automatically"
             ]
           },
           links: {
@@ -1291,17 +1298,18 @@ export const content = {
           title: 'Notion: Calendar-Based Meeting Notes Agent',
           category: 'AX Automation',
           image: null,
-          description: 'When a calendar event ends, meeting notes in a fixed format are created automatically. It is now used across the company.',
-          how: "Chose Notion Workers because a separate server was overkill for meeting notes, and walked each team through adoption because shipping alone did not grow usage.",
+          description: "Meeting notes in a fixed format are created automatically from calendar events. Built on Notion Workers and now used across the company.",
+          how: "Shipping alone did not grow usage, so alongside auto-generating notes from calendar events I wrote usage docs and walked each team through adoption.",
           details: {
-            problem: 'Organizers created meeting notes by hand, so notes appeared at different times for each meeting, and until the organizer made one, agenda items had to sit somewhere else. Agile retros also flagged it as repetitive manual work.',
-            solution: 'Used Notion Workers (serverless) to build a pipeline that auto-generates structured meeting notes from calendar events, rolled out company-wide. Dedicated infrastructure was too much for this scale, so I chose Notion Workers, a serverless model similar to AWS Lambda. Shipping the feature alone did not grow usage, so I wrote separate usage docs and walked each team through adoption.',
+            problem: "Organizers created meeting notes by hand, so the notes appeared at a different point for each meeting, and until they existed, discussion items had to be kept somewhere else.",
+            decision: "Meeting notes in a fixed format are now created automatically from calendar events. Shipping it did not grow usage by itself, so I wrote usage docs and walked each team through adoption.",
+            result: "It is now used across the company.",
             role: 'AX Engineer',
             tech: ['Notion Workers (serverless)', 'Notion API', 'Calendar API'],
             features: [
-              'Auto-generates structured meeting notes from calendar events',
-              'Serverless model similar to AWS Lambda',
-              'Company-wide rollout and operation'
+              "Meeting notes in a fixed format generated from calendar events",
+              "Serverless setup (Notion Workers), similar to AWS Lambda",
+              "Usage docs, team-by-team onboarding, company-wide rollout"
             ]
           },
           links: {
@@ -1323,13 +1331,13 @@ export const content = {
       greeting: "Hello, I'm",
       title: "Ko Donghyeon.",
       subtitle: "DevOps Engineer.",
-      description: "人とのつながりを大切にする DevOps エンジニアです。インフラと AX でチームの仕事をつなぎ、専攻やサークルの異なる開発者が交わるコミュニティをつくり、率いてきました。\nTerraform と Atlantis でインフラ変更を PR 承認の手順に移し、LLM と Notion エージェントで社内の反復業務を自動化します。\n営業チームのリード割り当てのような開発外の業務も、担当者に直接ヒアリングして測定基準から定めます。",
+      description: "Terraform と Atlantis でインフラ変更を PR 承認の手順に移し、LLM と Notion エージェントで社内の反復業務を自動化します。\n人とのつながりを大切にする DevOps エンジニアです。インフラと AX でチームの仕事をつなぎ、専攻やサークルの異なる開発者が交わるコミュニティをつくり、率いてきました。\n営業チームのリード割り当てのような開発外の業務も、担当者に直接ヒアリングして測定基準から定めます。",
       cta: "プロジェクトを見る",
       label: "DevOps Engineer · BUZZ & BEYOND 2026~",
       highlights: [
         { label: "DevOps", text: "Terraform と Atlantis で GitOps 基盤を構築、開発者の AWS アクセスキーを全廃" },
-        { label: "AX", text: "Notion と FLEX（人事労務 SaaS）を連携した全社業務量モニタリングを構築・運用。CS とリード対応エージェントも開発" },
         { label: "Open Source", text: "CNCF Atlantis のバグを修正、公式リリース v0.41.0 に反映" },
+        { label: "AX", text: "Notion と FLEX（人事労務 SaaS）を連携した全社業務量モニタリングを構築・運用。CS とリード対応エージェントも開発" },
         { label: "Community", text: "AWS Student Builder Group（東国大学）リーダー、Notion Campus Leader" }
       ],
       links: [
@@ -1346,44 +1354,80 @@ export const content = {
       problem: "課題",
       decision: "判断",
       result: "結果",
+      learned: "学び",
+      constraints: "この構成の前提と制約",
       more: "詳細",
-      zoom: "図を拡大"
+      zoom: "図を拡大",
+      diagram: "構成図を見る"
     },
     cases: [
       {
         projectId: 1,
-        diagram: null,
+        diagram: "/assets/diagrams/atlantis-gitops.svg",
+        diagramAlt: "Atlantis GitOps構成図。開発者のPRがBitbucketのWebhookでKubernetes上のAtlantisに届き、Podのbase roleがサービス別のtarget roleをAssumeRoleしてplanとapplyを実行します。状態ファイルのバケットは許可リスト外のアクセスを拒否するため、ローカル実行はできません。",
         summary: "ローカルでの Terraform 実行を PR 承認の手順に移し、途中で詰まった安全装置は無効化せずアップストリームで直しました。",
-        outcome: "ローカルの長期アクセスキー 0個、Terraform 作業の全件を PR 単位で監査可能に",
-        problem: "エンジニアごとにローカルで Terraform を実行しており、ステートファイルの衝突と変更履歴の追跡不能が重なっていました。ローカル実行のため開発者それぞれが長期 AWS Access Key を持ち、権限範囲もばらばらでした。",
-        decision: "Terraform Cloud は費用と外部 SaaS へのステート委託、GitHub Actions での自作は結局 Atlantis を作り直すことになるため却下し、Atlantis のセルフホストを選びました。迂回路が残れば手順は推奨に過ぎなくなるため Access Key を全量回収し、緊急デプロイの速度を諦める代わりに承認者を複数置きました。",
-        result: "Terraform 作業の全件を PR 単位で監査できるようになり、ローカルの長期 Access Key は 0 個になりました。運用中に plan_requirements: mergeable が PR を常にブロックしたバグは、オプションを切らずに自ら修正し PR #6186 として v0.41.0 にマージされました。",
+        outcome: "開発者 PC の長期アクセスキー 0個、非常時の復旧以外の Terraform 変更を PR 単位で記録",
+        problem: "インフラを触る人が一人から複数人に増えました。一人のときはローカルで terraform apply を実行しても問題は表に出ませんでしたが、人が増えると同じ構造がそのまま問題になりました。全システムが管理者権限で動いており、誰にでもすべてを開く構造でした。誰がいつ何を変えたかを追えませんでした。同時作業で State Lock がかかると、誰が握っているのかをチャットで聞いて回る必要がありました。ローカル実行のため、開発者それぞれが長期の AWS Access Key を持っていました。",
+        decision: "変更を人の記憶と合意に任せるのをやめ、リポジトリの記録と承認手続きに移すことにしました。Terraform Cloud は有料で、ステートファイルを外部 SaaS に預ける必要があるため外しました。汎用 CI で自作すると、plan の結果を PR に貼り apply を承認と連動させるロジックをすべて作ることになり、結局 Atlantis を作り直すことになります。そこで Atlantis をセルフホストし、問題が起きれば自分たちで直すというコストを受け入れました。配置先は別の EC2 ではなく既に運用していた Kubernetes クラスタにし、監視、ロールアウト、シークレット管理を既存の仕組みのまま使いました。Access Key が残っていれば急ぐときに誰かがその道を使うため全量回収し、AssumeRole でデプロイ時にのみサービス別の最小権限を発行しました。ローカルからの迂回は、ステートファイルのバケットポリシーの明示的な拒否で止めました。削除権限の除去は誤って作ったリソースも消せなくなり、タグによる制御はタグを書き換えれば迂回できるため却下しました。緊急デプロイの速度を諦める代わりに、承認者を複数置いて待ち時間を減らしました。",
+        result: "Terraform の変更は Atlantis の PR 単位で記録され、承認なしには apply できません。ステートファイルのバケットに直接触れられる例外は、非常時の復旧用の管理者アカウントに限りました。開発者 PC にあった長期 Access Key は 0 個になりました。権限はサービス別のロールに分かれ、定義されていないサービスへのアクセスは拒否されます。運用中に plan_requirements: mergeable が正常な PR まで止めたバグは、オプションを切らずに自ら修正し、PR #6186 として Atlantis v0.41.0 に反映されました。",
+        learned: "迂回路を残したまま作った手続きは、手続きではなく推奨に過ぎません。構築中に起きた設定の問題のいくつかは、サーバー側の設定（values.yaml）とリポジトリ側の設定（atlantis.yaml）がそれぞれどこまで効くのかを知らなかったことが原因でした。設定が二層ある仕組みでは、各層の範囲を先に確認すべきでした。明示的な拒否は強力なぶん、元に戻しにくいものです。",
+        constraints: [
+          "Atlantis を載せた Kubernetes クラスタに障害が起きると、インフラのデプロイも一緒に止まります。インフラのデプロイは常時必要な作業ではないと考えて受け入れました。普段はローカル実行がステートファイルのバケットで拒否され、こうした非常時に限り、許可リストに残した管理者アカウントでローカルから復旧します。",
+          "ステートファイルのバケットは、許可リスト外のアクセスを管理者権限も含めて拒否します。ポリシーを誤るとパイプライン全体が止まるため、非常用の管理者アカウントを一つ許可リストに残しています。",
+          "メモリの上限のため、plan と apply は並列ではなく順次実行しています。"
+        ],
+        incident: {
+          title: "障害対応の記録: メモリ不足による強制終了後の Lock DB 破損",
+          steps: [
+            { label: "症状", text: "Atlantis の Pod がメモリ不足（OOM）で強制終了され、再起動すると「must be mergeable」と「invalid key」の二つのエラーが同時に出ました。マージできる PR なのに plan が止まりました。" },
+            { label: "原因の絞り込み", text: "「invalid key」という文言が引っかかりました。キーがないときは別の文言（Lock not found）が出るからです。ソースを確認すると、このエラーは Atlantis が Lock を保管する内蔵 BoltDB のファイルからキーを読めないときに出るものでした。エラーは OOM による強制終了の直後から出ており、IAM の plan 一つだけでもメモリのピークが上限に近づいていました。これを根拠に、並列の plan がメモリの上限を超え、書き込みの途中で強制終了されてファイルが壊れたと判断しました。二つのエラーは原因が別でした。" },
+            { label: "対応", text: "plan と apply を並列から順次に変えました。Atlantis の Lock は PR の衝突を防ぐためのもので、State を守る Terraform の Lock は DynamoDB に別にあるため、作り直せるデータだと判断して DB ファイルを削除し、Pod を再起動しました。" },
+            { label: "再発防止", text: "順次実行を維持し、ダッシュボードで plan が終わるたびにメモリが下がってから上がる正常なパターンを確認しました。Lock の保存先を Redis に移す案は、管理する構成要素と費用が増えるため却下しました。" },
+            { label: "その後", text: "残った「must be mergeable」は Atlantis 自体のバグで、アップストリームでの修正（PR #6186）につながりました。" }
+          ]
+        },
         links: [
           { label: "PR #6186", url: "https://github.com/runatlantis/atlantis/pull/6186" }
         ]
       },
       {
         projectId: 7,
-        diagram: null,
+        diagram: "/assets/diagrams/nanogrid.svg",
+        diagramAlt: "NanoGrid構成図。リクエストはAWS WAFとALBを通ってパブリックサブネットのController EC2に入り、SQSを介してプライベートサブネットのWorker ASGに渡されます。結果はElastiCache Redisで戻り、WorkerはGateway VPC EndpointでS3とDynamoDBにアクセスし、AIノードを呼び出します。",
         summary: "マネージド FaaS の実行時間上限とデータ流出の制約を EC2 上で取り払い、代わりに背負った拡張性はコールドスタートを三つの層に分けて解きました。",
         outcome: "実行単位のコールドスタートを 3秒から 0.2秒へ、ワーカーの IAM を単一キューの 3アクションに縮小",
-        problem: "HTTP リクエスト処理を EC2 上で行う制約のもと、Lambda が担っていた関数のアップロード、呼び出し、即時実行を自作し、スケーラビリティも自分で担保する必要がありました。",
-        decision: "6 時間で動かした API Gateway と Dispatcher Lambda のプロトタイプはリクエスト経路に API Gateway が残るため取り外し、ALB と EC2 Controller へ移行しました。コールドスタートを実行単位、ワーカーインスタンス、スケーリング判断の三層に分け、スケーリング基準は事後指標の CPU ではなく SQS キュー長にしました。",
-        result: "実行単位は 3 秒から 0.2 秒へ、ASG Warm Pool で常時 2 台分の費用のまま 5 台分の拡張を準備しました。フィボナッチ 1 万件で約 11 秒（同一ワークロードの Lambda は 30〜40 秒）、2 日間の AWS 費用は約 3 万ウォンです。",
+        problem: "課題は、HTTP リクエストの処理を EC2 上で行うという制約でした。Lambda が代わりにやってくれていた関数のアップロード、HTTP 呼び出し、即時実行を、マネージド FaaS なしで自作する必要がありました。リクエストが集中したときにワーカーを増やす拡張性も、自分たちで担うことになりました。チームはここに目標をもう一つ足し、自前でホストするならマネージド FaaS の制約（当時の API Gateway 構成の 29 秒の統合タイムアウト、ランタイム制約、推論データの外部流出）も一緒に解くことにしました。チームでは私がインフラとセキュリティを担当しました。",
+        decision: "慣れている API Gateway と Dispatcher Lambda で 6 時間でプロトタイプを動かしましたが、リクエスト経路に API Gateway が残り、実行時間の上限もそのままでした。202 を先に返して結果を後で知らせる迂回は制約を移すだけなので選ばず、ALB と EC2 Controller に切り替えました。コールドスタートは、実行単位、ワーカーインスタンス、スケーリング判断という時間の規模が違う三つの層に分けて考えました。実行単位は、リクエストごとにコンテナを作らず、ランタイム別（Python、Node.js、C++、Go）のプールから借りて返す方式にしました。スケーリング判断は CPU ではなく SQS のキュー長を基準にしました。CPU はしきい値に達する頃にはすでに利用者が遅延を体験しており、キュー長は負荷がワーカーに届く前に上がるからです。ジョブの投入は失われてはならないので SQS に、結果の受け渡しは呼び出し側が待っているので遅延の小さい Redis Pub/Sub に任せました。任意のユーザーコードを実行するプラットフォームなので、ワーカーの IAM を SQS FullAccess から単一キューの 3 アクションに減らしました。",
+        result: "実行単位のコールドスタートは 3 秒から 0.2 秒に縮まりました。Prometheus の worker_job_duration_seconds ヒストグラムで、適用前後の分布が移ったことを確認した値です。ワーカー権限の影響範囲は、アカウント全体から単一のキューに縮まりました。推論ノード（Ollama）はインターネット経路もパブリックアドレスもないプライベートサブネットに置き、ワーカーのセキュリティグループからのみ届くようにしました。SoftBank Hackathon の本選に進みました。",
+        learned: "三つの層はどれも「どうすればもっと早く準備できるか」という同じ問いでした。終わってから、「そもそも起動するものをどこまで小さくできるか」という別の軸の問いがあることに気づき、これが WebAssembly ランタイムの研究につながりました。",
+        constraints: [
+          "Controller と Worker をつなぐのは SQS 一つだけで、互いを知りません。Controller はパブリックサブネットの 2 AZ に、Worker はプライベートサブネットに置いています。",
+          "S3 と DynamoDB には Gateway VPC Endpoint を付け、ワーカーの通信が NAT を通らないようにしています。",
+          "ハッカソン本選で作った構成で、実ユーザーのトラフィックを受けたシステムではありません。"
+        ],
         links: [
           { label: "AWS Article", url: "https://builder.aws.com/content/3I2Mw8lAM0x9sODvAwmHN8RylXM/building-a-faas-on-ec2-without-lambda-and-splitting-cold-start-into-three-layers" },
           { label: "GitHub", url: "https://github.com/Softbank-Final" }
         ]
       },
       {
-        projectId: 4,
-        diagram: null,
-        summary: "デプロイ基準をチームごとに合意して固定し、リリース文書そのものを DORA 指標の源泉にして、デプロイが終われば測定も終わるようにしました。",
-        outcome: "DORA 4指標を毎日自動算出、クルーとリーダーが同じダッシュボードで確認",
-        problem: "業務は Notion のタスクに、デプロイはリリース文書に、障害はさらに別の DB に散らばっており、組織として生産性を点検する一つの基準がありませんでした。",
-        decision: "測定専用ツールを入れると測定がもう一つの業務になるため、全員が既に使っている Notion から抽出しました。コミット数やトークン使用量は生産性の根拠として不十分と判断して却下し、意味のあるデプロイだけを認め、レビューは個々の精度より一貫性を取って Notion カスタムエージェントに任せました。",
-        result: "チーム別のデプロイ基準を各チームと合意して文書で固定し、DORA 4 指標を毎日自動算出してクルーとリーダーが同じ画面で見ています。この指標は R&R の議論と 1on1 の話題に使われています。",
-        links: []
+        projectId: 6,
+        diagram: "/assets/diagrams/wasm-runtime.svg",
+        diagramAlt: "Wasm とコンテナの比較実験の構成図。同じ Go ワークロードを SpinKube Wasm モジュールと scratch コンテナでそれぞれビルドして AKS 1.34 クラスタに載せ、Edge、Transform、Ingestion の各層でコールドスタートと Pod Ready、テナント密度と費用、処理量を比較します。Storage 層はモデル化のみで比較していません。",
+        summary: "ベンダーがランタイムだけを切り離して測った Wasm の優位が Kubernetes の運用スタックを通っても残るかを、同じ Go ワークロードを Wasm とコンテナで作り、AKS で直接測りました。",
+        outcome: "実測にもとづき、Ingestion はコンテナ、Transform と Edge は Wasm という階層別の割当基準を提案",
+        problem: "Wasm ランタイムのベンダーは、コンテナよりコールドスタートが約 400 倍速く Pod 密度が 43 倍高いと主張していますが、これはランタイムだけを切り離して測ったマイクロベンチマークの値です。Kubernetes の運用スタック（shim、SDK、HTTP 層）を通った経路全体でも同じ優位が残るかは、検証されていませんでした。",
+        decision: "ベンダーの数値をそのまま信じず、自分で測ることにしました。IoT ログパイプラインを Edge、Transform、Ingestion、Storage の四階層にモデル化し、そのうち三階層を同じ Go ワークロードの SpinKube Wasm モジュールと scratch コンテナでそれぞれ作り、AKS 1.34 上で比較しました。言語、ロジック、負荷条件をそろえ、ランタイムの違いだけが残るようにしました。差が偶然かどうかを見分けるため、Shapiro-Wilk の正規性検定のあと Welch の t 検定か Mann-Whitney の U 検定を自動で選ぶようにし、10 の指標群に Bonferroni 補正を適用しました。結論は「どちらのランタイムが優れているか」にはしませんでした。階層ごとに有利な方が逆になったため、一つを選ぶのではなく階層別に割り当てる基準を提案しました。",
+        result: "ランタイムのインスタンス化だけを測ると 0.436ms で、ベンダーの主張（0.5ms）との間に統計的に有意な差はありませんでした（p=0.71、n=10）。標本が小さいため、両者が同じだという根拠にはしていません。リクエスト経路全体 1.55ms のうち、直接測ったインスタンス化の割合は 28% でした。残りの 72% は Kubernetes、shim、SDK、HTTP 層で加わった分で、層ごとに個別には測っていないため、どの層がどれだけ加えたかは分けられていません。Ingestion ではコンテナが 24〜28K rps を保ち、Wasm（約 1,264 rps）より処理量が高くなりました。Transform では、テナントごとの隔離を強制した月額費用モデルで、2,500 テナント時に Wasm のテナント当たり費用が最大 64 倍安くなりました。Edge では scale-from-zero のコールドスタートで Wasm が 11 倍速くなりました。",
+        learned: "最初は外部のロードバランサー経由で負荷をかけたところ、高負荷の区間で逆の結果が出ました。ホストと外部ロードバランサーの間のネットワークの影響と分かり、クラスタ内部から測り直しました。同じ実験でも、負荷をどこからかけるかで結論が逆転しうると学びました。",
+        constraints: [
+          "6 vCPU の free-tier クラスタで測った値のため、41 Pod の上限や 8,000 テナントの上限といった絶対値は本番規模とは異なる可能性があります。",
+          "単一の Go ワークロードで、SpinKube と Wasmtime に限った結果です。Storage 層は比較していません。",
+          "コンテナは Kubernetes の推奨最小リクエスト（128Mi）を基準にしており、リクエストを下げると密度と費用の結果が変わります。インスタンス化は shim のジャーナルのタイムスタンプで測っており、コンテナの基準値とは測定経路が異なります。"
+        ],
+        links: [
+          { label: "論文 PDF", url: "/assets/wasm-spinkube-iot-layer-allocation.pdf" }
+        ]
       }
     ],
     writing: [
@@ -1419,12 +1463,12 @@ export const content = {
             ],
             '社内 AX 生産性指標の体系を構築（測定指標として DORA を採用）',
             [
-              '1日200件以上の業務を自動分類（精度91.7%）',
-              'チーム別のデプロイ基準を合意・文書化し算出基準として固定、役割分担の議論と 1on1 の話題として活用'
+              '1日200件以上の業務を自動分類',
+              'チーム別のデプロイ基準を合意・文書化し算出基準として固定'
             ],
             'インバウンドリードの SLA 体系を構築',
             [
-              'リード受付から担当者割り当てまでの平均を 33.6 時間から 0.4 時間へ短縮（98.7% 短縮）、1 時間以内の担当者割り当て率 9% → 86%',
+              'リード受付から担当者割り当てまでの平均を 33.6 時間から約 26 分へ短縮（98.7% 短縮）、1 時間以内の担当者割り当て率 9% → 86%',
               '営業時間基準で SLA を自動計測し、放置リードの通知・エスカレーション体系を構築'
             ],
             'Notionの社内エージェントを構築・運用',
@@ -1497,10 +1541,9 @@ export const content = {
         {
           title: 'SoftBank Hackathon',
           role: 'Finalist',
-          period: '2024.11 ~ 2024.12',
+          period: '2025.12',
           description: [
-            '予選参加 (2024.11.08 ~ 2024.11.09)',
-            '本選進出 (2024.12.06 ~ 2024.12.07)'
+            '本選進出 (2025.12.06 ~ 2025.12.07)'
           ]
         }
       ],
@@ -1574,8 +1617,10 @@ export const content = {
     },
     portfolio: {
       title: "Other Projects",
-      metrics: { 2: "PR #6186 マージ、v0.41.0 に収録", 3: "日次 200件+ 自動分類", 15: "担当者割り当て 33.6時間 → 0.4時間", 6: "AKS 1.34 実測", 5: "PR #124 マージ", 8: "オフシーズンの遊休リソースコスト 0円", 11: "2022年に自主的に移行", 12: "ベンダーと用途別の支出追跡、しきい値アラート", 13: "チーム別デプロイ基準を文書化", 14: "全社展開" },
-      order: [3, 2, 15, 13, 14, 12, 6, 5, 10, 9, 8, 11],
+      metrics: { 4: "DORA 4指標を毎日自動算出", 2: "PR #6186 マージ、v0.41.0 に収録", 3: "日次 200件+ 自動分類", 15: "担当者割り当て 33.6時間 → 約26分", 6: "AKS 1.34 実測", 5: "PR #124 マージ", 8: "オフシーズンは実行費用がかからない構成", 11: "2022年に自主的に移行", 12: "ベンダーと用途別の支出追跡、しきい値アラート", 13: "リリースレビューとタスク紐付けを自動化", 14: "全社展開" },
+      order: [15, 3, 2, 4, 13, 8, 12, 14, 5, 10, 9, 11],
+      showMore: "もっと見る",
+      showLess: "閉じる",
       filters: {
         all: "全て",
         web: "DevOps & Infra",
@@ -1590,6 +1635,10 @@ export const content = {
         role: "役割",
         techStack: "技術スタック",
         keyFeatures: "主要機能",
+        problem: "課題",
+        decision: "判断",
+        result: "結果",
+        learned: "学び",
         links: {
           github: "GitHub",
           demo: "Live",
@@ -1603,19 +1652,19 @@ export const content = {
           title: 'Atlantis による GitOps Terraform CI/CD 構築',
           category: 'DevOps & Infra',
           image: null,
-          description: 'インフラの変更が承認を経てからのみ反映されるように変え、誰がいつ何を変えたかをすべて記録に残しました。サービスごとに権限を分け、個人PCのアクセスキーをすべて回収しました。',
-          how: "外部 SaaS にステートを預ける Terraform Cloud と、plan の可読性やロック管理が弱い汎用 CI を比較し、Atlantis のセルフホストを採用しました。",
+          description: "Terraform の変更をローカル実行から Atlantis の PR 承認手続き（GitOps）へ移し、誰がいつ何を変えたかを PR 単位で記録に残しました。サービス別の AssumeRole で権限を分け、開発者 PC の長期 Access Key をすべて回収しました。",
+          how: "Terraform の変更を PR 承認後にのみ適用するため Atlantis をセルフホストしました。ステートを外部 SaaS に預ける Terraform Cloud と、plan の掲示やロック管理を自作する必要がある汎用 CI は比較のうえ外しました。",
           details: {
-            problem: 'エンジニアがローカルでTerraformを直接実行し、状態ファイル衝突・変更履歴追跡不可・環境間整合性問題が頻発',
-            solution: 'AtlantisをKubernetesクラスタにHelm Chart基盤でデプロイし、PR基盤GitOpsワークフローに転換しました。全てのインフラ変更がコードレビューを経て承認後にのみ適用されるようにし、運用透明性を確保しました。AWS AssumeRoleアーキテクチャを設計し、開発者ローカルのAccess Keyを全面回収して最小権限原則基盤のセキュリティ体系を構築しました。',
+            problem: "インフラを触る人が一人から複数人に増えました。全システムが管理者権限で動いていたため、人が増えると誰にでもすべてを開く構造になり、誰がいつ何を変えたかを追えず、同時作業でロックがかかると誰が握っているのかをチャットで聞いて回る必要がありました。",
+            decision: "変更を人の記憶に任せるのをやめ、リポジトリの記録と承認手続きに移すことにしました。Terraform Cloudは状態ファイルを外部に預ける必要があり、汎用CIは承認手続きを自分たちで作る必要があったため、Atlantisを自前で運用する方を選びました。アクセスキーが残っていれば急ぐときに誰かがその道を使うと考え、キーも併せて回収しました。",
+            result: "権限をサービスごとに分け、個人PCのアクセスキーをすべて回収し、すべての変更が承認を経て記録に残るようになりました。",
             role: 'Platform Engineer',
             tech: ['Terraform', 'Atlantis', 'Kubernetes', 'Helm', 'AWS IAM', 'Golang'],
             features: [
-              'Helm Chart基盤 Atlantis K8sデプロイ',
-              'PR基盤コードレビュー後インフラ変更適用',
-              'AWS AssumeRole最小権限セキュリティ体系構築',
-              'ローカル実行による迂回を遮断：削除権限の一括除去は誤作成リソースも消せなくなり、タグベース制御はタグ変更で回避されるため却下。ステートファイルのバケットポリシーで許可リスト外をすべて拒否しました。明示的拒否が明示的許可に優先するため、リストにない者は管理者権限でもステートを読めません。ポリシー誤設定でパイプラインが停止する場合に備え、緊急用の管理者アカウントは許可リストに残しています',
-              'Atlantis v0.41.0 OSSバグ修正貢献 (PR Merged)'
+              "AtlantisをHelmでKubernetesにデプロイし、インフラ変更をPR承認の手続きへ移行",
+              "マージできないPRはplanの段階で遮断（plan_requirements: mergeable）",
+              "AssumeRoleでデプロイ時にのみ一時権限を発行、個人PCのアクセスキーをすべて回収",
+              "状態ファイルのバケットで許可リスト外をすべて拒否し、ローカルからの迂回実行を遮断"
             ]
           },
           links: { demo: null, github: 'https://github.com/runatlantis/atlantis/pull/6186' }
@@ -1626,17 +1675,19 @@ export const content = {
           category: 'OSS貢献',
           image: null,
           description: 'Atlantis autoplanでplan_requirements: mergeable設定時にPRが常にブロックされるバグを発見し直接修正、v0.41.0にMerge',
-          how: "オプションを切る迂回は自ら定めた基準を下げることになるため選ばず、初めて読む Go のコードを追って、autoplan の経路にだけ欠けていた PR のマージ状態の取得を追加しました。",
+          how: "コメント実行の経路と違い autoplan の経路にだけ PR のマージ状態の取得が欠けていたことを Go のコードから突き止めて追加し、その取得自体を回帰テストで固定しました。",
           details: {
-            problem: 'plan_requirements: [mergeable]設定時、コンフリクトのないクリーンなPRでもautoplanが常に"Pull request must be mergeable before running plan"エラーを発生',
-            solution: '原因はrunAutoplan()がFetchPullStatus()を一度も呼び出さず、IsMergeableが常にfalse（Go zero value）のままだったことでした。コメント基盤のrun()には既に該当API呼び出しがありましたが、autoplanパスにのみ欠落していました。欠落したFetchPullStatus()呼び出しを追加しユニットテスト2個を作成して解決しました。2026年3月Merge、Atlantis v0.41.0に含まれました。',
+            problem: "マージできない PR がインフラに適用されるのを止めるために plan_requirements: mergeable を設定していましたが、コンフリクトのない正常な PR でも autoplan が毎回「Pull request must be mergeable before running plan」で止まり、インフラの変更が進まなくなりました。",
+            decision: "原因は二つの実行経路の違いでした。コメントで実行する run() の経路には PR のマージ可否を取得する FetchPullStatus() の呼び出しがありますが、runAutoplan() の経路にはありませんでした。そのため IsMergeable は Go の既定値 false のまま残り、条件が常に失敗していました。\n\n修正は、欠けていた取得を autoplan の経路に足す 10 行です。呼び出しを一行足すだけでは、実行経路がもう一つ増えたときに同じことが起きるため、autoplan の経路がマージ状態を取得するという事実そのものをテスト 91 行で固定しました。",
+            result: "2026.03.26 にマージされて Atlantis v0.41.0 に収録され、3年近く開いたままだった Issue #3486 がクローズされました。社内では安全装置を切らないまま承認手続きを運用しています。",
+            learned: "直す時間よりも、症状から原因を絞り込み、初めて見るコードベースの慣習に合わせてテストを書く時間の方がはるかに長くかかりました。Go に不慣れだったことはむしろ助けになりました。分かっていると思えば読み飛ばしたはずのコードを一行ずつ読むことになり、IsMergeable がどこでも設定されていないことはその過程で見つけました。",
             role: 'Open Source Contributor',
             tech: ['Golang', 'Atlantis', 'Terraform', 'Git'],
             features: [
-              'runAutoplan()内FetchPullStatus()欠落バグ発見',
-              'Go zero valueによるIsMergeable常時false問題分析',
-              'ユニットテスト2個作成及びPR提出',
-              '2026年3月Merge、Atlantis v0.41.0リリースに含まれる'
+              "原因: runAutoplan() の経路で FetchPullStatus() の呼び出しが欠落し、IsMergeable が Go の既定値 false のまま",
+              "本体コード 10 行（server/events/plan_command_runner.go）、回帰テスト 91 行（2 ケース）",
+              "同じ症状の Issue が同じ原因かを CNCF Slack で確認したうえで修正",
+              "2026.03.26 マージ、Atlantis v0.41.0 に収録。Issue #3486 をクローズ"
             ]
           },
           links: { demo: null, github: 'https://github.com/runatlantis/atlantis/pull/6186' }
@@ -1646,23 +1697,19 @@ export const content = {
           title: 'NanoGrid: マネージド FaaS の制約を取り払った関数実行プラットフォーム',
           category: 'DevOps & Infra',
           image: null,
-          description: 'マネージドFaaSが定めていた実行時間の上限、ランタイム制約、推論データの外部流出をEC2上で取り払った関数実行プラットフォーム。代わりに自ら背負うことになった拡張性は、コールドスタートを三つの層に分けて解決しました。実行単位は3秒から0.2秒へ、サーバーは普段2台分の費用だけで、5台まですぐに増やせるよう準備しました（SoftBank Hackathon本選）',
-          how: "CPU は事後指標のため却下して SQS キュー長のアラームでスケーリングし、リクエストごとに作っていたコンテナはランタイム別のプールから借りる方式に変えました。",
+          description: "マネージド FaaS（AWS Lambda）が定めていた実行時間の上限、ランタイム制約、推論データの外部流出を EC2 上で取り払った関数実行プラットフォームです。代わりに自ら背負うことになった拡張性は、コールドスタートを実行単位、ワーカーインスタンス、スケーリング判断の三つの層に分けて解きました。実行単位のコールドスタートはコンテナプールの再利用で 3 秒から 0.2 秒になりました（Prometheus のヒストグラムで前後を測定）。SoftBank Hackathon 本選進出。",
+          how: "CPU 使用率は上がる頃にはすでに利用者が遅延を体験しているため SQS のキュー長でワーカーを増やし、リクエストごとに作っていた Docker コンテナはランタイム別のプールから借りる方式に変えました。",
           details: {
-            problem: 'HTTPリクエスト処理をEC2上で行うという制約のもと、Lambdaが代わりにやってくれていたことを自分で作る必要がありました。関数のアップロード、HTTP呼び出し、即時実行をマネージドFaaSなしで実装し、スケーラビリティを自分で担保しなければなりませんでした。',
-            solution: 'まず既存FaaSの限界がEC2上で解けるかを検討しました。API Gatewayの29秒タイムアウト、ランタイム制約、ベンダーロックイン、推論データの外部流出は解けますが、スケーラビリティだけが悪化する構造でした。慣れているAPI GatewayとDispatcher Lambdaで6時間でプロトタイプを動かしましたが、リクエスト経路にAPI Gatewayが残る構成だったため取り外し、ALBとEC2 Controllerへ移行して実行時間の上限をなくし、コンピュートを置くサブネットを自分で決められるようにしました。残ったスケーラビリティの問題を掘り下げる中で、コールドスタートが実行単位、ワーカーインスタンス、スケーリング判断という時間規模の異なる三層であることを確認し、それぞれに別の道具を当てました。任意のユーザーコードを実行するプラットフォームのため、Zip Slip遮断、コンテナリソースクォータ、ジョブ単位のタイムアウト、IAM最小権限、WAFルール5種も併せて適用しました。',
-            role: 'Infrastructure & Security',
+            problem: "HTTPリクエストの処理をEC2上で行うという制約のもと、Lambdaが代わりにやってくれていた関数のアップロード、呼び出し、実行を自分たちで作る必要がありました。リクエストが集中したときにサーバーを増やす仕事も、自分たちで担うことになりました。",
+            decision: "まず慣れているAPI GatewayとLambdaでプロトタイプを動かしましたが、実行時間の上限がそのまま残るため取り外し、ALBとEC2 Controllerに切り替えました。リクエストごとにコンテナを作らず、ランタイム別にあらかじめ起動しておいたものを借りて使うようにし、サーバーを増やすかどうかはCPUではなくSQSに溜まったリクエスト数で判断しました。CPUは数値が上がる頃には、すでに利用者が遅延を体験した後だからです。",
+            result: "実行を始めるまでの時間が3秒から0.2秒に縮まり、SoftBank Hackathonの本選に進みました。",
+            role: "Infrastructure & Security。チームではインフラとセキュリティを担当しました。",
             tech: ['AWS EC2', 'ALB', 'Auto Scaling Warm Pool', 'AWS SQS', 'AWS S3', 'DynamoDB', 'ElastiCache Redis', 'AWS WAF', 'Terraform', 'Docker', 'Prometheus', 'Ollama', 'GCP Cloud Storage'],
             features: [
-              '① 実行単位: ランタイム別（Python、Node.js、C++、Go）にコンテナプールを事前起動し、リクエストごとに作らず借りて返す方式へ。3秒から0.2秒。Prometheusのworker_job_duration_secondsヒストグラムで前後の分布シフトを測定',
-              '② ワーカーインスタンス: EC2 Auto Scaling Warm Poolでインスタンスを停止状態で待機。InService 2台 + Warm Pool 3台で、常時2台分の費用のままASG最大5台分の拡張を準備。停止状態はコンピュート課金なし、EBSのみ',
-              '③ スケーリング判断: CPUではなくSQSキュー長を基準に。CPUは事後指標のため閾値に達した時点でユーザーは既に遅延を体験済み。Backlog per InstanceとStep Scalingで過剰プロビジョニングを防止',
-              '負荷テスト: フィボナッチ1万件で約11秒（同一ワークロードのLambdaは30〜40秒）。個別実行がミリ秒単位のワークロードでは実行環境の割当オーバーヘッドが全体時間を支配',
-              'セキュリティ: ワーカーのIAMをマネージドSQS FullAccessから単一キューの3アクションへ縮小し、影響範囲をアカウント全体から一つのキューに限定。WAFルール5種（SQLi、XSS、Log4j、レート制限、ボディサイズ上限）',
-              'ネットワーク: Multi-AZ構成。Controllerはパブリックサブネット2 AZ、Workerはプライベートサブネット。両者を繋ぐのはSQS一つのみ。S3とDynamoDBにGateway VPC Endpointを付けてNATを迂回',
-              'Private AI Node: プライベートサブネットにOllamaを配置し、インターネット経路とパブリックアドレスなしでワーカーのSGからのみアクセス許可。推論データがVPC外へ出ない構成',
-              'マルチクラウド冗長化：期間中にAWSの一リージョンで火災による実際の障害を経験し、単一ベンダーに依存すると打つ手がないことを確認してGCP Cloud Storageへデータを複製しました',
-              '2日間のAWS費用は約3万ウォン'
+              "ランタイム別（Python、Node.js、C++、Go）のコンテナプールを事前起動して再利用",
+              "SQSに溜まったリクエスト数を基準にワーカー数を調整",
+              "ワーカーの権限を単一キューの3アクションに縮小、WAFルール5種を適用",
+              "インターネット経路のないプライベートサブネットにOllamaを置き、ワーカーからのみ接続"
             ]
           },
           links: { demo: null, github: 'https://github.com/Softbank-Final', article: 'https://builder.aws.com/content/3I2Mw8lAM0x9sODvAwmHN8RylXM/building-a-faas-on-ec2-without-lambda-and-splitting-cold-start-into-three-layers' }
@@ -1673,18 +1720,18 @@ export const content = {
           category: 'DevOps & Infra',
           image: null,
           description: 'デプロイという行為自体を楽しくしたサーバーレス CI/CD プラットフォーム。ログだけが流れる画面を、キャラクターがパイプラインを走り抜けるゲーム画面に変えてデプロイ状態をリアルタイム共有',
-          how: "パイプラインの成功応答を最終判定とせず、デプロイ後に Elastic Beanstalk のヘルスと実際の HTTP 200 を再確認し、通らなければ失敗に切り替えました。",
+          how: "CodePipeline の成功応答だけではサービスが実際に応答するか分からないため、デプロイ後に Elastic Beanstalk のヘルスと HTTP 200 を再確認し、通らなければ失敗として扱いました。",
           details: {
-            problem: 'デプロイ状態がログとしてしか存在せず、開発者以外は進行状況が分からず、失敗の認知も遅れていた。パイプラインの成功応答だけでは、デプロイしたサービスが実際に応答するかは分からなかった。',
-            solution: 'デプロイを見守る行為をゲームにしました。GitHub Push から Build、Deploy、Health Check までの状態を、キャラクターがパイプラインの各ステージを走り抜ける画面としてリアルタイム共有します。CodePipeline・CodeBuild・Elastic Beanstalk の状態変化を EventBridge が捕捉し、Lambda が DynamoDB に記録、Amplify のモニタリングアプリが描画します。パイプラインが成功を返しても最終成功とはみなさず、デプロイ後に Elastic Beanstalk 環境のヘルスと実際の HTTP 200 応答を再確認し、通らなければ失敗に切り替えます。失敗ログは Bedrock で原因を要約し、呼び出し制限（ThrottlingException）には指数バックオフで最大3回再試行、Discord・Slack に即時通知します。Infra と Backend を担当し、Terraform インフラと Lambda API を実装しました。',
-            role: 'Infra & Backend',
+            problem: "デプロイの状態がログとしてしか流れず、開発者でなければ今どこまで進んだのか分かりませんでした。パイプラインが成功を返しても、デプロイしたサービスが実際に応答するかは分かりませんでした。",
+            decision: "デプロイの過程を、キャラクターが各ステージを走り抜けるゲーム画面に変え、誰でもリアルタイムで見られるようにしました。パイプラインの成功応答を最終的な成功とはみなさず、デプロイ後に環境の状態と実際のHTTP 200応答をもう一度確認し、通らなければ失敗に切り替えます。失敗したときはBedrockがログから原因を要約し、DiscordとSlackにすぐ通知します。",
+            result: "GitHub PushからBuild、Deploy、Health Checkまでの全過程が自動でつながり、状態はモニタリング画面にリアルタイムで描かれます。",
+            role: "Infra & Backend。Terraform のインフラと Lambda API の実装を担当しました。",
             tech: ['AWS CodePipeline', 'AWS CodeBuild', 'Elastic Beanstalk', 'AWS Lambda', 'Amazon EventBridge', 'DynamoDB', 'Amazon Bedrock', 'AWS Amplify', 'Terraform'],
             features: [
-              'キャラクターがパイプラインを走り抜けるゲーム型リアルタイムデプロイモニタリング',
-              'GitHub Push → Build → Deploy → Health Check 全過程自動化',
-              'EventBridge → Lambda → DynamoDB で状態を記録し、DynamoDB Streams が Health Check Lambda を再度呼び出す2段構成',
-              'パイプライン成功後に EB 環境ヘルスと HTTP 200 を再確認し未通過なら失敗判定、Bedrock 失敗ログ要約（Throttling 時は指数バックオフで再試行）',
-              'Discord・Slack 即時通知、Terraform IaC インフラ管理'
+              "キャラクターがパイプラインを走り抜けるゲーム型のリアルタイムデプロイ画面",
+              "EventBridge → Lambda → DynamoDBでデプロイ状態を記録",
+              "デプロイ後にEB環境の状態とHTTP 200を再確認し、通らなければ失敗と判定",
+              "Bedrockで失敗ログを要約、呼び出し制限には指数バックオフで最大3回再試行"
             ]
           },
           links: { demo: null, github: 'https://github.com/Deploy-Land' }
@@ -1695,18 +1742,18 @@ export const content = {
           category: 'AX 業務自動化',
           image: null,
           description: 'Notion の業務記録と FLEX の勤怠データをつなぎ、チームごとの休暇、実際の業務記録、生産性への影響度を判断できる指標体系とモニタリングを構築・運用。1日200件以上の業務を LLM で13の業務タイプと14のミーティングタイプに自動分類',
-          how: "Notion の業務記録と FLEX の勤怠をつないでチーム別の業務量を見られるようにし、同じタイトルでもどのロードマップの仕事かで種類が変わるため、単一プロンプトではなくロードマップの性格を先に判定する二段の分類にしました。",
+          how: "同じ業務名でも属するロードマップによって性格が変わるため、先にロードマップを判定してから業務タイプを分ける二段階の LLM 分類（Gemini 2.5 Flash）でチーム別の業務量を集計しました。",
           details: {
-            problem: '手動分類で発生するヒューマンエラーによりタスク分類が一貫せず、組織構成員の実際のWorkloadがどこに使われているか追跡不可能な状態',
-            solution: '既存の分散されたNotionタスクデータを統合し、Gemini 2.5 Flash基盤の階層的分類ロジック（ロードマップ性格＋タスクコンテキスト）を適用して13個の業務タイプ・14個のミーティングタイプに自動分類しました。構成員別Workloadが実際にどこに投入されているか定量的に追跡できる基盤を確保しました。',
+            problem: "業務が複数の Notion DB に散らばっていて、メンバーの時間が実際にどこへ使われているのかを集計できませんでした。手作業で分類すると人によって基準が違い、同じ性質の仕事が別のタイプとして積み上がり、その上にどんな指標を載せても信頼できない状態でした。",
+            decision: "単一のプロンプトにタイトルだけを渡して 13 タイプから一つを選ばせると、精度が落ちました。同じタイトルでも、どのロードマップに属する仕事かでタイプが変わるからです。そこで先にロードマップの性格を判定し、その結果をコンテキストに入れて業務を分類する二段階に分けました。LLM の呼び出しが増えるコストは受け入れました。1 日 1 回のバッチなので、遅延は問題になりませんでした。\n\nモデルは上位モデルではなく Gemini 2.5 Flash を選びました。1 日 200 件以上を毎日回すバッチでは、モデルの単価がそのまま運用費になります。分類は推論の難しさよりも判断基準の一貫性が大事な作業なので、モデルを上げるよりプロンプトと階層構造に投資する方がよいと判断しました。\n\n分類結果は Apollo Federation の Subgraph として切り出しました。このパイプラインの中だけに置くと他の機能で同じ計算をやり直すことになるため、社内の他サービスが GraphQL で参照できるようにしました。",
+            result: "1 日 200 件以上の業務を、13 の業務タイプと 14 のミーティングタイプに Argo CronWorkflow で毎日自動分類し、その結果を FLEX の勤怠データとつないでチーム別の業務量を見ています。",
             role: 'DevOps & AX Engineer',
             tech: ['Gemini', 'Argo Workflows', 'Python', 'Apollo Federation', 'GraphQL'],
             features: [
-              '分散Notionデータ統合及びGemini 2.5 Flash階層的分類',
-              '日次200件+自動分類、精度91.7%',
-              '構成員別Workload投入現況の定量的追跡体系構築',
-              'Argo CronWorkflow毎日定期実行',
-              'Apollo Federation Subgraph分離で再利用性確保'
+              "ロードマップの性格を判定してから業務を分類する二段階の LLM 分類（Gemini 2.5 Flash）",
+              "1 日 200 件以上を Argo CronWorkflow で毎日処理",
+              "13 の業務タイプ、14 のミーティングタイプに自動で割り当て",
+              "分類結果を Apollo Federation Subgraph として公開し、他サービスが GraphQL で参照"
             ]
           },
           links: { demo: null, github: null }
@@ -1715,20 +1762,20 @@ export const content = {
           id: 4,
           title: '生産性指標の仕組みづくり',
           category: 'AX 業務自動化',
-          image: null,
-          description: '「何をデプロイと数えるか」をチームごとに合意して文書で固定し、デプロイ頻度や失敗率などの指標を毎日自動で算出しています。言葉でしか語れなかった生産性を数字で示せるようになり、社内AX転換の主要指標として使っています。',
-          how: "コミット数は変更量にすぎず、トークン使用量は操作しやすいため却下し、各チームと合意した意味のあるデプロイだけを生産性と認めました。",
+          image: "/assets/diagrams/ax-metrics.svg",
+          description: "「何をデプロイと数えるか」をチームごとに合意して文書で固定し、DORA の 4 指標（デプロイ頻度、変更のリードタイム、変更失敗率、復旧時間）を Notion のリリース文書から毎日自動で算出しています。言葉でしか語れなかった生産性を数字で示せるようになり、社内 AX 転換の主要指標として使っています。",
+          how: "コミット数は変更量にすぎず、トークン使用量は水増ししやすいため外し、チームごとに合意して文書で定めた基準を満たすデプロイだけを数えて DORA の 4 指標を算出しています。",
           details: {
-            problem: 'DORA指標手動算出の非効率性、分散されたNotion DBデータによる集計困難、非稼働時間未反映による公平性問題',
-            solution: '複数のNotion DBに分散されたデプロイ・障害データを統合し、別途ツール導入なしで7日・30日・90日スライディングウィンドウでDORA 4大指標（Deploy Frequency, Lead Time to Changes, Change Fail Rate, MTTR）を毎日自動算出しました。チーム別・個人別加重値基盤DORA Score体系を設計し、FLEX APIを連動して休暇・祝日等の非稼働時間を反映した実質営業日基準でDeploy Frequencyを補正しました。',
+            problem: "誰もがAIで生産性が上がったと言いますが、どれだけ上がったのかに答える方法がありませんでした。業務はNotionのタスクに、デプロイはリリース文書に、障害はまた別のDBに残り、一つの基準でつながっていませんでした。",
+            decision: "コミット数はコードを多く変えたというだけで、トークン使用量は個人が水増ししやすいため、意味のあるデプロイにつながったものだけを生産性と認めました。何をデプロイと数えるかはチームごとに話し合って合意し、文書で固定しました。基準を一方的に決めると、チームが指標を信じなくなるからです。指標は全員が毎日使っているNotionのリリース文書から取り出し、デプロイが終われば計測も一緒に終わるようにしました。",
+            result: "言葉でしか語れなかった生産性を数字で示せるようになり、社内AX転換の主要指標として使っています。",
+            learned: "計測が別の作業として残っていると、忙しいときに真っ先に後回しにされ、遅れたデータで作った指標は信頼を失います。そのため、実装よりもチームごとにデプロイ基準を合意して文書で固定することに時間をかけました。",
             role: 'DevOps Engineer',
             tech: ['Python', 'SQLite', 'REST API', 'Grafana'],
             features: [
-              '分散Notion DBデプロイ・障害データ統合収集',
-              '7/30/90日スライディングウィンドウDORA 4大指標自動算出',
-              'チーム別・個人別加重値基盤DORA Score体系',
-              'FLEX API連動 実質営業日基準Deploy Frequency補正',
-              'クルー・リーダーダッシュボードDORA Metricビュー構築'
+              "チームごとのデプロイ基準を各チームと合意し、文書で固定",
+              "DORAの4指標（デプロイ頻度、リードタイム、失敗率、復旧時間）を毎日自動算出",
+              "基準を満たしているかはNotionカスタムエージェントがレビュー"
             ]
           },
           links: { demo: null, github: null }
@@ -1739,17 +1786,17 @@ export const content = {
           category: 'OSS貢献',
           image: null,
           description: 'Spin Framework Python SDKのPostgresサンプルがクエリ結果を返さなかった問題を、他ユーザーのIssue（#115）を受けて修正しマージ（PR #124）。サンプル文書の誤り2件も修正（#126、#128）',
-          how: "Python のサンプルだけが結果をログに流して固定文字列を返していたため、他言語 SDK のサンプルと同様にカラム名と行を表形式でレスポンス本文に返すよう直しました。",
+          how: "Spin Python SDK の Postgres サンプルだけがクエリ結果をログに出して固定文字列を返し、結果を確認できなかったため、他言語 SDK と同じく表形式で HTTP レスポンスに載せるよう直しました。",
           details: {
-            problem: 'spin-postgresサンプルがクエリ結果をサーバーログにのみ出力し、HTTPレスポンスには固定文字列を返していたため、サンプル通りに動かしてもPostgresの結果を確認できなかった',
-            solution: 'SpinのPostgresバインディングが値をラッパーオブジェクトで返す点に合わせてformat_value、format_rowsetヘルパーを追加し、カラム名と行を表形式でレスポンス本文に返すよう修正しました。サンプルが前提とするtestテーブルの作成SQLをREADMEに追加し、手順通りに実行できるようにしました。',
+            problem: "Spin Python SDKのPostgresサンプルは、クエリ結果をサーバーログにだけ出力し、レスポンスには固定文字列を返していたため、サンプル通りに動かしても結果を確認できませんでした。",
+            decision: "他のユーザーが起票したIssue（#115）を引き受け、他言語のSDKと同じようにクエリ結果を表形式でレスポンスに載せるよう直しました。",
+            result: "PR #124が2025.12.15にマージされ、サンプル文書の誤り2件（#126、#128）も併せて直しました。",
             role: 'Open Source Contributor',
             tech: ['Python', 'WebAssembly', 'Spin Framework', 'Git'],
             features: [
-              'PR #124: 他ユーザーが起票したIssue #115を解決、2025.12.15マージ',
-              'format_value、format_rowsetヘルパーでクエリ結果をHTTPレスポンスに表形式で返却',
-              'READMEにサンプル用testテーブルの作成SQLを追加',
-              'PR #126、#128: サンプルREADMEのタイトル誤りとタイプミスを修正（自ら起票したIssue #125、#127）'
+              "format_value、format_rowsetヘルパーでクエリ結果を表形式で返却",
+              "READMEにサンプル用testテーブルの作成SQLを追加",
+              "PR #126、#128: サンプルREADMEのタイトル誤りとタイプミスを修正"
             ]
           },
           links: { demo: null, github: 'https://github.com/spinframework/spin-python-sdk/pull/128' }
@@ -1760,27 +1807,26 @@ export const content = {
           category: 'DevOps & Infra',
           image: null,
           description: 'AKS 1.34 の実環境で同一の Go ワークロードを SpinKube Wasm モジュールとコンテナで実装し、階層ごとに実測比較。ベンダーが主張するコールドスタートの優位が運用スタックを通過した後にどこまで残るかを検証',
-          how: "ベンダーのマイクロベンチマークを鵜呑みにせず、同一の Go ワークロードを Wasm とコンテナで実測し、階層別の割当を提案しました。",
+          how: "ベンダーの数値はランタイムだけを切り離して測った値のため、同じ Go ワークロードを SpinKube Wasm とコンテナで作って AKS 上で実測し、階層ごとにランタイムを割り当てる基準を提案しました。",
           details: {
-            problem: 'Wasm ランタイムのベンダーはコンテナ比でコールドスタート約400倍、Pod 密度43倍の優位を主張するが、これらは隔離されたマイクロベンチマークの数値である。Kubernetes の運用スタック（shim・SDK・HTTP 階層）を通過した end-to-end 経路でも同じ優位が残るかは検証されていなかった。',
-            solution: 'IoT ログパイプラインを Edge・Transform・Ingestion・Storage の四階層としてモデル化し、そのうち三階層を同一の Go ワークロードによる SpinKube Wasm モジュールと scratch コンテナの二通りで実装し、Azure Kubernetes Service（AKS 1.34）上で実測比較しました。言語・ビジネスロジック・負荷条件を統制してランタイム差のみを隔離測定し、Shapiro-Wilk の正規性検定の後に Welch の t 検定または Mann-Whitney U 検定を自動選択、確証的10指標群に Bonferroni 補正を適用しました。その結果、ベンダーが示したランタイム水準の定量的優位は実際の運用スタックを通過する過程で大きく希釈され、階層ごとに有利なランタイムが逆転することを確認し、単一ランタイムの選択ではなく階層別割当を提案しました。これに先立つ先行実験では Python Wasm の演算限界を Rust ネイティブ Wasm への移行で解決し、バイナリ91倍削減（35.86MB→0.39MB）とスループット7.8倍向上を得ました。',
-            role: '学部研究生（CSDC Lab 個別研究・単独）',
+            problem: "Wasm ランタイムのベンダーは、コンテナよりコールドスタートが約 400 倍速く Pod 密度が 43 倍高いと主張していますが、これはランタイムだけを切り離して測ったマイクロベンチマークの値です。Kubernetes の運用スタック（shim、SDK、HTTP 層）を通った経路全体でも同じ優位が残るかは、検証されていませんでした。",
+            decision: "ベンダーの数値をそのまま信じず、自分で測ることにしました。IoT ログパイプラインを Edge、Transform、Ingestion、Storage の四階層にモデル化し、そのうち三階層を同じ Go ワークロードの SpinKube Wasm モジュールと scratch コンテナでそれぞれ作り、AKS 1.34 上で比較しました。言語、ロジック、負荷条件をそろえ、ランタイムの違いだけが残るようにしました。\n\n差が偶然かどうかを見分けるため、Shapiro-Wilk の正規性検定のあと Welch の t 検定か Mann-Whitney の U 検定を自動で選ぶようにし、10 の指標群に Bonferroni 補正を適用しました。\n\n結論は「どちらのランタイムが優れているか」にはしませんでした。階層ごとに有利な方が逆になったため、一つを選ぶのではなく階層別に割り当てる基準を提案しました。",
+            result: "ランタイムのインスタンス化だけを測ると 0.436ms で、ベンダーの主張（0.5ms）との間に統計的に有意な差はありませんでした（p=0.71）。リクエスト経路全体 1.55ms のうち、直接測ったインスタンス化の割合は 28% でした。残りの 72% は Kubernetes、shim、SDK、HTTP 層で加わった分で、層ごとに個別には測っていないため、どの層がどれだけ加えたかは分けられていません。Ingestion はコンテナ、Transform と Edge は Wasm が有利でした。",
+            role: "学部研究生（CSDC Lab 個別研究として実施）",
             tech: ['SpinKube', 'WebAssembly', 'WASI', 'Rust', 'Go', 'Azure AKS', 'KEDA', 'Kubernetes', 'containerd-shim-spin', '統計検定'],
             features: [
-              'インスタンス化の実測は0.436ms でベンダー主張（0.5ms）と統計的に区別されず（p=0.71）。ただし全体の要求経路1.55ms のうちランタイムの比重は28%、残り72%は Kubernetes・shim・SDK・HTTP 階層',
-              'Ingestion 階層はコンテナ優位: 24〜28K rps を維持 vs Wasm 約1,264 rps の限界（19〜22倍）',
-              'Transform 階層は Wasm 優位: テナント別隔離を強制するとコンテナは約41 Pod で限界、Wasm 共有プールは8,000テナントを無損失で収容。テナント当たり費用は最大64倍安価（$4.69→$0.07）',
-              'Edge 階層は Wasm 優位: scale-from-zero のコールドスタートが11倍高速、arm64 ビルドのコンテナが amd64 ノードで失敗した一方、同一 Wasm モジュールは cross-arch で動作',
-              '先行実験: Python Wasm から Rust ネイティブ Wasm への移行でバイナリ35.86MB→0.39MB（91倍）、スループット1,713→13,389 req/s（7.8倍）',
-              'Threats to Validity を6件明示（6 vCPU の free-tier クラスタ、単一 Go ワークロード、測定ツールの基準差など）'
+              "受信（Ingestion）階層はコンテナ優位: 24〜28K rps vs Wasm 約1,264 rps",
+              "変換（Transform）階層は Wasm 優位: 8,000 テナントを無損失で収容。テナントごとの隔離を強制した月額費用モデルで、2,500 テナント時にテナント当たり費用が最大 64 倍安価（6 vCPU クラスタ基準）",
+              "Edge 階層は Wasm 優位: scale-from-zero のコールドスタートが 11 倍高速",
+              "先行実験: Python Wasm を Rust ネイティブ Wasm に移し、バイナリを 35.86MB から 0.39MB に、スループットを 7.8 倍に",
+              "限界を 6 件明示（6 vCPU クラスタ、単一の Go ワークロード、SpinKube/Wasmtime 限定など）"
             ]
           },
           links: {
             demo: null,
             github: null,
             papers: [
-              { label: '論文・階層別ランタイム割当（AKS 実測）', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' },
-              { label: '先行実験資料・ランタイム比較と Rust 最適化', url: '/assets/wasm-spinkube-runtime-comparison.pdf' }
+              { label: '論文・階層別ランタイム割当（AKS 実測）', url: '/assets/wasm-spinkube-iot-layer-allocation.pdf' }
             ]
           }
         },
@@ -1790,18 +1836,18 @@ export const content = {
           category: 'DevOps & Infra',
           image: null,
           description: 'シーズン別寮マッチングサービス。AWSフルサーバーレスアーキテクチャ + Terraform IaC（Lambda 9個、Step Functions、DynamoDB）',
-          how: "シーズン制のサービスのため Lambda と DynamoDB オンデマンドで組み、使用量プランが不要なので REST API ではなく HTTP API v2 を選びました。",
+          how: "シーズンにしか使われないサービスのため、使った分だけ支払う Lambda と DynamoDB オンデマンドで構成し、使用量プランとリクエスト検証が不要なので REST API ではなく HTTP API v2 を選びました。",
           details: {
-            problem: 'シーズン別運用特性による遊休コスト発生とマッチングワークフローの複雑性',
-            solution: 'Lambda 9個関数、Step Functionsマッチングワークフロー、DynamoDB 4テーブル、API Gateway（HTTP API v2）、Cognito OAuth 2.0認証、SESメール送信まで全インフラをTerraformでコード化しました。LambdaとDynamoDBオンデマンド（PAY_PER_REQUEST）のみで構成し、オフシーズンの遊休コストは0円です。アンケート収集、マッチング演算、結果通知の流れがどこで止まったか見えるようマッチングワークフローをStep Functionsに置いて実行履歴をコンソールで確認できるようにし、使用量プランやリクエスト検証が不要だったためREST APIではなくコストと遅延の低いHTTP API v2を選びました。オフシーズンにリソースを落とし、シーズンに再構築できるよう全てTerraformで残しました。',
-            role: 'Cloud Architect',
+            problem: "寮のマッチングはシーズンにしか使われないため、サーバーを動かし続けると使わない期間にも費用がかかります。アンケート収集、マッチング演算、結果通知と続く流れも長く、どこで止まったかが見える必要がありました。",
+            decision: "使った分だけ支払うLambdaとDynamoDBオンデマンドだけで構成しました。マッチングの流れはStep Functionsに置いて実行履歴をコンソールで確認できるようにし、使用量プランやリクエスト検証が不要だったため、REST APIではなくコストと遅延の低いHTTP API v2を選びました。",
+            result: "リクエストがなければ実行課金のないLambdaとDynamoDBオンデマンドだけで構成したため、使わない期間は実行費用がかからない設計で、インフラ全体をTerraformに残してあるためシーズンごとに立て直せます。",
+            role: "Cloud Architect。アーキテクチャ設計と Terraform IaC の全体を担当しました。",
             tech: ['Terraform', 'AWS Lambda', 'AWS Step Functions', 'DynamoDB', 'API Gateway', 'Cognito'],
             features: [
-              'Lambda 9個関数 + Step Functionsマッチングワークフロー',
-              'DynamoDB 4テーブル（Forms, FormResponses, Results, Students）',
-              'Cognito OAuth 2.0認証 + API Gateway HTTP API',
-              'LambdaとDynamoDBオンデマンド構成でオフシーズン遊休コスト0円',
-              'Terraformで全インフラコード化'
+              "Lambda関数9個 + Step Functionsのマッチングワークフロー",
+              "DynamoDB 4テーブル（Forms、FormResponses、Results、Students）",
+              "Cognito OAuth 2.0認証 + API Gateway HTTP API v2",
+              "SESのメール送信まで、インフラ全体をTerraformでコード化"
             ]
           },
           links: { demo: null, github: 'https://github.com/Roomeya' }
@@ -1812,17 +1858,17 @@ export const content = {
           category: 'Security',
           image: null,
           description: 'TerraformのIAMリソース関係をグラフ化し、時間とサービス目的のコンテキストを併せて見るセキュリティ分析ツール。ルールベースのスキャナーが見逃す期限切れアカウント、未使用アカウント、目的の不一致を検知',
-          how: "既存スキャナーを置き換えず補完する方針で、IAM の関係をグラフ化し、有効期限とサービス目的はルールベースで分析して Checkov の結果と統合しました。",
+          how: "Checkov のようなルールベースのスキャナーは期限切れアカウントや目的に合わない権限を見逃すため、Terraform の IAM 関係をグラフにし、有効期限とサービス目的を併せて分析して Checkov の結果と統合しました。",
           details: {
-            problem: 'ルールベースの静的分析ツール（TFSec、Checkov）はパターンに合うものしか検知できず、個々のリソースは正常でも繋ぐと危険になる構成や、期限切れアカウントのような時間に基づくリスクを見逃す',
-            solution: 'python-hcl2でTerraformをパースしてIAMリソース関係（assume_role、pass_roleなど7種）をNetworkXのグラフにし、危険なIAMアクション17種の辞書とアクションの組み合わせ照合で権限昇格経路を判定しました。アカウントの有効期限と最終使用日、サービス目的と付与権限を併せて比較し、ルールベースのスキャナーが構造的に見られないリスクを検知します。既存ツールを置き換えず補完するようCheckovの結果を統合するモジュールを設け、BERT（bert-base-uncased）の埋め込み類似度モジュールも実装しました。',
+            problem: "TFSecやCheckovのようなルールベースのツールは、決まったパターンに当てはまるものしか検知しません。リソース一つひとつは正常でもつなぐと危険になる構成や、期限切れアカウントのように時間が経って生じるリスクは見逃します。",
+            decision: "TerraformのIAMリソースの関係をグラフにして権限が上がっていく経路を探し、アカウントの有効期限と最終使用日、サービスの目的と付与された権限を併せて比較しました。既存ツールを置き換えるより補う方が適切だと考え、Checkovの結果を統合するモジュールを設けました。",
+            result: "期限切れアカウント、未使用アカウント、目的の不一致など、同じテストファイルで比較した TFSec と Checkov が検知しなかった類型を検知し、動作をユニットテスト11件で固定しました。",
             role: 'Security Researcher & Developer',
             tech: ['Python', 'BERT', 'Terraform', 'NetworkX', 'AWS IAM', 'Hugging Face', 'NLP'],
             features: [
-              '期限切れアカウント、未使用アカウント、目的の不一致、時間に基づくリスクなどTFSecとCheckovが検知しない類型を検知',
-              'IAM関係グラフ上で危険アクション17種の辞書とアクション組み合わせ照合により権限昇格経路を判定',
-              'Checkovの結果を統合し既存スキャナーと相互補完',
-              '検知機能の動作をユニットテスト11件で固定'
+              "python-hcl2でパースしたIAM関係7種をNetworkXのグラフに構成",
+              "危険アクション17種の辞書とアクションの組み合わせで権限昇格経路を判定",
+              "Checkovの結果を統合し、既存スキャナーと相互補完"
             ]
           },
           links: { demo: null, github: 'https://github.com/Gosorasora/NLP-Enhanced-IaC-Security-Analyzer' }
@@ -1832,18 +1878,18 @@ export const content = {
           title: 'AWS クラウド移行（CAPS サークル）',
           category: 'DevOps & Infra',
           image: null,
-          description: '2022年、頼まれたわけではなくサークルのサーバーを物理PCからAWSへ自ら移行。停電や再起動で止まっていたサービスを常時稼働にし、学外からも管理可能に',
-          how: "停電や再起動のたびに止まり、学内に行かなければ触れなかったサークルのサーバーを、誰に言われるでもなく 2022年に自ら AWS へ移しました。",
+          description: '2022年、頼まれたわけではなくサークルのサーバーを物理PCからAWSへ自ら移行。停電や再起動で止まる学内PCへの依存をなくし、学外からも管理可能に',
+          how: "物理 PC で動かしていたサークルのサーバーが停電や再起動のたびに止まり、学内でしか触れなかったため、2022年に自主的に AWS へ移し、Docker コンテナで構成しました。",
           details: {
-            problem: '物理PCで動かしていたサークルサーバーが停電や再起動の影響をそのまま受け、管理者が学内にいなければ対応できなかった問題',
-            solution: 'サークルサーバーをAWSへ移行し、停電や再起動の影響をなくして学外からも管理できるようにし、24/7サービス可用性を確保しました。',
+            problem: "物理PCで動かしていたサークルのサーバーは停電や再起動のたびに止まり、管理者が学内にいなければ手を入れられませんでした。",
+            decision: "2022年、頼まれたわけではありませんが、サーバーをAWSへ移し、サービスはDockerコンテナで構成しました。",
+            result: "停電や再起動のたびにサービスが止まっていた学内PCへの依存をなくし、学外からも管理できるようになりました。",
             role: 'Cloud Architect',
             tech: ['AWS EC2', 'AWS EBS', 'AWS S3', 'AWS RDS', 'Docker'],
             features: [
-              'AWSクラウド全面マイグレーション',
-              '24/7サービス可用性確保',
-              '停電や再起動の影響と現地管理の必要性を排除',
-              'Docker基盤コンテナ化'
+              "サークルのサーバー全体をAWSへ移行",
+              "Dockerによるコンテナ化",
+              "学内PCの停電や再起動への依存を解消、学外から管理"
             ]
           },
           links: { demo: null, github: null }
@@ -1853,17 +1899,19 @@ export const content = {
           title: 'LLM コストのラベリング基盤構築',
           category: 'DevOps & Infra',
           image: null,
-          description: 'LLMの呼び出しごとに、どのベンダーのモデルをどの用途で使ったかの印を付け、用途別の支出を追跡し、上限を超えると通知が届くようにしました。',
-          how: "AI 活用を広げる前に用途別の支出が見えるべきだと考え、社内 LLM サーバーのコードにベンダーと用途のラベルを先に付けました。",
+          description: "LLM の呼び出しごとにベンダー（Vertex AI、AI Studio、OpenAI）と用途のラベルを付け、用途別に支出を追跡し、しきい値を超えると通知が届くようにしました。",
+          how: "AI の利用を広げる前に、どこに費用がかかっているかが見える必要があると判断し、社内 LLM サーバーのコードで呼び出しごとにベンダー（Vertex AI、OpenAI など）と用途のラベルを付けました。",
           details: {
-            problem: '社内のLLM利用が増える中、どのベンダー・機能でコストが発生しているか追跡できず、コスト管理が困難な状況。',
-            solution: '社内LLMサーバーのコードにベンダー・用途ベースのラベリング方式を追加し、Vertex AI、AI Studio、OpenAIなどベンダー別のLLM支出をモニタリングできる基盤を整備しました。AI活用を広げる前に、用途別の支出がまず見えている必要があると判断して進めた作業です。入社初期の課題として進め、社内コード規約やGraphQLコンベンションを素早く習得する機会にもなりました。',
+            problem: "社内のLLM利用が増えましたが、どのベンダーのモデルに、どの機能で費用がかかっているのか分かりませんでした。",
+            decision: "AIの利用を広げる前に用途別の支出が見えている必要があると判断し、社内LLMサーバーのコードで呼び出しごとにベンダーと用途のラベルを付けました。",
+            result: "Vertex AI、AI Studio、OpenAIの支出をベンダー別、用途別に分けて確認でき、しきい値を超えると通知が届きます。",
+            learned: "入社初期の課題として進めながら、社内のコード規約と GraphQL のコンベンションを身につけました。",
             role: 'AX / Platform Engineer',
             tech: ['GraphQL', 'Cost Monitoring', 'FinOps'],
             features: [
-              'ベンダー別（Vertex AI・AI Studio・OpenAI）LLMコストラベリング',
-              '使用量モニタリング環境と閾値ベースのアラートシステムを構築',
-              'LLMコストラベリング作成ガイドを文書化'
+              "ベンダー別（Vertex AI、AI Studio、OpenAI）のLLMコストラベリング",
+              "使用量のモニタリングと上限超過時の通知",
+              "ラベル作成ガイドを文書化"
             ]
           },
           links: { demo: null, github: null }
@@ -1873,18 +1921,20 @@ export const content = {
           title: 'インバウンドリードの SLA の仕組み構築',
           category: 'Platform Engineering',
           image: null,
-          description: '受付 → 担当者割り当ての平均を 33.6 時間から 0.4 時間へ短縮（98.7% 短縮）。「応答」の基準を決めるところから、営業時間基準の計測、通知、長く放置された問い合わせを上位者に引き継ぐ手順まで作りました。',
-          how: "担当者の割り当て時刻だけでは数値が良く見えても、顧客が感じる応答は初回コンタクトなのでその基準も併せて残しました。週末の問い合わせを遅延と数えないよう、改善前後とも営業時間基準で計測しました。",
+          description: "リード受付から担当者割り当てまでの平均を 33.6 時間から約 26 分へ短縮しました（98.7% 短縮、改善前後とも営業時間基準）。「応答」を何と見なすかという SLA の定義から始め、営業時間基準の自動計測、通知、放置されたリードを上位職の人に引き継ぐエスカレーションまで作りました。",
+          how: "担当者の割り当てだけを数えれば数字は良く見えても、顧客が感じる応答は最初の連絡なので、SLA を割り当て時刻と顧客への初回連絡の二つで測り、改善前後を同じ営業時間基準で比べました。",
           details: {
-            problem: '上半期のリード応答は 1 時間以内 45.5%、平均応答 4.3 時間、9 時間超の放置が 4 件でした。初期対応が遅れるほど商談転換が下がり、そのまま機会損失につながる状態でした。',
-            solution: '受付・担当者割り当て・初回顧客コンタクトの時刻を同一基準で自動記録し、営業時間基準で SLA を計測する定義を整えました。担当者が対応できる時間帯にのみ通知が届くよう配信条件を変更し、放置リードのエスカレーションを追加しました。結果として受付から担当者割り当てまでの平均は 33.6 時間から 0.4 時間に短縮され、1 時間以内の割り当て率は 9% から 86% に上がりました。',
+            problem: "リードの受付から担当者の割り当てまで平均 33.6 時間かかり、1 時間以内に担当者が割り当てられる割合は 9% でした（営業時間基準）。顧客への最初の連絡がいつ行われたのかは指標として残らず、対応の遅れは後から偶然見つかるだけでした。",
+            decision: "問題はコードではなく営業組織の業務の流れの中にあったため、設計の前に営業担当者の仕事に付いて回って聞きました。なぜ連絡が遅れたのか、通知を見ても動けなかった理由は何か。今の設計はその対話から出てきました。\n\n最も難しかったのは「応答」の定義でした。システムの視点では担当者が割り当てられた時刻が自然で、営業の視点では顧客に実際に連絡がついた時刻です。割り当てだけを数えれば数字はずっと良く見えますが、二つの指標を両方残し、より不利な「顧客への初回連絡」の基準を捨てないことにしました。その代わり、成果を報告するたびに未達の指標も一緒に持っていくことになります。\n\nSLA は営業時間基準でのみ測りました。金曜の夜の問い合わせを月曜の朝に受けたものまで遅延と数えると、指標が現実とずれるからです。通知は増やさず、担当者が対応できる時間帯に絞り、代わりに放置されたリードは上位職の人に引き継がれるようにしました。",
+            result: "受付から担当者割り当てまでの平均は 33.6 時間から約 26 分に縮まり、1 時間以内に担当者が割り当てられる割合は 9% から 86% に上がりました。受付と割り当ての時刻は以前から記録されていた項目なので、前後を同じ項目、同じ基準で計算しています。顧客への初回連絡を基準にした指標は、まだ目標に届いていません。",
+            learned: "有利な基準に乗り換えた瞬間、指標は改善の道具ではなく報告用の数字になります。",
             role: 'DevOps / FDE',
             tech: ['Notion', 'Backoffice', 'SLA Metrics', 'アラートing', 'Data Backfill'],
             features: [
-              '受付 → 担当者割り当て 平均 33.6 時間 → 0.4 時間（98.7% 短縮）',
-              '1 時間以内の担当者割り当て率 9% → 86%',
-              '営業時間基準の SLA 自動計測（週末・祝日・時間外を除外）',
-              '放置リードの通知・エスカレーション体系を構築'
+              "受付、担当者割り当て、顧客への初回連絡の 3 区間の時刻を同じ基準で自動記録",
+              "営業時間基準で SLA を自動計測（週末、祝日、時間外を除外）",
+              "対応できる時間帯のみの通知、放置リードのエスカレーション、リアルタイムのモニタリング画面",
+              "二重受付の解消、受付時刻がリセットされる不具合の修正、変更履歴の詳細化と過去データのバックフィル"
             ]
           },
           links: {
@@ -1897,18 +1947,19 @@ export const content = {
           title: 'Notion: デプロイレビューエージェントとリリースデータの整合性',
           category: 'AX 業務自動化',
           image: null,
-          description: 'チーム別のデプロイ基準を整備し、エージェントでデプロイ品質を自動レビュー。リリースに紐付いていない作業を見つけてつなぎ、リリース記録と業務記録がずれないようにしました。',
-          how: "人のレビューは繰り返すと形骸化するため、個々の判断精度を多少譲っても、同じ基準を適用し続けるカスタムエージェントに任せました。",
+          description: "Notion Custom Agent がリリース文書を受け取り、チーム別のデプロイ基準文書を落としたプロンプトに照らして基準を満たしているかを判定します。リリースに紐付いていないタスクを見つけてつなぎ、リリース記録と業務記録がずれないようにし、DORA スコアレポートもエージェントが発行します。",
+          how: "担当者がリリース文書を直接見ていたレビューを、リリース文書を入力に受けてチーム別の基準文書とプロンプトで判定する Notion Custom Agent に移し、リリースに漏れたタスクの紐付けまで任せました。",
           details: {
-            problem: 'デプロイ品質の点検やデプロイ基準が人に依存し、漏れやばらつきが発生。リリースとTASKの連携も手作業で管理されていた。',
-            solution: 'Notion カスタムエージェントとチーム別のデプロイ基準ドキュメント・プロンプトを整備し、デプロイ品質を自動点検する体系を構築しました。リリースに未連携のTASKを自動マッピングするボットも併せて作成し、先に構築したDORAスコアレポートもカスタムエージェントで完全自動化しました。人によるレビューは初めは正確でも繰り返すうちに形骸化し基準が揺らぐため、個々の判断精度より同じ基準を適用し続けることを選び、エージェントに任せました。',
+            problem: "デプロイ品質のレビューは、担当者がリリース文書を直接確認する方式でした。基準が人によって異なるため漏れやずれが生じ、リリースとタスクをつなぐ仕事も手作業でした。",
+            decision: "人によるレビューは初めは正確でも、繰り返すうちに形だけになり基準がぶれると考えました。そこで判定を Notion Custom Agent に移し、同じ基準文書とプロンプトで判定させました。一つひとつの判断の正確さが人に劣りうる点は受け入れました。\n\nエージェントはリリース文書を入力として受け取り、チーム別のデプロイ基準文書を落としたプロンプトに照らして基準を満たしているかを判定します。リリースに紐付いていないタスクを見つけてつなぐ仕事もエージェントに任せ、リリース記録と業務記録がずれないようにしました。",
+            result: "デプロイ品質のレビュー、リリースに紐付いていないタスクの発見と紐付け、DORA スコアレポートの発行がすべて自動で動いており、レビューエージェントは全社で使われています。",
             role: 'AX Engineer',
             tech: ['Notion Custom Agent', 'プロンプトエンジニアリング', 'Notion API'],
             features: [
-              'エージェントによるデプロイ品質の自動点検',
-              'リリース関連タスクの自動追跡・紐付け',
-              'チーム別デプロイ基準ドキュメント・プロンプトの整備',
-              'DORAスコアレポートの完全自動発行'
+              "Notion Custom Agent によるデプロイ品質の自動レビュー",
+              "リリースに紐付いていないタスクの自動追跡、紐付け",
+              "チーム別の基準文書を落としたプロンプトで判定",
+              "DORA スコアレポートの自動発行"
             ]
           },
           links: { demo: null, github: null }
@@ -1918,17 +1969,18 @@ export const content = {
           title: 'Notion: カレンダー連動の議事録自動生成エージェント',
           category: 'AX 業務自動化',
           image: null,
-          description: 'カレンダーの予定が終わると、決まった形式の議事録が自動で作られるようにし、現在は全社で使われています。',
-          how: "議事録の自動化に専用サーバーは過剰と考えて Notion Workers を選び、配布だけでは利用者が増えないためチームごとに導入を案内しました。",
+          description: "カレンダーの予定から、決まった形式の議事録が自動で作られるようにしました。Notion Workers で構成し、現在は全社で使われています。",
+          how: "配布だけでは利用者が増えなかったため、カレンダー連動の議事録自動生成とあわせて利用ドキュメントを書き、チームごとに導入を案内しました。",
           details: {
-            problem: '主催者が議事録を手作業で作成していたため作成タイミングが会議ごとに異なり、事前に作られていないと議題を主催者が作るまで別の場所に置いておく必要があった。アジャイル振り返りでも反復的な手作業として指摘されていた。',
-            solution: 'Notion Workers（サーバーレス）を活用し、カレンダー予定から構造化された議事録を自動生成するパイプラインを構築して全社に展開しました。議事録自動化の規模に専用インフラは過剰と判断し、AWS Lambdaに類似したサーバーレスモデルのNotion Workersを選びました。機能を配布するだけでは利用者が増えなかったため、利用ドキュメントを別途作成しチームごとに導入方法を案内しました。',
+            problem: "議事録を主催者が手作業で作っていたため、作られるタイミングが会議ごとに違い、事前に作られていなければ議論する内容を別の場所に書いておく必要がありました。",
+            decision: "カレンダーの予定から、決まった形式の議事録が自動で作られるようにしました。配布するだけでは使う人が増えなかったため、利用ドキュメントを書き、チームごとに導入方法を案内しました。",
+            result: "現在は全社で使われています。",
             role: 'AX Engineer',
             tech: ['Notion Workers (サーバーレス)', 'Notion API', 'Calendar API'],
             features: [
-              'カレンダー予定から構造化された議事録を自動生成',
-              'AWS Lambda に類似したサーバーレス構成',
-              '全社単位での展開・運用'
+              "カレンダーの予定から決まった形式の議事録を自動生成",
+              "AWS Lambdaに近いサーバーレス（Notion Workers）構成",
+              "利用ドキュメントの作成とチームごとの導入案内、全社展開"
             ]
           },
           links: { demo: null, github: null }
