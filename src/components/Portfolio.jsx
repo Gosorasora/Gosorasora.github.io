@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaTimes, FaFileAlt } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaTimes, FaFileAlt, FaChevronDown } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import { content } from '../data/content';
 import { reveal, revealDelay } from '../utils/motion';
@@ -87,7 +87,7 @@ const Portfolio = () => {
             aria-controls="other-grid"
             onClick={() => { justExpanded.current = !expanded; setExpanded(!expanded); }}
           >
-            {expanded ? t.showLess : `${t.showMore} (${filteredProjects.length - FRONT})`}
+            {expanded ? t.showLess : `${t.showMore} (${filteredProjects.length - FRONT})`} <FaChevronDown className="chev" aria-hidden="true" />
           </button>
         )}
 

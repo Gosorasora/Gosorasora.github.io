@@ -33,7 +33,7 @@ const Hero = () => {
           {t.links.map(({ label, url }) => {
             const Icon = ICONS[label] || FaFilePdf;
             return (
-              <a key={label} href={url} target="_blank" rel="noopener noreferrer" className="hero-link">
+              <a key={label} href={url} target="_blank" rel="noopener noreferrer" className={`hero-link${ICONS[label] ? '' : ' primary'}`}>
                 <Icon aria-hidden="true" /> {label}
               </a>
             );

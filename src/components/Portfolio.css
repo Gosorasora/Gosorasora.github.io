@@ -11,9 +11,10 @@
 }
 
 .filter-btn {
-    padding: 8px 20px;
-    border: 2px solid #e5e7eb;
-    border-radius: 20px;
+    min-height: var(--pill-height);
+    padding: var(--pill-pad);
+    border: var(--pill-border) solid #c9ccc6;
+    border-radius: var(--pill-radius);
     background: transparent;
     color: var(--text-secondary);
     font-weight: 600;
@@ -88,11 +89,15 @@
 }
 
 .other-more {
-    display: block;
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 8px;
     margin: 28px auto 0;
-    padding: 10px 24px;
-    border: 2px solid #e5e7eb;
-    border-radius: 20px;
+    min-height: var(--pill-height);
+    padding: var(--pill-pad);
+    border: var(--pill-border) solid #c9ccc6;
+    border-radius: var(--pill-radius);
     background: transparent;
     color: var(--primary-color);
     font-family: inherit;
@@ -244,11 +249,13 @@
     gap: 8px;
     color: var(--text-secondary);
     font-weight: 500;
-    padding: 8px 16px;
-    border: 1px solid #e5e7eb;
-    border-radius: 20px;
+    min-height: var(--pill-height);
+    padding: var(--pill-pad);
+    border: var(--pill-border) solid #c9ccc6;
+    border-radius: var(--pill-radius);
     transition: var(--transition);
     font-size: 0.9rem;
+    font-weight: 600;
 }
 
 .icon-link:hover {

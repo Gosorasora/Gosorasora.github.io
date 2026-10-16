@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaExternalLinkAlt, FaTimes } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaTimes, FaChevronDown } from 'react-icons/fa';
 import { useLanguage } from '../contexts/LanguageContext';
 import { content } from '../data/content';
 import { reveal } from '../utils/motion';
@@ -40,7 +40,7 @@ const Case = ({ c, project, index, s, onZoom }) => {
           </a>
         ))}
         <button type="button" className="case-toggle" aria-expanded={open} onClick={() => setOpen(!open)}>
-          {s.more} {open ? '▴' : '▾'}
+          {s.more} <FaChevronDown className="chev" aria-hidden="true" />
         </button>
       </div>
 
@@ -50,7 +50,7 @@ const Case = ({ c, project, index, s, onZoom }) => {
 
           {c.diagram && hasDiagram && (
             <details className="case-diagram-wrap">
-              <summary>{s.diagram}</summary>
+              <summary>{s.diagram} <FaChevronDown className="chev" aria-hidden="true" /></summary>
               <button type="button" className="case-diagram" onClick={() => onZoom(c.diagram)} aria-label={s.zoom}>
                 <img src={c.diagram} alt={c.diagramAlt || project.title} loading="lazy" onError={() => setHasDiagram(false)} />
               </button>

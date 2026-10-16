@@ -59,13 +59,50 @@
     margin-bottom: 20px;
 }
 
-.case-diagram-wrap > summary {
-    cursor: pointer;
-    font-family: monospace;
+.case-diagram-wrap > summary,
+.case-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: var(--pill-height);
+    padding: var(--pill-pad);
+    border: var(--pill-border) solid #c9ccc6;
+    border-radius: var(--pill-radius);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--primary-color);
-    padding: 6px 0;
-    margin-bottom: 8px;
+    background: transparent;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.case-diagram-wrap > summary {
+    list-style: none;
+    margin-bottom: 12px;
+}
+
+.case-diagram-wrap > summary::-webkit-details-marker {
+    display: none;
+}
+
+.case-diagram-wrap > summary:hover,
+.case-toggle:hover {
+    border-color: var(--accent-color);
+    background-color: var(--bg-light);
+}
+
+/* One disclosure mark everywhere: a chevron that turns when open */
+.chev {
+    display: inline-block;
+    font-size: 0.75em;
+    transition: transform 0.2s ease;
+}
+
+.case-toggle[aria-expanded="true"] .chev,
+.other-more[aria-expanded="true"] .chev,
+.case-diagram-wrap[open] > summary .chev {
+    transform: rotate(180deg);
 }
 
 .case-diagram {
@@ -207,10 +244,6 @@
 
 .case-toggle {
     margin-left: auto;
-    font-family: monospace;
-    font-weight: 600;
-    color: var(--primary-color);
-    padding: 8px 4px;
 }
 
 .case-detail {

@@ -83,13 +83,24 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 14px;
-    border: 1.5px solid #778DA9;
-    border-radius: 4px;
+    min-height: var(--pill-height);
+    padding: var(--pill-pad);
+    border: var(--pill-border) solid #778DA9;
+    border-radius: var(--pill-radius);
     color: #E0E1DD;
-    font-size: 0.85rem;
-    font-family: monospace;
+    font-size: 0.9rem;
+    font-family: var(--font-sans);
     font-weight: 600;
+}
+
+.hero-link.primary {
+    background-color: #E0E1DD;
+    border-color: #E0E1DD;
+    color: #1B263B;
+}
+
+.hero-link.primary:hover {
+    background-color: #fff;
 }
 
 .hero-link:hover {

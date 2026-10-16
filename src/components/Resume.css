@@ -20,20 +20,22 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 0.75rem 1.25rem;
-    border: 2px solid var(--accent-color);
-    border-radius: 4px;
-    color: var(--accent-color);
+    min-height: var(--pill-height);
+    padding: var(--pill-pad);
+    border: var(--pill-border) solid var(--primary-color);
+    border-radius: var(--pill-radius);
+    color: #fff;
     font-size: 0.9rem;
-    font-family: monospace;
+    font-family: var(--font-sans);
     font-weight: 600;
     transition: var(--transition);
-    background-color: transparent;
+    background-color: var(--primary-color);
     white-space: nowrap;
 }
 
 .btn-download:hover {
-    background-color: rgba(119, 141, 169, 0.15);
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
 }
 
 .resume-grid {

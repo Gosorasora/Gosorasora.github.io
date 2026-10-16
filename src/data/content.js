@@ -23,6 +23,7 @@ export const content = {
     },
     intro: {
       value: "기술은 사람을 향해야 한다고 생각합니다.",
+      skip: "건너뛰기",
       chapters: [
         { kicker: "사람을 모으는 기술", tag: "Community Leader", title: "받기만 하던 멤버에서, 주는 리더로", body: "2022년 Cloud Club 1기에서는 받기만 하는 멤버였습니다. 지금은 AWS Student Builder Group과 Notion Campus Leader 등 여러 커뮤니티에서 리더로 활동하며 배운 것을 나눕니다." },
         { kicker: "사람을 돕는 기술", tag: "AX Engineer", title: "누군가 어려워하는 일을, 제가 아는 기술로", body: "영업 담당자가 어려워하던 리드 응대를 직접 인터뷰로 듣고, 자동 측정과 알림을 만들어 응대가 늦어지지 않게 했습니다." },
@@ -666,6 +667,7 @@ export const content = {
     },
     intro: {
       value: "I believe technology should serve people.",
+      skip: "Skip",
       chapters: [
         { kicker: "Technology that brings people together", tag: "Community Leader", title: "From a member who only received, to a leader who gives back", body: "In 2022 I was a Cloud Club member who only took things in. Today I lead communities such as AWS Student Builder Group and Notion Campus Leader at Dongguk University and share what I have learned." },
         { kicker: "Technology that helps people", tag: "AX Engineer", title: "Solving what someone struggles with, using what I know", body: "I sat down with the sales team to hear why lead responses were hard, then built automatic measurement and alerts so no response falls behind." },
@@ -1368,6 +1370,7 @@ export const content = {
     },
     intro: {
       value: "技術は人に向かうべきだと考えています。",
+      skip: "スキップ",
       chapters: [
         { kicker: "人を集める技術", tag: "Community Leader", title: "受け取るだけのメンバーから、与えるリーダーへ", body: "2022年の Cloud Club 1期では受け取るだけのメンバーでした。今は AWS Student Builder Group と Notion Campus Leader など複数のコミュニティでリーダーとして活動し、学んだことを共有しています。" },
         { kicker: "人を助ける技術", tag: "AX Engineer", title: "誰かが困っていることを、自分の知る技術で", body: "営業担当者が困っていたリード対応を直接インタビューで聞き、自動計測とアラートを作って対応が遅れないようにしました。" },

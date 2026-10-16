@@ -159,6 +159,13 @@ const DevopsScene = ({ lp }) => {
 
 const SCENES = [CommunityScene, AxScene, DevopsScene];
 
+// Progress dot: lit while the scroll is inside [a, b].
+const Dot = ({ progress, a, b }) => {
+  const opacity = useTransform(progress, [a - 0.001, a, b - 0.001, b], [0.3, 1, 1, 0.3]);
+  const scale = useTransform(progress, [a - 0.001, a, b - 0.001, b], [1, 1.4, 1.4, 1]);
+  return <motion.span className="intro-dot" style={{ opacity, scale }} />;
+};
+
 const Chapter = ({ progress, i, chapter, last }) => {
   const start = CH_START + i * CH_LEN;
   const lp = useTransform(progress, (v) => Math.min(1, Math.max(0, (v - start) / CH_LEN)));
@@ -180,7 +187,7 @@ const Chapter = ({ progress, i, chapter, last }) => {
 const Intro = () => {
   const { language } = useLanguage();
   const t = content[language].hero;
-  const { chapters, value: valueLine } = content[language].intro || content.kr.intro;
+  const { chapters, value: valueLine, skip } = content[language].intro || content.kr.intro;
   const ref = useRef(null);
   const reduced = useReducedMotion();
 
@@ -206,6 +213,14 @@ const Intro = () => {
   const nameScale = useTransform(progress, [0, NAME_END], [1, 0.9]);
   const lineOpacity = useTransform(progress, [NAME_END - 0.02, NAME_END + 0.02, VALUE_END - 0.03, VALUE_END], [0, 1, 1, 0]);
   const hintOpacity = useTransform(progress, [0, 0.03], [1, 0]);
+  // black opening hands over to the navy hero without a seam
+  const navyOpacity = useTransform(progress, [0.9, 1], [0, 1]);
+  const skipOpacity = useTransform(progress, [0.94, 1], [1, 0]);
+
+  const skipToPage = () => {
+    const hero = document.getElementById('home');
+    if (hero) window.scrollTo({ top: hero.getBoundingClientRect().top + window.scrollY, behavior: 'smooth' });
+  };
 
   if (reduced) return null;
 
@@ -214,6 +229,7 @@ const Intro = () => {
   return (
     <section ref={ref} className="intro" aria-label={t.title}>
       <div className="intro-stage">
+        <motion.div className="intro-navy" style={{ opacity: navyOpacity }} aria-hidden="true" />
         <motion.div className="intro-name" style={{ opacity: nameOpacity, scale: nameScale }}>
           <h2 className="intro-title" aria-label={t.title}>
             {letters.map((ch, i) => (
@@ -233,6 +249,16 @@ const Intro = () => {
         {chapters.map((ch, i) => <Chapter key={i} progress={progress} i={i} chapter={ch} last={i === chapters.length - 1} />)}
 
         <motion.p className="intro-line" style={{ opacity: lineOpacity }}>{valueLine}</motion.p>
+
+        <div className="intro-dots" aria-hidden="true">
+          {[[NAME_END, VALUE_END], ...chapters.map((_, i) => [CH_START + i * CH_LEN, CH_START + (i + 1) * CH_LEN])].map(([a, b]) => (
+            <Dot key={a} progress={progress} a={a} b={b} />
+          ))}
+        </div>
+
+        <motion.button type="button" className="intro-skip" style={{ opacity: skipOpacity }} onClick={skipToPage}>
+          {skip} <span aria-hidden="true">↓</span>
+        </motion.button>
 
         <motion.div className="intro-hint" style={{ opacity: hintOpacity }} aria-hidden="true">
           <span>Scroll</span>

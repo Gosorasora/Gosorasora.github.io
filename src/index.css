@@ -21,6 +21,11 @@
   --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* Pill controls: one shape for every button and toggle */
+  --pill-radius: 999px;
+  --pill-height: 44px;
+  --pill-pad: 10px 20px;
+  --pill-border: 1.5px;
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.11), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
