@@ -231,17 +231,20 @@
     content: "–";
 }
 
+.profile-text p a,
 .resume-description a {
     color: var(--accent-color);
     text-decoration: underline;
     text-underline-offset: 2px;
 }
 
+.profile-text p a::after,
 .resume-description a::after {
     content: " \2197";
     font-size: 0.85em;
 }
 
+.profile-text p a:hover,
 .resume-description a:hover {
     opacity: 0.75;
 }
