@@ -4,7 +4,7 @@ export const content = {
       greeting: "Hello, I'm",
       title: "Ko Donghyeon.",
       subtitle: "DevOps Engineer.",
-      description: "Terraform과 Atlantis로 인프라 변경을 PR 승인 절차로 옮기고, LLM과 Notion 에이전트로 사내 반복 업무를 자동화합니다.\n사람과의 연결을 중시하는 DevOps 엔지니어입니다. 인프라와 AX로 팀의 일을 잇고, 전공과 동아리가 다른 개발자들이 섞이는 커뮤니티를 만들고 이끌어 왔습니다.\n영업팀 리드 배정처럼 개발 밖의 업무도 담당자를 직접 인터뷰해 측정 기준부터 세웁니다.",
+      description: "기술은 사람을 향해야 한다고 생각합니다. 그래서 인프라를 만들 때도, 사내 업무를 자동화할 때도 그것을 쓸 사람의 이야기를 먼저 듣습니다.\n사람과의 연결을 중시하는 DevOps 엔지니어입니다. 인프라와 AX로 팀의 일을 잇고, 전공과 동아리가 다른 개발자들이 섞이는 커뮤니티를 만들고 이끌어 왔습니다.\n영업팀 리드 배정처럼 개발 밖의 업무도 담당자를 직접 인터뷰해 측정 기준부터 세웁니다.",
       cta: "프로젝트 보기",
       label: "DevOps Engineer · BUZZ & BEYOND 2026~",
       highlights: [
@@ -111,8 +111,10 @@ export const content = {
       title: "About Me",
       intro: [
         "안녕하세요! 저는 **DevOps Engineer** **고동현**입니다.",
-        "Terraform·Kubernetes 기반 인프라와 GitOps 배포 환경을 구축하고 운영합니다. 최근에는 **LLM과 Notion 에이전트로 사내 반복 업무를 자동화하는 AX**에 집중하고 있으며, 문제가 있는 팀 옆에서 직접 듣고 고치는 방식을 택합니다.",
-        "**AWS Student Builder Group at Dongguk University의 Leader**로 Hands-on Seminar 10회 이상과 Dongguk Dev Conference 2026을 열었습니다."
+        "기술은 사람을 향해야 한다고 생각합니다. 영업팀 리드 응대처럼 개발 밖의 문제도 담당자를 직접 인터뷰해 기준부터 세웠습니다.",
+        "Terraform과 Kubernetes로 인프라와 GitOps 배포 환경을 구축하고 운영하며, 최근에는 **LLM과 Notion 에이전트로 사내 반복 업무를 자동화하는 AX**에 집중하고 있습니다.",
+        "2022년 Cloud Club 1기에서는 받기만 하는 쪽이었지만, CAPS 부회장으로 소모임의 중앙동아리 승격에 참여해 인원이 30명에서 200명이 되는 것을 함께 겪었습니다. 지금은 **AWS Student Builder Group at Dongguk University의 Leader**와 Notion Campus Leader로 두 커뮤니티를 이끌며, Hands-on Seminar 10회 이상과 교내 개발동아리가 모인 약 100명 규모의 Dongguk Dev Conference 2026을 열었습니다.",
+        "코딩의 문턱이 낮아진 만큼, 무엇을 만들지 정하고 다른 사람에게 설명하고 쓰게 만드는 일이 더 중요해졌다고 생각합니다. 그 일을 하는 엔지니어가 되겠습니다."
       ],
       tabs: {
         experience: "Experience",
@@ -125,7 +127,7 @@ export const content = {
         {
           title: 'DevOps Engineer / Infra·Platform·AX',
           company: 'BUZZ & BEYOND (버즈앤비)',
-          period: '2026.01 ~ 재직중 (인턴 2026.01~06 · 정규직 2026.07~)',
+          period: '2026.01 ~ 재직중',
           description: [
             'Terraform·Atlantis로 사내 GitOps 환경 구축',
             [
@@ -637,7 +639,7 @@ export const content = {
       greeting: "Hi, I'm",
       title: "Ko Donghyeon.",
       subtitle: "DevOps Engineer.",
-      description: "I moved infrastructure changes onto PR approval with Terraform and Atlantis, and automate repetitive internal work with LLMs and Notion agents.\nI'm a DevOps engineer who cares about connecting people. I tie teams' work together through infrastructure and AI transformation (AX), and I've built and led communities that bring together developers across majors and student clubs.\nEven outside engineering, such as sales lead assignment, I interview the people doing the work and set the measurement criteria first.",
+      description: "I believe technology should serve people. That is why, whether I build infrastructure or automate internal work, I start by listening to the people who will use it.\nI'm a DevOps engineer who cares about connecting people. I tie teams' work together through infrastructure and AI transformation (AX), and I've built and led communities that bring together developers across majors and student clubs.\nEven outside engineering, such as sales lead assignment, I interview the people doing the work and set the measurement criteria first.",
       cta: "Check out my work",
       label: "DevOps Engineer · BUZZ & BEYOND 2026~",
       highlights: [
@@ -759,7 +761,7 @@ export const content = {
         {
           title: 'DevOps Engineer / Infra·Platform·AX',
           company: 'BUZZ & BEYOND',
-          period: '2026.01 ~ Present (Intern 2026.01–06 · Full-time 2026.07~)',
+          period: '2026.01 ~ Present',
           description: [
             'Built the company GitOps environment with Terraform and Atlantis',
             [
@@ -1331,7 +1333,7 @@ export const content = {
       greeting: "Hello, I'm",
       title: "Ko Donghyeon.",
       subtitle: "DevOps Engineer.",
-      description: "Terraform と Atlantis でインフラ変更を PR 承認の手順に移し、LLM と Notion エージェントで社内の反復業務を自動化します。\n人とのつながりを大切にする DevOps エンジニアです。インフラと AX でチームの仕事をつなぎ、専攻やサークルの異なる開発者が交わるコミュニティをつくり、率いてきました。\n営業チームのリード割り当てのような開発外の業務も、担当者に直接ヒアリングして測定基準から定めます。",
+      description: "技術は人に向かうべきだと考えています。だからこそ、インフラを作るときも社内業務を自動化するときも、まずそれを使う人の話を聞きます。\n人とのつながりを大切にする DevOps エンジニアです。インフラと AX でチームの仕事をつなぎ、専攻やサークルの異なる開発者が交わるコミュニティをつくり、率いてきました。\n営業チームのリード割り当てのような開発外の業務も、担当者に直接ヒアリングして測定基準から定めます。",
       cta: "プロジェクトを見る",
       label: "DevOps Engineer · BUZZ & BEYOND 2026~",
       highlights: [
@@ -1453,7 +1455,7 @@ export const content = {
         {
           title: 'DevOps Engineer / Infra・Platform・AX',
           company: 'BUZZ & BEYOND',
-          period: '2026.01 ~ 在職中 (インターン 2026.01~06 · 正社員 2026.07~)',
+          period: '2026.01 ~ 在職中',
           description: [
             'Terraform・Atlantisで社内GitOps環境を構築',
             [
