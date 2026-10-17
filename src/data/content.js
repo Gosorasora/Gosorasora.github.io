@@ -181,7 +181,7 @@ export const content = {
           company: 'Notion',
           period: '2026.08 ~ 현재',
           description: [
-            '교내 Notion 공식 캠퍼스 리더로 교내 구성원 대상 Notion 교육 세션 운영, Notion 마켓플레이스에 [대학생 개발 프로젝트 관리 허브](https://www.notion.com/ko/templates/student-dev-project-hub) 템플릿 게시, 사내 업무 자동화 사례 공유'
+            '교내 Notion 공식 캠퍼스 리더로 활동, Notion 마켓플레이스에 [대학생 개발 프로젝트 관리 허브](https://www.notion.com/ko/templates/student-dev-project-hub) 템플릿 게시, 사내 업무 자동화 사례 공유'
           ],
           tags: ['Notion', 'Community']
         },
@@ -824,7 +824,7 @@ export const content = {
           company: 'Notion',
           period: '2026.08 ~ Present',
           description: [
-            'Official Notion Campus Leader on campus: runs Notion training sessions, published the [Student Dev Project Hub](https://www.notion.com/ko/templates/student-dev-project-hub) template on the Notion Marketplace, and shares workplace automation cases'
+            'Official Notion Campus Leader on campus: published the [Student Dev Project Hub](https://www.notion.com/ko/templates/student-dev-project-hub) template on the Notion Marketplace, and shares workplace automation cases'
           ],
           tags: ['Notion', 'Community']
         },
@@ -1527,7 +1527,7 @@ export const content = {
           company: 'Notion',
           period: '2026.08 ~ 現在',
           description: [
-            '学内の Notion 公式キャンパスリーダーとして、学内向け Notion 教育セッションの運営、Notion マーケットプレイスに[大学生開発プロジェクト管理ハブ](https://www.notion.com/ko/templates/student-dev-project-hub)テンプレートを公開、社内業務自動化事例の共有を担当'
+            '学内の Notion 公式キャンパスリーダーとして、Notion マーケットプレイスに[大学生開発プロジェクト管理ハブ](https://www.notion.com/ko/templates/student-dev-project-hub)テンプレートを公開、社内業務自動化事例の共有を担当'
           ],
           tags: ['Notion', 'Community']
         },
